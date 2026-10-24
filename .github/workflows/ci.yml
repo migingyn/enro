@@ -1,0 +1,57 @@
+# main must always build and boot in fake mode (PRD 15.4). /shipit waits for this before merging.
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  contracts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install jsonschema
+      - run: python3 scripts/check_contracts.py
+
+  backend:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libcurl4-openssl-dev
+      - uses: actions/cache@v4
+        with:
+          path: build/_deps
+          key: deps-${{ matrix.os }}-${{ hashFiles('backend/CMakeLists.txt') }}
+      - run: cmake -S backend -B build -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build -j4
+      - run: ctest --test-dir build --output-on-failure
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install jsonschema
+      - name: boot in fake mode with no .env and smoke-test every route
+        run: |
+          DB_PATH=":memory:" PORT=8080 ./build/enro > enro.log 2>&1 &
+          for i in $(seq 1 50); do curl -sf localhost:8080/health && break; sleep 0.2; done
+          python3 scripts/smoke_api.py http://localhost:8080 || (cat enro.log; exit 1)
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: build if the frontend exists yet (S4)
+        run: |
+          if [ -f frontend/package.json ]; then
+            npm --prefix frontend ci && npm --prefix frontend run build
+          else
+            echo "frontend/package.json not there yet, skipping"
+          fi
