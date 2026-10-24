@@ -106,6 +106,9 @@ void selectRouter(AppContext& ctx) {
     ctx.router = ctx.google_router.get();
   }
   ctx.providers.router = ctx.router->name();
+  // Every plan asks for the same few trips, so an LRU in front of the router saves Routes API calls (T05).
+  ctx.cached_router = std::make_unique<CachedRouter>(*ctx.router);
+  ctx.router = ctx.cached_router.get();
   ctx.providers.transit = ctx.makeTransitFeed()->name();
 }
 
