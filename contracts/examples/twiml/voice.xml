@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- POST /twilio/voice : call connected, agent speaks then listens -->
+<Response>
+  <Play>https://example.ngrok.app/audio/line_call_001_0.mp3</Play>
+  <Gather input="speech" action="/twilio/gather?call_id=call_001" method="POST" speechTimeout="auto" timeout="6">
+    <Say>Still there? Talk to me.</Say>
+  </Gather>
+  <Redirect method="POST">/twilio/voice?call_id=call_001&amp;retry=1</Redirect>
+</Response>

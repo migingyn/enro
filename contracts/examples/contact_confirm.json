@@ -1,0 +1,11 @@
+{
+  "contact": {
+    "id": "c_mom",
+    "user_id": "u_demo",
+    "spoken_name": "Mom",
+    "relationship": "mother",
+    "phone": "+16195554417",
+    "consent": "CONFIRMED",
+    "added_ts": 1792825200
+  }
+}

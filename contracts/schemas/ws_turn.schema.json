@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enro.local/schemas/ws_turn.schema.json",
+  "title": "WS /ws/dashboard event 'turn'",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "type",
+    "ts",
+    "data"
+  ],
+  "properties": {
+    "type": {
+      "const": "turn"
+    },
+    "ts": {
+      "$ref": "common.schema.json#/$defs/Timestamp"
+    },
+    "data": {
+      "$ref": "common.schema.json#/$defs/Turn"
+    }
+  }
+}

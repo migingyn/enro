@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- POST /twilio/gather : user said something, agent replies and keeps listening -->
+<Response>
+  <Play>https://example.ngrok.app/audio/line_call_001_1.mp3</Play>
+  <Gather input="speech" action="/twilio/gather?call_id=call_001" method="POST" speechTimeout="auto" timeout="6"/>
+</Response>

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enro.local/schemas/ws_decision.schema.json",
+  "title": "WS /ws/dashboard event 'decision'",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "type",
+    "ts",
+    "data"
+  ],
+  "properties": {
+    "type": {
+      "const": "decision"
+    },
+    "ts": {
+      "$ref": "common.schema.json#/$defs/Timestamp"
+    },
+    "data": {
+      "$ref": "common.schema.json#/$defs/Decision"
+    }
+  }
+}

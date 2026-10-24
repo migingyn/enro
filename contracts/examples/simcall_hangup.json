@@ -1,0 +1,8 @@
+{
+  "type": "hangup",
+  "ts": 1793023980,
+  "data": {
+    "call_id": "call_003",
+    "reason": "completed"
+  }
+}

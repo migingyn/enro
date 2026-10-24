@@ -1,0 +1,334 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enro.local/schemas/common.schema.json",
+  "title": "Shared Enro types (PRD section 10). Mirrored in backend/src/models/ and frontend/src/api/types.ts",
+  "$defs": {
+    "Timestamp": { "type": "integer", "description": "Unix epoch seconds (UTC)" },
+
+    "Urgency": { "enum": ["CHILL", "FIRM", "URGENT"] },
+    "ConsentStatus": { "enum": ["PENDING", "CONFIRMED", "REVOKED"] },
+    "TaskKind": {
+      "enum": ["PLAN_TOMORROW", "WAKE_CHECK", "WAKE_CALL", "LEAVE_REMINDER", "DEPARTURE_CHECK",
+               "TRANSIT_TICK", "POLL_CALENDAR", "POLL_GMAIL", "POST_EVENT_LOG"]
+    },
+    "ConsequenceStatus": { "enum": ["OK", "AT_RISK", "MISSED"] },
+    "DecisionSource": { "enum": ["jev", "rules"] },
+    "EventSource": { "enum": ["calendar", "email"] },
+    "Speaker": { "enum": ["agent", "user"] },
+
+    "User": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "phone", "timezone", "home_area", "archetype_id", "alarm_time",
+                   "grace_minutes", "preferred_mode", "prep_minutes", "warmth", "harshness", "humor", "verbosity"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "phone": { "type": "string", "description": "E.164" },
+        "timezone": { "type": "string", "description": "IANA, e.g. America/Los_Angeles" },
+        "home_area": { "type": "string" },
+        "archetype_id": { "type": "string", "description": "id from backend/config/personas.json" },
+        "alarm_time": { "type": "string", "pattern": "^[0-2][0-9]:[0-5][0-9]$" },
+        "grace_minutes": { "type": "integer" },
+        "preferred_mode": { "type": "object", "additionalProperties": { "type": "string" }, "description": "trip type -> mode" },
+        "prep_minutes": { "type": "object", "additionalProperties": { "type": "integer" }, "description": "casual|formal -> minutes to get ready (from onboarding)" },
+        "warmth": { "type": "number", "minimum": 0, "maximum": 1 },
+        "harshness": { "type": "number", "minimum": 0, "maximum": 1 },
+        "humor": { "type": "number", "minimum": 0, "maximum": 1 },
+        "verbosity": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+
+    "EmergencyContact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "user_id", "spoken_name", "relationship", "phone", "consent", "added_ts"],
+      "properties": {
+        "id": { "type": "string" },
+        "user_id": { "type": "string" },
+        "spoken_name": { "type": "string" },
+        "relationship": { "type": "string" },
+        "phone": { "type": "string" },
+        "consent": { "$ref": "#/$defs/ConsentStatus" },
+        "added_ts": { "$ref": "#/$defs/Timestamp" }
+      }
+    },
+
+    "Event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "user_id", "title", "location", "event_type", "source", "start_ts", "end_ts", "canceled"],
+      "properties": {
+        "id": { "type": "string" },
+        "user_id": { "type": "string" },
+        "title": { "type": "string" },
+        "location": { "type": "string" },
+        "event_type": { "type": "string", "description": "key in backend/config/event_types.json" },
+        "source": { "$ref": "#/$defs/EventSource" },
+        "start_ts": { "$ref": "#/$defs/Timestamp" },
+        "end_ts": { "$ref": "#/$defs/Timestamp" },
+        "canceled": { "type": "boolean" }
+      }
+    },
+
+    "LeavePlan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["event_id", "mode", "prep_minutes", "travel_minutes", "buffer_minutes",
+                   "reminder_at", "leave_by", "urgency", "urgency_score", "reasoning"],
+      "properties": {
+        "event_id": { "type": "string" },
+        "mode": { "type": "string", "description": "walk | bike | bus | drive" },
+        "prep_minutes": { "type": "integer" },
+        "travel_minutes": { "type": "integer" },
+        "buffer_minutes": { "type": "integer" },
+        "reminder_at": { "$ref": "#/$defs/Timestamp" },
+        "leave_by": { "$ref": "#/$defs/Timestamp" },
+        "urgency": { "$ref": "#/$defs/Urgency" },
+        "urgency_score": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "reasoning": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+
+    "LadderStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["step", "at", "tone", "notify_contacts"],
+      "properties": {
+        "step": { "enum": ["CALL_1", "CALL_2", "CALL_3", "AWAKE_VERIFY"] },
+        "at": { "$ref": "#/$defs/Timestamp" },
+        "tone": { "type": "string", "description": "calm | louder | yelling | check" },
+        "notify_contacts": { "type": "boolean" }
+      }
+    },
+
+    "WakePlan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["alarm_time", "alarm_ts", "grace_minutes", "steps"],
+      "properties": {
+        "alarm_time": { "type": "string" },
+        "alarm_ts": { "$ref": "#/$defs/Timestamp" },
+        "grace_minutes": { "type": "integer" },
+        "steps": { "type": "array", "items": { "$ref": "#/$defs/LadderStep" } }
+      }
+    },
+
+    "AgentTask": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["due_at", "user_id", "kind", "payload"],
+      "properties": {
+        "due_at": { "$ref": "#/$defs/Timestamp" },
+        "user_id": { "type": "string" },
+        "kind": { "$ref": "#/$defs/TaskKind" },
+        "payload": { "type": "object" }
+      }
+    },
+
+    "Decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["user_id", "kind", "verdict", "source", "confidence", "ts", "latency_ms", "inputs"],
+      "properties": {
+        "user_id": { "type": "string" },
+        "kind": {
+          "enum": ["email_relevance", "transit_speak", "interrupt_channel", "readiness", "snooze", "stop_condition"],
+          "description": "One per row of PRD 7.11"
+        },
+        "verdict": { "type": "string", "description": "One of the verdicts for this kind in PRD 7.11" },
+        "source": { "$ref": "#/$defs/DecisionSource" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "ts": { "$ref": "#/$defs/Timestamp" },
+        "latency_ms": { "type": "integer" },
+        "inputs": { "type": "object" }
+      }
+    },
+
+    "Outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["user_id", "event_id", "event_type", "mode", "planned_leave", "actual_leave", "arrival"],
+      "properties": {
+        "user_id": { "type": "string" },
+        "event_id": { "type": "string" },
+        "event_type": { "type": "string" },
+        "mode": { "type": "string" },
+        "planned_leave": { "$ref": "#/$defs/Timestamp" },
+        "actual_leave": { "$ref": "#/$defs/Timestamp" },
+        "arrival": { "$ref": "#/$defs/Timestamp" }
+      }
+    },
+
+    "PunctualityStats": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["prep_bias", "travel_factor", "arrival_delta", "snooze_inflation", "samples"],
+      "properties": {
+        "prep_bias": { "type": "number", "description": "minutes, actual leave minus planned leave" },
+        "travel_factor": { "type": "number", "description": "actual travel / predicted travel" },
+        "arrival_delta": { "type": "number", "description": "minutes, arrival minus start" },
+        "snooze_inflation": { "type": "number", "description": "actual snooze / requested snooze" },
+        "samples": { "type": "integer" }
+      }
+    },
+
+    "ChannelResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["channel", "time_of_day", "answer_rate", "samples"],
+      "properties": {
+        "channel": { "enum": ["call", "earbud", "text"] },
+        "time_of_day": { "enum": ["morning", "day", "evening"] },
+        "answer_rate": { "type": "number", "minimum": 0, "maximum": 1 },
+        "samples": { "type": "integer" }
+      }
+    },
+
+    "TransportCount": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["destination_type", "distance_bucket", "counts", "predicted"],
+      "properties": {
+        "destination_type": { "type": "string" },
+        "distance_bucket": { "type": "string", "description": "<2km | 2-5km | 5-15km | >15km" },
+        "counts": { "type": "object", "additionalProperties": { "type": "integer" } },
+        "predicted": { "type": "string" }
+      }
+    },
+
+    "ConsequenceItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["event_id", "title", "start_ts", "status", "minutes_late"],
+      "properties": {
+        "event_id": { "type": "string" },
+        "title": { "type": "string" },
+        "start_ts": { "$ref": "#/$defs/Timestamp" },
+        "status": { "$ref": "#/$defs/ConsequenceStatus" },
+        "minutes_late": { "type": "integer" }
+      }
+    },
+
+    "Call": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "user_id", "provider_sid", "purpose", "state", "attempt", "turns"],
+      "properties": {
+        "id": { "type": "string" },
+        "user_id": { "type": "string" },
+        "provider_sid": { "type": "string" },
+        "purpose": { "enum": ["wake", "awake_verify", "leave_reminder", "departure_check"] },
+        "state": { "enum": ["queued", "ringing", "in_progress", "completed", "no_answer", "failed"] },
+        "attempt": { "type": "integer" },
+        "turns": { "type": "integer" }
+      }
+    },
+
+    "Turn": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["call_id", "speaker", "text", "intent", "ts"],
+      "properties": {
+        "call_id": { "type": "string" },
+        "speaker": { "$ref": "#/$defs/Speaker" },
+        "text": { "type": "string" },
+        "intent": { "type": "string", "description": "IntentClassifier label for user turns (e.g. SNOOZE_REQUEST, AWAKE, READY, STALLING, LEFT, UNCLEAR); empty for agent turns" },
+        "ts": { "$ref": "#/$defs/Timestamp" }
+      }
+    },
+
+    "Reroute": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reason", "suggestion", "new_eta_ts"],
+      "properties": {
+        "reason": { "type": "string" },
+        "suggestion": { "type": "string" },
+        "new_eta_ts": { "$ref": "#/$defs/Timestamp" }
+      }
+    },
+
+    "TripTick": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["trip_id", "seq", "ts", "lat", "lng", "route", "next_stop", "eta_ts",
+                   "scheduled_arrival_ts", "delay_minutes", "on_route", "verdict", "line", "reroute"],
+      "properties": {
+        "trip_id": { "type": "string" },
+        "seq": { "type": "integer" },
+        "ts": { "$ref": "#/$defs/Timestamp", "description": "recorded time of this position" },
+        "lat": { "type": "number" },
+        "lng": { "type": "number" },
+        "route": { "type": "string" },
+        "next_stop": { "type": "string" },
+        "eta_ts": { "$ref": "#/$defs/Timestamp" },
+        "scheduled_arrival_ts": { "$ref": "#/$defs/Timestamp" },
+        "delay_minutes": { "type": "integer" },
+        "on_route": { "type": "boolean" },
+        "verdict": { "enum": ["IGNORE", "COMMENT", "ALERT", "REROUTE"] },
+        "line": { "type": "string", "description": "commentator line, empty when verdict is IGNORE" },
+        "reroute": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/Reroute" }] }
+      }
+    },
+
+    "CallsPerMinuteBucket": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minute", "calls"],
+      "properties": {
+        "minute": { "type": "string", "description": "HH:MM local" },
+        "calls": { "type": "integer" }
+      }
+    },
+
+    "SimResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["run_id", "users", "threads", "runtime_ms", "tasks_scheduled", "llm_calls",
+                   "calls_per_minute", "cost_per_user_month_usd", "cost_breakdown"],
+      "properties": {
+        "run_id": { "type": "string" },
+        "users": { "type": "integer" },
+        "threads": { "type": "integer" },
+        "runtime_ms": { "type": "integer" },
+        "tasks_scheduled": { "type": "integer" },
+        "llm_calls": { "type": "integer" },
+        "calls_per_minute": { "type": "array", "items": { "$ref": "#/$defs/CallsPerMinuteBucket" } },
+        "cost_per_user_month_usd": { "type": "number" },
+        "cost_breakdown": { "type": "object", "additionalProperties": { "type": "number" }, "description": "llm | tts | telephony | reflex -> USD per user per month" }
+      }
+    },
+
+    "OnboardingQuestion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["slot", "prompt"],
+      "properties": {
+        "slot": { "type": "string" },
+        "prompt": { "type": "string" }
+      }
+    },
+
+    "NewContact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["spoken_name", "relationship", "phone"],
+      "properties": {
+        "spoken_name": { "type": "string" },
+        "relationship": { "type": "string" },
+        "phone": { "type": "string" }
+      }
+    },
+
+    "WsEnvelope": {
+      "type": "object",
+      "required": ["type", "ts", "data"],
+      "properties": {
+        "type": { "type": "string" },
+        "ts": { "$ref": "#/$defs/Timestamp" },
+        "data": {}
+      }
+    }
+  }
+}

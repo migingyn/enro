@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enro.local/schemas/simcall_say.schema.json",
+  "title": "WS /ws/sim-call server->browser: agent speaks",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "type",
+    "ts",
+    "data"
+  ],
+  "properties": {
+    "type": {
+      "const": "say"
+    },
+    "ts": {
+      "$ref": "common.schema.json#/$defs/Timestamp"
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "call_id",
+        "text",
+        "audio_url",
+        "persona",
+        "urgency"
+      ],
+      "properties": {
+        "call_id": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "audio_url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "persona": {
+          "type": "string"
+        },
+        "urgency": {
+          "$ref": "common.schema.json#/$defs/Urgency"
+        }
+      }
+    }
+  }
+}

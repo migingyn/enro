@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enro.local/schemas/punctuality.schema.json",
+  "title": "GET /api/users/:id/punctuality",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "user_id",
+    "by_event_type",
+    "by_mode",
+    "channel_response",
+    "transport",
+    "headlines"
+  ],
+  "properties": {
+    "user_id": {
+      "type": "string"
+    },
+    "by_event_type": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "common.schema.json#/$defs/PunctualityStats"
+      }
+    },
+    "by_mode": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "common.schema.json#/$defs/PunctualityStats"
+      }
+    },
+    "channel_response": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/ChannelResponse"
+      }
+    },
+    "transport": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/TransportCount"
+      }
+    },
+    "headlines": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enro.local/schemas/ws_call_state.schema.json",
+  "title": "WS /ws/dashboard event 'call_state'",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "type",
+    "ts",
+    "data"
+  ],
+  "properties": {
+    "type": {
+      "const": "call_state"
+    },
+    "ts": {
+      "$ref": "common.schema.json#/$defs/Timestamp"
+    },
+    "data": {
+      "$ref": "common.schema.json#/$defs/Call"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "profile": {
+    "name": "Sam Rivera",
+    "phone": "+18585550142",
+    "timezone": "America/Los_Angeles",
+    "home_area": "La Jolla, Nobel Dr near UC San Diego",
+    "alarm_time": "07:00",
+    "sets_own_alarm": true,
+    "preferred_mode": {
+      "campus": "walk",
+      "off_campus": "bus",
+      "night": "drive"
+    },
+    "prep_minutes": {
+      "casual": 15,
+      "formal": 40
+    },
+    "harshness_pref": 0.4
+  },
+  "contacts": [
+    {
+      "spoken_name": "Mom",
+      "relationship": "mother",
+      "phone": "+16195554417"
+    },
+    {
+      "spoken_name": "Jules",
+      "relationship": "roommate",
+      "phone": "+18585550199"
+    }
+  ]
+}

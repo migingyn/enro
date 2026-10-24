@@ -1,0 +1,18 @@
+{
+  "type": "decision",
+  "ts": 1793025720,
+  "data": {
+    "user_id": "u_demo",
+    "kind": "email_relevance",
+    "verdict": "PLAN_CHANGE",
+    "source": "rules",
+    "confidence": 0.9,
+    "ts": 1793025720,
+    "latency_ms": 1,
+    "inputs": {
+      "message_id": "msg_1003",
+      "from": "cse110-tas@ucsd.edu",
+      "subject": "Section canceled today"
+    }
+  }
+}

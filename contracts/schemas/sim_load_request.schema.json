@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enro.local/schemas/sim_load_request.schema.json",
+  "title": "POST /api/sim/load (request body)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "users",
+    "threads"
+  ],
+  "properties": {
+    "users": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "threads": {
+      "type": "integer",
+      "minimum": 1
+    }
+  }
+}

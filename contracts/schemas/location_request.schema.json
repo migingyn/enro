@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enro.local/schemas/location_request.schema.json",
+  "title": "POST /api/location (request body)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "user_id",
+    "lat",
+    "lng",
+    "accuracy_m",
+    "ts"
+  ],
+  "properties": {
+    "user_id": {
+      "type": "string"
+    },
+    "lat": {
+      "type": "number"
+    },
+    "lng": {
+      "type": "number"
+    },
+    "accuracy_m": {
+      "type": "number"
+    },
+    "ts": {
+      "$ref": "common.schema.json#/$defs/Timestamp"
+    }
+  }
+}

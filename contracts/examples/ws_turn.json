@@ -1,0 +1,11 @@
+{
+  "type": "turn",
+  "ts": 1793023920,
+  "data": {
+    "call_id": "call_003",
+    "speaker": "user",
+    "text": "Give me five more minutes.",
+    "intent": "SNOOZE_REQUEST",
+    "ts": 1793023920
+  }
+}

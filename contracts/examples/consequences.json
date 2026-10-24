@@ -1,0 +1,29 @@
+{
+  "user_id": "u_demo",
+  "delay_minutes": 11,
+  "worst": "AT_RISK",
+  "items": [
+    {
+      "event_id": "evt_cse110_lec",
+      "title": "CSE 110 Lecture",
+      "start_ts": 1793026800,
+      "status": "AT_RISK",
+      "minutes_late": 6
+    },
+    {
+      "event_id": "evt_cse110_dis",
+      "title": "CSE 110 Discussion",
+      "start_ts": 1793030400,
+      "status": "OK",
+      "minutes_late": 0
+    },
+    {
+      "event_id": "evt_interview",
+      "title": "Qualcomm SWE Intern Interview",
+      "start_ts": 1793037600,
+      "status": "OK",
+      "minutes_late": 0
+    }
+  ],
+  "summary": "11 more minutes makes you 6 minutes late to CSE 110 Lecture. The interview is still safe."
+}

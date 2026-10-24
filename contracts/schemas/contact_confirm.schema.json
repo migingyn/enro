@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enro.local/schemas/contact_confirm.schema.json",
+  "title": "POST /api/contacts/:id/confirm",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contact"
+  ],
+  "properties": {
+    "contact": {
+      "$ref": "common.schema.json#/$defs/EmergencyContact"
+    }
+  }
+}

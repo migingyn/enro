@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enro.local/schemas/plan.schema.json",
+  "title": "GET /api/users/:id/plan?date=YYYY-MM-DD",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "user_id",
+    "date",
+    "timezone",
+    "generated_at",
+    "events",
+    "plans",
+    "wake",
+    "reasoning"
+  ],
+  "properties": {
+    "user_id": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string"
+    },
+    "timezone": {
+      "type": "string"
+    },
+    "generated_at": {
+      "$ref": "common.schema.json#/$defs/Timestamp"
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/Event"
+      }
+    },
+    "plans": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/LeavePlan"
+      }
+    },
+    "wake": {
+      "$ref": "common.schema.json#/$defs/WakePlan"
+    },
+    "reasoning": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

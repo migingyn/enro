@@ -1,0 +1,107 @@
+{
+  "user_id": "u_demo",
+  "by_event_type": {
+    "class": {
+      "prep_bias": 12.0,
+      "travel_factor": 1.15,
+      "arrival_delta": 4.5,
+      "snooze_inflation": 2.2,
+      "samples": 24
+    },
+    "interview": {
+      "prep_bias": 8.0,
+      "travel_factor": 1.1,
+      "arrival_delta": -3.0,
+      "snooze_inflation": 1.0,
+      "samples": 2
+    },
+    "casual": {
+      "prep_bias": 6.5,
+      "travel_factor": 1.1,
+      "arrival_delta": 7.0,
+      "snooze_inflation": 1.8,
+      "samples": 6
+    },
+    "meeting": {
+      "prep_bias": 3.0,
+      "travel_factor": 1.12,
+      "arrival_delta": 1.5,
+      "snooze_inflation": 1.4,
+      "samples": 5
+    }
+  },
+  "by_mode": {
+    "walk": {
+      "prep_bias": 0.0,
+      "travel_factor": 1.15,
+      "arrival_delta": 0.0,
+      "snooze_inflation": 0.0,
+      "samples": 30
+    },
+    "bus": {
+      "prep_bias": 0.0,
+      "travel_factor": 1.2,
+      "arrival_delta": 0.0,
+      "snooze_inflation": 0.0,
+      "samples": 9
+    },
+    "bike": {
+      "prep_bias": 0.0,
+      "travel_factor": 1.05,
+      "arrival_delta": 0.0,
+      "snooze_inflation": 0.0,
+      "samples": 3
+    }
+  },
+  "channel_response": [
+    {
+      "channel": "call",
+      "time_of_day": "morning",
+      "answer_rate": 0.58,
+      "samples": 15
+    },
+    {
+      "channel": "call",
+      "time_of_day": "day",
+      "answer_rate": 0.81,
+      "samples": 11
+    },
+    {
+      "channel": "earbud",
+      "time_of_day": "day",
+      "answer_rate": 0.9,
+      "samples": 20
+    },
+    {
+      "channel": "text",
+      "time_of_day": "morning",
+      "answer_rate": 0.33,
+      "samples": 9
+    }
+  ],
+  "transport": [
+    {
+      "destination_type": "campus",
+      "distance_bucket": "<2km",
+      "counts": {
+        "walk": 26,
+        "bike": 3
+      },
+      "predicted": "walk"
+    },
+    {
+      "destination_type": "off_campus",
+      "distance_bucket": "5-15km",
+      "counts": {
+        "bus": 7,
+        "drive": 1
+      },
+      "predicted": "bus"
+    }
+  ],
+  "headlines": [
+    "You leave 12 minutes later than planned for class.",
+    "Your walks take 15% longer than the map says.",
+    "Last three times you said five more minutes, it was eleven."
+  ]
+}

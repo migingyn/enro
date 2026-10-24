@@ -1,0 +1,6 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enro.local/schemas/sim_result.schema.json",
+  "title": "POST /api/sim/load (response) and ws sim_result data",
+  "$ref": "common.schema.json#/$defs/SimResult"
+}

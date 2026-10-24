@@ -1,0 +1,69 @@
+{
+  "type": "sim_result",
+  "ts": 1793041200,
+  "data": {
+    "run_id": "sim_0001",
+    "users": 100000,
+    "threads": 8,
+    "runtime_ms": 3120,
+    "tasks_scheduled": 1284000,
+    "llm_calls": 212400,
+    "calls_per_minute": [
+      {
+        "minute": "06:00",
+        "calls": 1210
+      },
+      {
+        "minute": "06:15",
+        "calls": 2890
+      },
+      {
+        "minute": "06:30",
+        "calls": 5320
+      },
+      {
+        "minute": "06:45",
+        "calls": 7480
+      },
+      {
+        "minute": "07:00",
+        "calls": 9930
+      },
+      {
+        "minute": "07:15",
+        "calls": 8710
+      },
+      {
+        "minute": "07:30",
+        "calls": 7020
+      },
+      {
+        "minute": "07:45",
+        "calls": 5160
+      },
+      {
+        "minute": "08:00",
+        "calls": 3940
+      },
+      {
+        "minute": "08:15",
+        "calls": 2350
+      },
+      {
+        "minute": "08:30",
+        "calls": 1380
+      },
+      {
+        "minute": "08:45",
+        "calls": 720
+      }
+    ],
+    "cost_per_user_month_usd": 0.41,
+    "cost_breakdown": {
+      "llm": 0.09,
+      "tts": 0.05,
+      "telephony": 0.25,
+      "reflex": 0.02
+    }
+  }
+}

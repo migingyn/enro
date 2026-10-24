@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enro.local/schemas/demo_trigger_request.schema.json",
+  "title": "POST /api/demo/trigger (request body)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "user_id",
+    "scenario"
+  ],
+  "properties": {
+    "user_id": {
+      "type": "string"
+    },
+    "scenario": {
+      "enum": [
+        "wake_ladder",
+        "leave_reminder",
+        "email_drop"
+      ]
+    }
+  }
+}

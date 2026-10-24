@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enro.local/schemas/demo_trip.schema.json",
+  "title": "POST /api/demo/trip",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "ok",
+    "trip",
+    "speed",
+    "ticks",
+    "duration_s"
+  ],
+  "properties": {
+    "ok": {
+      "type": "boolean"
+    },
+    "trip": {
+      "type": "string"
+    },
+    "speed": {
+      "type": "number"
+    },
+    "ticks": {
+      "type": "integer"
+    },
+    "duration_s": {
+      "type": "number"
+    }
+  }
+}
