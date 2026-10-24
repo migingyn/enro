@@ -1,5 +1,7 @@
 #include "calls/WakeLadder.hpp"
 
+#include <algorithm>
+
 #include "app/App.hpp"
 #include "models/Json.hpp"
 #include "planner/DayPlanner.hpp"
@@ -33,6 +35,7 @@ LadderState WakeLadder::load(const std::string& user_id) const {
   s.demo = j.value("demo", false);
   s.gap_s = j.value("gap_s", 180LL);
   s.last_call_id = j.value("last_call_id", "");
+  s.snoozed_until = j.value("snoozed_until", 0LL);
   return s;
 }
 
@@ -42,7 +45,8 @@ void WakeLadder::save(const std::string& user_id, const LadderState& s) {
                                                         {"awake", s.awake},
                                                         {"demo", s.demo},
                                                         {"gap_s", s.gap_s},
-                                                        {"last_call_id", s.last_call_id}}
+                                                        {"last_call_id", s.last_call_id},
+                                                        {"snoozed_until", s.snoozed_until}}
                                                        .dump());
 }
 
@@ -114,8 +118,17 @@ void WakeLadder::handleWakeCall(const AgentTask& task) {
     return;
   }
 
+  if (task.payload.value("purpose", "") == "snooze_callback") {
+    // Snooze granted on CALL_3: one more urgent call, contacts were already told.
+    if (s.awake) return;
+    s.last_call_id = callNow(user_id, "wake", 3);
+    save(user_id, s);
+    return;
+  }
+
   int attempt = task.payload.value("attempt", 1);
   if (s.awake || attempt != s.next_attempt || attempt > 3) return;  // done, or already pulled forward
+  if (task.due_at < s.snoozed_until) return;  // held by a snooze; a task at the snooze end replaces it
 
   // Still talking to the previous call: wait instead of ringing over it.
   if (auto last = ctx_.repos->call(s.last_call_id); last && last->state == "in_progress") {
@@ -174,6 +187,25 @@ void WakeLadder::onAwake(const std::string& call_id) {
                     {{"ladder_id", s.ladder_id}, {"purpose", "awake_verify"}}});
   ctx_.scheduler->wake();
   LOG_INFO("ladder", call->user_id << " is awake, verification call in " << kVerifyMinutes << " min");
+}
+
+void WakeLadder::onSnooze(const std::string& call_id, int minutes) {
+  auto call = ctx_.repos->call(call_id);
+  if (!call || call->purpose != "wake" || minutes <= 0) return;
+  LadderState s = load(call->user_id);
+  if (s.awake || call_id != s.last_call_id) return;
+  long long seconds = minutes * 60LL;
+  if (s.demo) seconds = std::max<long long>(5, seconds * s.gap_s / (kStepMinutes * 60));
+  s.snoozed_until = time::nowTs() + seconds;
+  save(call->user_id, s);
+  if (s.next_attempt <= 3) {
+    queueAttempt(call->user_id, s, s.next_attempt, s.snoozed_until);
+  } else {
+    ctx_.queue->push({s.snoozed_until, call->user_id, TaskKind::WAKE_CALL,
+                      {{"ladder_id", s.ladder_id}, {"purpose", "snooze_callback"}}});
+    ctx_.scheduler->wake();
+  }
+  LOG_INFO("ladder", call->user_id << " snoozed " << minutes << " min, calling back in " << seconds << " s");
 }
 
 // ---------- helpers ----------

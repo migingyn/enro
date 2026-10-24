@@ -113,3 +113,43 @@ TEST_CASE("the contact SMS names the time of the first thing in the day's plan")
   std::string body = sms[0]["body"];
   CHECK(body.find("something at 8:00") != std::string::npos);
 }
+
+TEST_CASE("a granted snooze holds the ladder until the snooze ends, then resumes it") {
+  auto app = seededApp();  // demo gap 15 s -> snooze compressed by 15/180
+  long long t0 = time::nowTs();
+  auto id = app->wake_ladder->start("u_demo");
+  app->conversation->onEvent(id, "answered", "");
+  app->wake_ladder->onSnooze(id, 12);  // 12 min -> 60 s in demo time
+  app->conversation->onEvent(id, "completed", "");
+  app->scheduler->tick(t0 + 30);
+  CHECK(callsFor(*app, "u_demo") == 1);  // the regular CALL_2 step is held
+  app->scheduler->tick(t0 + 61);
+  CHECK(callsFor(*app, "u_demo") == 2);  // called back when the snooze ran out
+  auto last = app->repos->call(app->wake_ladder->lastCallId("u_demo"));
+  REQUIRE(last);
+  CHECK(last->attempt == 2);
+}
+
+TEST_CASE("a snooze granted on CALL_3 gets one callback and doesn't text contacts again") {
+  auto app = seededApp();
+  long long t0 = time::nowTs();
+  app->wake_ladder->start("u_demo");
+  app->scheduler->tick(t0 + 15);
+  app->scheduler->tick(t0 + 30);  // CALL_3 + SMS to Mom
+  auto call3 = app->wake_ladder->lastCallId("u_demo");
+  app->conversation->onEvent(call3, "answered", "");
+  app->wake_ladder->onSnooze(call3, 6);  // 30 s demo time
+  app->conversation->onEvent(call3, "completed", "");
+  app->scheduler->tick(time::nowTs() + 31);
+  CHECK(callsFor(*app, "u_demo") == 4);
+  CHECK(app->sim->sentSms().size() == 1);
+  app->scheduler->tick(time::nowTs() + 10000);
+  CHECK(callsFor(*app, "u_demo") == 4);  // one callback only
+}
+
+TEST_CASE("snoozes on non-ladder calls are ignored") {
+  auto app = seededApp();
+  auto id = app->wake_ladder->callNow("u_demo", "leave_reminder", 1);
+  app->wake_ladder->onSnooze(id, 5);
+  CHECK(app->queue->size() == 0);
+}
