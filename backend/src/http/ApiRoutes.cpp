@@ -64,10 +64,10 @@ void registerApiRoutes(CrowApp& app, AppContext& ctx) {
   });
 
   // POST /api/contacts/:id/confirm
-  CROW_ROUTE(app, "/api/contacts/<string>/confirm").methods(crow::HTTPMethod::POST)([&ctx](const std::string&) {
-    // STUB
-    // TODO(T10): ctx.contacts->confirm(contact_id); 404 when unknown.
-    return fixtureResponse(ctx, "contact_confirm");
+  CROW_ROUTE(app, "/api/contacts/<string>/confirm").methods(crow::HTTPMethod::POST)([&ctx](const std::string& id) {
+    auto contact = ctx.contacts->confirm(id);
+    if (!contact) return errorResponse(404, "not_found", "no contact " + id);
+    return jsonResponse({{"contact", *contact}});
   });
 
   // POST /api/location  (Beacon page, departure verification, P1)

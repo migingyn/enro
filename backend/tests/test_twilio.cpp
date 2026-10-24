@@ -38,3 +38,20 @@ TEST_CASE("TODO(T02): validSignature accepts Twilio's documented example and rej
 TEST_CASE("TODO(T02): /twilio/voice renders the opener with Play + Gather" * doctest::skip()) {}
 TEST_CASE("TODO(T02): /twilio/status no-answer emits no_answer" * doctest::skip()) {}
 TEST_CASE("TODO(T02): inbound STOP revokes the contact" * doctest::skip()) {}
+
+TEST_CASE("a browser subscribed by user id rings for every call to that user") {
+  SimProvider sim;
+  std::vector<std::string> events;
+  sim.onCallEvent([&](const std::string& id, const std::string& ev, const std::string&) { events.push_back(id + ":" + ev); });
+  std::vector<std::string> got;
+  int conn = 0;
+  sim.attachBrowser("u_demo", &conn, [&](const std::string& t) { got.push_back(t); });
+  sim.placeCall({"call_a", "u_demo", "+1", "wake", 1, "best_friend", Urgency::CHILL});
+  sim.placeCall({"call_b", "u_demo", "+1", "wake", 2, "best_friend", Urgency::FIRM});
+  sim.placeCall({"call_c", "someone_else", "+1", "wake", 1, "best_friend", Urgency::CHILL});
+  REQUIRE(got.size() == 2);
+  CHECK(nlohmann::json::parse(got[1])["data"]["call_id"] == "call_b");
+  // Replies on the user socket carry their call id in data.call_id.
+  sim.onBrowserMessage("u_demo", R"({"type":"decline","ts":0,"data":{"call_id":"call_b"}})");
+  CHECK(events == std::vector<std::string>{"call_b:declined"});
+}
