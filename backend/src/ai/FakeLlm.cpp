@@ -8,7 +8,9 @@ nlohmann::json FakeLlm::chatJson(const std::string&, const std::string&, const n
   nlohmann::json out = {{"fake", true}};
   if (schema.contains("properties")) {
     for (auto& [key, prop] : schema["properties"].items()) {
-      std::string type = prop.value("type", "string");
+      // "type" may be a string or a list such as ["integer", "null"]; use the first entry.
+      std::string type = "string";
+      if (prop.contains("type")) type = prop["type"].is_array() ? prop["type"][0].get<std::string>() : prop["type"].get<std::string>();
       if (type == "string") out[key] = "";
       else if (type == "integer" || type == "number") out[key] = 0;
       else if (type == "boolean") out[key] = false;

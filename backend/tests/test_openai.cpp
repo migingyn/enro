@@ -25,3 +25,9 @@ TEST_CASE("TODO(T01): chatJson returns JSON matching the schema" * doctest::skip
 TEST_CASE("TODO(T01): tts returns MP3 bytes and caches by text+voice" * doctest::skip()) {}
 TEST_CASE("TODO(T01): realtimeSession mints an ephemeral key with expiry" * doctest::skip()) {}
 TEST_CASE("TODO(T01): onboarding complete saves user + PENDING contacts" * doctest::skip()) {}
+
+TEST_CASE("FakeLlm handles nullable types written as a list") {
+  FakeLlm llm;
+  auto j = llm.chatJson("s", "u", {{"properties", {{"when", {{"type", {"integer", "null"}}}}}}});
+  CHECK(j["when"] == 0);
+}
