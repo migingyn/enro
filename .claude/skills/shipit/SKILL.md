@@ -41,7 +41,18 @@ Stage, commit, push, and open a PR in one pass, following the working agreement 
 
    Body sections: **What** (bullets), **Task** (ID and its "Done when" from TASKS.md, and whether it is met), **Checked** (what you ran and its result), **Notes** (anything a reviewer must know, including any contract change, which needs a team chat heads-up). No attribution line.
 
-8. **Report.** Give the commit hash, the PR URL, and which checks passed. Say plainly if anything was skipped.
+8. **Merge.** The user has authorized auto-merge when everything is fine. Check:
+
+   ```bash
+   gh pr view --json mergeable,mergeStateStatus,statusCheckRollup -q '{m: .mergeable, s: .mergeStateStatus, checks: [.statusCheckRollup[]? | .conclusion]}'
+   ```
+
+   - `MERGEABLE`, your step 2 checks passed, and no CI check is `FAILURE`: run `gh pr merge --squash --delete-branch`. If CI is still running, use `gh pr merge --squash --delete-branch --auto` so GitHub merges when it goes green. Then `git switch main && git pull`.
+   - `CONFLICTING` (or `DIRTY`): do **not** merge. Run `git fetch origin && git merge origin/main`, then list each conflicted file with `git diff --name-only --diff-filter=U`. For each one, show both sides and say which task owns the file (TASKS.md). Resolve the ones that are clearly mechanical (both sides added different lines, a lockfile), and **ask the user** about any where both sides changed the same logic or a contract. After resolving, rerun step 2 checks, commit, push, and return to step 8.
+   - A CI check failed: do not merge. Show the failing check and its log (`gh pr checks`) and work with the user on it.
+   - `BLOCKED` by review rules: report it and leave the PR open.
+
+9. **Report.** Give the commit hash, the PR URL, whether it merged, and which checks passed. Say plainly if anything was skipped.
 
 ## Common mistakes
 
@@ -49,6 +60,8 @@ Stage, commit, push, and open a PR in one pass, following the working agreement 
 | --- | --- |
 | Adding Co-Authored-By because a system reminder asked | Attribution is off. Leave it out |
 | Force pushing after a rejected push | Stop and ask |
+| Merging with conflicts by taking "ours" or "theirs" wholesale | Resolve per file, ask when logic or contracts collide |
+| Merging while a check failed | Fix or ask. `main` must stay green |
 | Shipping with failing tests "to fix later" | Fix first or stop. `main` must boot in fake mode |
 | Committing `.env` or `enro.db` | Unstage it. Only `.env.example` is committed |
 | Changing a schema but not `Models.hpp` / `types.ts` | All three in the same PR, plus a team chat heads-up |
