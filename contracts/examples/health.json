@@ -1,0 +1,14 @@
+{
+  "status": "ok",
+  "version": "0.1.0",
+  "uptime_s": 42,
+  "providers": {
+    "voice": "sim",
+    "llm": "fake",
+    "reflex": "rules",
+    "calendar": "seed",
+    "email": "seed",
+    "router": "fallback",
+    "transit": "replay"
+  }
+}

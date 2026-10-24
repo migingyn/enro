@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enro.local/schemas/onboarding_session.schema.json",
+  "title": "POST /api/onboarding/session",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "provider",
+    "client_secret",
+    "expires_at",
+    "model",
+    "voice",
+    "instructions",
+    "questions"
+  ],
+  "properties": {
+    "provider": {
+      "enum": [
+        "fake",
+        "openai"
+      ],
+      "description": "fake = push-to-talk/typed fallback, no Realtime session"
+    },
+    "client_secret": {
+      "type": "string"
+    },
+    "expires_at": {
+      "$ref": "common.schema.json#/$defs/Timestamp"
+    },
+    "model": {
+      "type": "string"
+    },
+    "voice": {
+      "type": "string"
+    },
+    "instructions": {
+      "type": "string"
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/OnboardingQuestion"
+      }
+    }
+  }
+}

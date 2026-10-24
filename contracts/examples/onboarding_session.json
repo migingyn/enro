@@ -1,0 +1,42 @@
+{
+  "provider": "fake",
+  "client_secret": "fake-ephemeral-key",
+  "expires_at": 1792911660,
+  "model": "",
+  "voice": "",
+  "instructions": "You are Enro. Interview the user in a warm, quick voice. Ask one question at a time. Read each emergency contact back with the last four digits of the number.",
+  "questions": [
+    {
+      "slot": "name",
+      "prompt": "Hey, I'm Enro. What should I call you?"
+    },
+    {
+      "slot": "phone",
+      "prompt": "What number should I call when it's time to get up?"
+    },
+    {
+      "slot": "home_area",
+      "prompt": "Roughly where do you live?"
+    },
+    {
+      "slot": "alarm_time",
+      "prompt": "What time does your own alarm usually go off? Do you set it yourself?"
+    },
+    {
+      "slot": "prep_minutes",
+      "prompt": "How long do you take to get ready for something casual? And for something formal, like an interview?"
+    },
+    {
+      "slot": "preferred_mode",
+      "prompt": "How do you usually get to class? And off campus?"
+    },
+    {
+      "slot": "harshness_pref",
+      "prompt": "When you're running late, how harsh do you want me to be? Gentle, honest, or drill sergeant?"
+    },
+    {
+      "slot": "contacts",
+      "prompt": "If you sleep through everything, who should I let know? Say their name, how you know them, and their number."
+    }
+  ]
+}

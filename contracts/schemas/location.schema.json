@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enro.local/schemas/location.schema.json",
+  "title": "POST /api/location",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "ok",
+    "departed",
+    "distance_from_home_m"
+  ],
+  "properties": {
+    "ok": {
+      "type": "boolean"
+    },
+    "departed": {
+      "type": "boolean"
+    },
+    "distance_from_home_m": {
+      "type": "number"
+    }
+  }
+}

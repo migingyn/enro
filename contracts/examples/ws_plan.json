@@ -1,0 +1,178 @@
+{
+  "type": "plan",
+  "ts": 1793025720,
+  "data": {
+    "user_id": "u_demo",
+    "date": "2026-10-26",
+    "timezone": "America/Los_Angeles",
+    "generated_at": 1793025720,
+    "events": [
+      {
+        "id": "evt_cse110_lec",
+        "user_id": "u_demo",
+        "title": "CSE 110 Lecture",
+        "location": "Center Hall 105, UC San Diego",
+        "event_type": "class",
+        "source": "calendar",
+        "start_ts": 1793026800,
+        "end_ts": 1793029800,
+        "canceled": false
+      },
+      {
+        "id": "evt_cse110_dis",
+        "user_id": "u_demo",
+        "title": "CSE 110 Discussion",
+        "location": "WLH 2005, UC San Diego",
+        "event_type": "class",
+        "source": "calendar",
+        "start_ts": 1793030400,
+        "end_ts": 1793033400,
+        "canceled": true
+      },
+      {
+        "id": "evt_interview",
+        "user_id": "u_demo",
+        "title": "Qualcomm SWE Intern Interview",
+        "location": "Qualcomm Building Q, 6455 Lusk Blvd, San Diego",
+        "event_type": "interview",
+        "source": "calendar",
+        "start_ts": 1793037600,
+        "end_ts": 1793041200,
+        "canceled": false
+      },
+      {
+        "id": "evt_lunch",
+        "user_id": "u_demo",
+        "title": "Lunch with Alex",
+        "location": "Price Center, UC San Diego",
+        "event_type": "casual",
+        "source": "calendar",
+        "start_ts": 1793044800,
+        "end_ts": 1793048400,
+        "canceled": false
+      },
+      {
+        "id": "evt_study",
+        "user_id": "u_demo",
+        "title": "COGS 108 Study Group",
+        "location": "Geisel Library 2nd floor",
+        "event_type": "meeting",
+        "source": "calendar",
+        "start_ts": 1793062800,
+        "end_ts": 1793068200,
+        "canceled": false
+      }
+    ],
+    "plans": [
+      {
+        "event_id": "evt_cse110_lec",
+        "mode": "walk",
+        "prep_minutes": 32,
+        "travel_minutes": 16,
+        "buffer_minutes": 5,
+        "reminder_at": 1793023620,
+        "leave_by": 1793025540,
+        "urgency": "FIRM",
+        "urgency_score": 55,
+        "reasoning": [
+          "prep 32 min = base 20 (class) + learned bias +12",
+          "travel 16 min = 14 min walk ETA x learned factor 1.15",
+          "leave_by 07:39 = start 08:00 - travel 16 - buffer 5",
+          "reminder_at 07:07 = leave_by 07:39 - prep 32",
+          "urgency FIRM (55)"
+        ]
+      },
+      {
+        "event_id": "evt_interview",
+        "mode": "bus",
+        "prep_minutes": 53,
+        "travel_minutes": 34,
+        "buffer_minutes": 15,
+        "reminder_at": 1793031480,
+        "leave_by": 1793034660,
+        "urgency": "URGENT",
+        "urgency_score": 88,
+        "reasoning": [
+          "prep 53 min = base 45 (interview) + learned bias +8",
+          "travel 34 min = 28 min bus ETA x learned factor 1.20",
+          "leave_by 10:11 = start 11:00 - travel 34 - buffer 15",
+          "reminder_at 09:18 = leave_by 10:11 - prep 53",
+          "urgency URGENT (88)"
+        ]
+      },
+      {
+        "event_id": "evt_lunch",
+        "mode": "walk",
+        "prep_minutes": 0,
+        "travel_minutes": 10,
+        "buffer_minutes": 5,
+        "reminder_at": 1793043900,
+        "leave_by": 1793043900,
+        "urgency": "CHILL",
+        "urgency_score": 20,
+        "reasoning": [
+          "prep 0 min (already on campus)",
+          "travel 10 min = 9 min walk ETA x learned factor 1.15",
+          "leave_by 12:45 = start 13:00 - travel 10 - buffer 5",
+          "reminder_at 12:45 = leave_by 12:45 - prep 0",
+          "urgency CHILL (20)"
+        ]
+      },
+      {
+        "event_id": "evt_study",
+        "mode": "walk",
+        "prep_minutes": 0,
+        "travel_minutes": 9,
+        "buffer_minutes": 5,
+        "reminder_at": 1793061960,
+        "leave_by": 1793061960,
+        "urgency": "CHILL",
+        "urgency_score": 25,
+        "reasoning": [
+          "prep 0 min (already on campus)",
+          "travel 9 min = 8 min walk ETA x learned factor 1.15",
+          "leave_by 17:46 = start 18:00 - travel 9 - buffer 5",
+          "reminder_at 17:46 = leave_by 17:46 - prep 0",
+          "urgency CHILL (25)"
+        ]
+      }
+    ],
+    "wake": {
+      "alarm_time": "07:00",
+      "alarm_ts": 1793023200,
+      "grace_minutes": 5,
+      "steps": [
+        {
+          "step": "CALL_1",
+          "at": 1793023500,
+          "tone": "calm",
+          "notify_contacts": false
+        },
+        {
+          "step": "CALL_2",
+          "at": 1793023680,
+          "tone": "louder",
+          "notify_contacts": false
+        },
+        {
+          "step": "CALL_3",
+          "at": 1793023860,
+          "tone": "yelling",
+          "notify_contacts": true
+        },
+        {
+          "step": "AWAKE_VERIFY",
+          "at": 1793024160,
+          "tone": "check",
+          "notify_contacts": false
+        }
+      ]
+    },
+    "reasoning": [
+      "Email 'Section canceled today' canceled CSE 110 Discussion",
+      "5 events today, first at 08:00 (CSE 110 Lecture)",
+      "Interview at 11:00 is the highest-stakes event (URGENT, 88)",
+      "Alarm 07:00 + 5 min grace -> first wake call 07:05"
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "ok": true,
+  "scenario": "wake_ladder",
+  "call_id": "call_001",
+  "message": "Wake ladder started. CALL_1 ringing now."
+}

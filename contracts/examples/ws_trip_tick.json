@@ -1,0 +1,24 @@
+{
+  "type": "trip_tick",
+  "ts": 1793035860,
+  "data": {
+    "trip_id": "bus_trip_01",
+    "seq": 17,
+    "ts": 1793035860,
+    "lat": 32.8798,
+    "lng": -117.2134,
+    "route": "201",
+    "next_stop": "Genesee Ave & Executive Dr",
+    "eta_ts": 1793037060,
+    "scheduled_arrival_ts": 1793036640,
+    "delay_minutes": 7,
+    "on_route": false,
+    "verdict": "REROUTE",
+    "line": "Plot twist. The 201 just went off script around a closure on Genesee. Hop off at Regents and walk, you'll still beat the clock.",
+    "reroute": {
+      "reason": "Vehicle left planned route (detour on Genesee Ave)",
+      "suggestion": "Get off at Regents Rd & Executive Dr and walk 9 minutes",
+      "new_eta_ts": 1793036820
+    }
+  }
+}

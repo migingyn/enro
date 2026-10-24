@@ -1,0 +1,10 @@
+{
+  "type": "ring",
+  "ts": 1793023860,
+  "data": {
+    "call_id": "call_003",
+    "purpose": "wake",
+    "attempt": 3,
+    "caller": "Enro"
+  }
+}

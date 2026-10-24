@@ -1,0 +1,21 @@
+# secrets: only .env.example is committed
+.env
+.env.*
+!.env.example
+
+# backend
+build/
+*.db
+*.db-journal
+backend/audio_cache/
+
+# frontend
+node_modules/
+frontend/dist/
+
+# tooling
+.DS_Store
+__pycache__/
+.claude/settings.local.json
+.vscode/
+.idea/

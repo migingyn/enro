@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enro.local/schemas/simcall_ring.schema.json",
+  "title": "WS /ws/sim-call server->browser: incoming call",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "type",
+    "ts",
+    "data"
+  ],
+  "properties": {
+    "type": {
+      "const": "ring"
+    },
+    "ts": {
+      "$ref": "common.schema.json#/$defs/Timestamp"
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "call_id",
+        "purpose",
+        "attempt",
+        "caller"
+      ],
+      "properties": {
+        "call_id": {
+          "type": "string"
+        },
+        "purpose": {
+          "type": "string"
+        },
+        "attempt": {
+          "type": "integer"
+        },
+        "caller": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

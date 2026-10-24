@@ -1,0 +1,13 @@
+{
+  "type": "call_state",
+  "ts": 1793023860,
+  "data": {
+    "id": "call_003",
+    "user_id": "u_demo",
+    "provider_sid": "SIM-call_003",
+    "purpose": "wake",
+    "state": "ringing",
+    "attempt": 3,
+    "turns": 0
+  }
+}

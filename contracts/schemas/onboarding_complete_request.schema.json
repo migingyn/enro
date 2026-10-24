@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enro.local/schemas/onboarding_complete_request.schema.json",
+  "title": "POST /api/onboarding/complete (request body)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile",
+    "contacts"
+  ],
+  "properties": {
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "phone",
+        "timezone",
+        "home_area",
+        "alarm_time",
+        "sets_own_alarm",
+        "preferred_mode",
+        "prep_minutes",
+        "harshness_pref"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "timezone": {
+          "type": "string"
+        },
+        "home_area": {
+          "type": "string"
+        },
+        "alarm_time": {
+          "type": "string"
+        },
+        "sets_own_alarm": {
+          "type": "boolean"
+        },
+        "preferred_mode": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "prep_minutes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer"
+          }
+        },
+        "harshness_pref": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "contacts": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/NewContact"
+      }
+    }
+  }
+}

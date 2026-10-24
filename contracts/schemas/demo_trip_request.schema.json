@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enro.local/schemas/demo_trip_request.schema.json",
+  "title": "POST /api/demo/trip (request body)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "trip",
+    "speed"
+  ],
+  "properties": {
+    "trip": {
+      "type": "string",
+      "description": "file name in backend/seed/trips without .json"
+    },
+    "speed": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    }
+  }
+}

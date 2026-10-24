@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enro.local/schemas/consequences.schema.json",
+  "title": "GET /api/users/:id/consequences?delay=minutes",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "user_id",
+    "delay_minutes",
+    "worst",
+    "items",
+    "summary"
+  ],
+  "properties": {
+    "user_id": {
+      "type": "string"
+    },
+    "delay_minutes": {
+      "type": "integer"
+    },
+    "worst": {
+      "$ref": "common.schema.json#/$defs/ConsequenceStatus"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/ConsequenceItem"
+      }
+    },
+    "summary": {
+      "type": "string"
+    }
+  }
+}

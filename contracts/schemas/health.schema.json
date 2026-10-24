@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://enro.local/schemas/health.schema.json",
+  "title": "GET /health",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "version",
+    "uptime_s",
+    "providers"
+  ],
+  "properties": {
+    "status": {
+      "const": "ok"
+    },
+    "version": {
+      "type": "string"
+    },
+    "uptime_s": {
+      "type": "integer"
+    },
+    "providers": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "voice",
+        "llm",
+        "reflex",
+        "calendar",
+        "email",
+        "router",
+        "transit"
+      ],
+      "properties": {
+        "voice": {
+          "type": "string"
+        },
+        "llm": {
+          "type": "string"
+        },
+        "reflex": {
+          "type": "string"
+        },
+        "calendar": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "router": {
+          "type": "string"
+        },
+        "transit": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
