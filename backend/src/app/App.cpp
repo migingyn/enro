@@ -166,8 +166,8 @@ std::unique_ptr<AppContext> buildApp(Env env) {
   c.urgency = std::make_unique<UrgencyScorer>(UrgencyWeights::fromConfig(c.event_types));
   c.ready_to_leave = std::make_unique<ReadyToLeave>(c.event_types, *c.router, *c.urgency);
   c.consequences = std::make_unique<ConsequenceEngine>();
-  c.punctuality = std::make_unique<PunctualityModel>();
   c.transport = std::make_unique<TransportLearner>();
+  c.punctuality = std::make_unique<PunctualityModel>(c.transport.get());
   c.queue = std::make_unique<TaskQueue>(*c.repos);
   c.scheduler = std::make_unique<Scheduler>(*c.queue);
   c.intents = std::make_unique<IntentClassifier>(*c.llm);

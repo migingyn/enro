@@ -21,6 +21,8 @@ class IntentClassifier {
   explicit IntentClassifier(LlmClient& llm) : llm_(llm) {}
   // context: {purpose, attempt, last_agent_line}
   Intent classify(const std::string& text, const nlohmann::json& context = {});
+  // Keyword rules. Used as is with the fake LLM, and as the fallback when the LLM fails.
+  static Intent keywords(const std::string& text);
 
  private:
   LlmClient& llm_;
