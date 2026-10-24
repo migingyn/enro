@@ -189,6 +189,9 @@ std::unique_ptr<AppContext> buildApp(Env env) {
     }
   });
 
+  // Scheduler handlers, one line per owner (T04 queue + loop).
+  c.wake_ladder->registerHandlers(*c.scheduler);  // WAKE_CALL (T10)
+
   LOG_INFO("providers", "voice=" << c.providers.voice << " llm=" << c.providers.llm << " speech=" << c.providers.speech
                                  << " reflex=" << c.providers.reflex << " calendar=" << c.providers.calendar
                                  << " email=" << c.providers.email << " router=" << c.providers.router

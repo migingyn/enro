@@ -7,6 +7,10 @@
 namespace enro {
 
 std::string SimProvider::placeCall(const CallRequest& req) {
+  {
+    std::lock_guard<std::mutex> lock(mu_);
+    call_user_[req.call_id] = req.user_id;
+  }
   LOG_INFO("sim", "ringing " << req.call_id << " (" << req.purpose << ", attempt " << req.attempt << ")");
   send(req.call_id, "ring", {{"call_id", req.call_id}, {"purpose", req.purpose}, {"attempt", req.attempt}, {"caller", "Enro"}});
   return "SIM-" + req.call_id;
@@ -56,15 +60,17 @@ void SimProvider::detachBrowser(void* conn) {
   }
 }
 
-void SimProvider::onBrowserMessage(const std::string& call_id, const std::string& raw) {
+void SimProvider::onBrowserMessage(const std::string& key, const std::string& raw) {
   nlohmann::json msg;
   try {
     msg = nlohmann::json::parse(raw);
   } catch (...) {
-    LOG_WARN("sim", "ignoring non-JSON message on " << call_id);
+    LOG_WARN("sim", "ignoring non-JSON message on " << key);
     return;
   }
   std::string type = msg.value("type", "");
+  std::string call_id = key;
+  if (msg.contains("data") && msg["data"].is_object()) call_id = msg["data"].value("call_id", key);
   if (type == "answer") emit(call_id, "answered");
   else if (type == "decline") emit(call_id, "declined");
   else if (type == "speech") emit(call_id, "speech", msg["data"].value("text", ""));
@@ -76,12 +82,14 @@ void SimProvider::send(const std::string& call_id, const std::string& type, nloh
   std::vector<Sender> targets;
   {
     std::lock_guard<std::mutex> lock(mu_);
-    auto it = browsers_.find(call_id);
-    if (it == browsers_.end() || it->second.empty()) {
+    for (const std::string& key : {call_id, call_user_.count(call_id) ? call_user_[call_id] : std::string()}) {
+      if (auto it = browsers_.find(key); !key.empty() && it != browsers_.end())
+        for (auto& [conn, s] : it->second) targets.push_back(s);
+    }
+    if (targets.empty()) {
       pending_[call_id].push_back(text);
       return;
     }
-    for (auto& [conn, s] : it->second) targets.push_back(s);
   }
   for (auto& s : targets) s(text);
 }

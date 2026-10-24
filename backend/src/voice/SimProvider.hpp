@@ -27,12 +27,13 @@ class SimProvider : public VoiceProvider {
   void hangup(const std::string& call_id, const std::string& reason) override;
   std::string sendSms(const std::string& to_phone, const std::string& body) override;
 
-  // Called by http/SimCallSocket.cpp when a browser opens or closes /ws/sim-call/:call_id.
-  // Messages sent before the browser connects are queued and flushed on connect.
+  // Called by http/SimCallSocket.cpp when a browser opens or closes /ws/sim-call/:key.
+  // key is a call id (that call only) or a user id (every call to that user, e.g. the whole wake
+  // ladder). Messages for a call nobody is listening to are queued and flushed on connect.
   void attachBrowser(const std::string& call_id, void* conn, Sender send);
   void detachBrowser(void* conn);
-  // A message from the browser (answer | decline | speech envelope).
-  void onBrowserMessage(const std::string& call_id, const std::string& raw);
+  // A message from the browser (answer | decline | speech envelope). data.call_id wins over key.
+  void onBrowserMessage(const std::string& key, const std::string& raw);
 
   // Texts "sent" in sim mode, newest last (for tests and the dashboard).
   std::vector<nlohmann::json> sentSms() const;
@@ -41,7 +42,8 @@ class SimProvider : public VoiceProvider {
   void send(const std::string& call_id, const std::string& type, nlohmann::json data);
 
   mutable std::mutex mu_;
-  std::map<std::string, std::vector<std::pair<void*, Sender>>> browsers_;  // call_id -> open sockets
+  std::map<std::string, std::vector<std::pair<void*, Sender>>> browsers_;  // call_id or user_id -> sockets
+  std::map<std::string, std::string> call_user_;                            // call_id -> user_id
   std::map<std::string, std::vector<std::string>> pending_;                // call_id -> queued messages
   std::vector<nlohmann::json> sms_;
 };
