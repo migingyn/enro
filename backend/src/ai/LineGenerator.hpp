@@ -18,7 +18,9 @@ struct LineRequest {
   std::string persona;  // archetype id
   Urgency urgency = Urgency::CHILL;
   std::string user_name;
-  nlohmann::json facts = nlohmann::json::object();  // {event, minutes, consequences, history, ...}
+  // {event, minutes, consequences, history, ...}. Set has_contacts=true only when the user has a
+  // confirmed emergency contact; it is the one thing a line may warn about (PRD 7.10).
+  nlohmann::json facts = nlohmann::json::object();
 };
 
 class LineGenerator {
@@ -27,10 +29,22 @@ class LineGenerator {
   std::string generate(const LineRequest& req);
 
   // First canned line for `purpose` from scripts.json with {name}, {event}, {minutes} filled in.
-  // Empty if scripts.json has no such key.
+  // Tries `<purpose>_<urgency>` (e.g. leave_reminder_urgent) before `purpose`. Empty if neither exists.
   std::string canned(const LineRequest& req) const;
 
+  // Persona + urgency style + length and safety rules, sent as the system message.
+  std::string systemPrompt(const LineRequest& req) const;
+
+  // Spoken lines get shorter as urgency rises.
+  static int maxWords(Urgency urgency);
+
+  // False if the line threatens anything, or mentions emergency contacts when there are none.
+  static bool isSafe(const std::string& line, bool has_contacts);
+
  private:
+  const nlohmann::json* archetype(const std::string& id) const;
+  std::string fallback(const LineRequest& req) const;
+
   LlmClient& llm_;
   nlohmann::json personas_, scripts_;
 };
