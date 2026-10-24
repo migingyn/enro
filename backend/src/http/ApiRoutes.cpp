@@ -1,4 +1,5 @@
 // Core API routes (PRD 11). Shared file: each route's TODO names the task that replaces its stub.
+#include <algorithm>
 #include <fstream>
 #include <thread>
 
@@ -107,12 +108,12 @@ void registerApiRoutes(CrowApp& app, AppContext& ctx) {
       res["message"] = "Leave reminder call ringing.";
     } else if (scenario == "email_drop") {
       ctx.email->injectDemo("msg_1003");
+      // Triage records each verdict and, on a plan change, updates the event and broadcasts the new plan.
       auto results = ctx.triage->process(user_id, ctx.email->poll(user_id));
-      // STUB
-      // TODO(T09): triage updates the event and rebuilds the plan itself; drop this fixture broadcast.
-      ctx.dashboard->broadcast("plan", ctx.fixtures.json("ws_plan")["data"]);
+      int changed = static_cast<int>(std::count_if(results.begin(), results.end(), [](auto& r) { return r.extracted.has_value(); }));
       res["call_id"] = "";
-      res["message"] = "Dropped 'Section canceled today'. Triaged " + std::to_string(results.size()) + " email(s).";
+      res["message"] = "Dropped 'Section canceled today'. Triaged " + std::to_string(results.size()) + " email(s), " +
+                       std::to_string(changed) + " plan change(s).";
     } else {
       return errorResponse(400, "bad_scenario", "scenario must be wake_ladder, leave_reminder, or email_drop");
     }
