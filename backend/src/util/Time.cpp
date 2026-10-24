@@ -5,6 +5,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <mutex>
+#include <string>
+#include <unordered_map>
 
 namespace enro::time {
 
@@ -40,12 +42,25 @@ struct TzScope {
   }
 };
 
-std::tm localIn(long long ts, const std::string& tz) {
+// UTC offset for tz at the hour containing ts. DST and offset changes happen on hour boundaries, so caching
+// per (tz, hour) is exact and turns the TZ switch into a map lookup after the first call (load sim: millions).
+long offsetAt(long long ts, const std::string& tz) {
+  static std::unordered_map<std::string, long> cache;
+  std::string key = tz + '|' + std::to_string(ts / 3600);
   std::lock_guard<std::mutex> lock(tz_mu);
+  if (auto it = cache.find(key); it != cache.end()) return it->second;
   TzScope scope(tz);
   std::time_t t = static_cast<std::time_t>(ts);
   std::tm tm{};
   localtime_r(&t, &tm);
+  if (cache.size() > 100000) cache.clear();
+  return cache[key] = tm.tm_gmtoff;
+}
+
+std::tm localIn(long long ts, const std::string& tz) {
+  std::time_t t = static_cast<std::time_t>(ts + offsetAt(ts, tz));
+  std::tm tm{};
+  gmtime_r(&t, &tm);
   return tm;
 }
 
