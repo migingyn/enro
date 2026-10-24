@@ -134,10 +134,7 @@ void registerApiRoutes(CrowApp& app, AppContext& ctx) {
   CROW_ROUTE(app, "/api/sim/load").methods(crow::HTTPMethod::POST)([&ctx](const crow::request& req) {
     auto body = jsonBody(req);
     if (!body) return errorResponse(400, "bad_request", "expected JSON body (sim_load_request)");
-    ctx.load_sim->run(body->value("users", 100000), body->value("threads", 8));
-    // STUB
-    // TODO(T16): return and broadcast the real SimResult from ctx.load_sim->run.
-    auto result = ctx.fixtures.json("sim_result");
+    nlohmann::json result = ctx.load_sim->run(body->value("users", 100000), body->value("threads", 8));
     ctx.dashboard->broadcast("sim_result", result);
     return jsonResponse(result);
   });
