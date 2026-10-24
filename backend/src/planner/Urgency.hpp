@@ -25,7 +25,7 @@ struct UrgencyInput {
   Event event;
   int slack_minutes = 0;   // minutes between leave_by and now (or wake), negative = already late
   int events_today = 1;
-  bool has_deadline = false;
+  bool has_deadline = false;  // hard start: interview, exam, flight
   PunctualityStats bias;   // learned stats for this event type
 };
 
@@ -40,6 +40,8 @@ class UrgencyScorer {
   explicit UrgencyScorer(UrgencyWeights weights) : w_(std::move(weights)) {}
   UrgencyResult score(const UrgencyInput& in) const;
   const UrgencyWeights& weights() const { return w_; }
+  // Used when event_types.json has no urgency_weight for the type.
+  static double defaultTypeWeight(const std::string& type);
 
  private:
   UrgencyWeights w_;
