@@ -158,6 +158,7 @@ std::optional<AgentLine> Conversation::onEvent(const std::string& call_id, const
                         "Okay, " + minutesWord(d.requested) + ". " + history + "Even then you're on time. I'll call back.");
         line.end_call = true;
         stage_.erase(call_id);
+        ctx_.wake_ladder->onSnooze(call_id, d.effective);  // call back when the real snooze runs out (T10)
         return line;
       }
       if (d.verdict == "COUNTER") {

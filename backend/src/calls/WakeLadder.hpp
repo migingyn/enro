@@ -28,6 +28,7 @@ struct LadderState {
   bool demo = false;     // demo ladders retry fast after a decline
   long long gap_s = 180;
   std::string last_call_id;
+  long long snoozed_until = 0;  // ladder steps due before this are held (a granted snooze)
 };
 
 class WakeLadder {
@@ -46,6 +47,9 @@ class WakeLadder {
   // Called by Conversation (T11).
   void onNoAnswer(const std::string& call_id);
   void onAwake(const std::string& call_id);
+  // A snooze was granted on a ladder call (minutes = effective length after learned inflation).
+  // Holds the ladder until it ends, then calls back. Demo ladders compress it like the steps.
+  void onSnooze(const std::string& call_id, int minutes);
 
   // Registers the WAKE_CALL handler. Called once from buildApp.
   void registerHandlers(Scheduler& scheduler);
