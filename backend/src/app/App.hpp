@@ -28,6 +28,7 @@
 #include "planner/ReadyToLeave.hpp"
 #include "planner/Urgency.hpp"
 #include "reflex/Reflex.hpp"
+#include "cache/CachedRouter.hpp"
 #include "routing/Router.hpp"
 #include "scheduler/Scheduler.hpp"
 #include "scheduler/TaskQueue.hpp"
@@ -75,7 +76,8 @@ struct AppContext {
   std::unique_ptr<EmailSource> email;
   std::unique_ptr<FallbackRouter> fallback_router;
   std::unique_ptr<Router> google_router;
-  Router* router = nullptr;  // google_router when GOOGLE_MAPS_API_KEY is set, else fallback_router
+  std::unique_ptr<CachedRouter> cached_router;  // LRU in front of google_router or fallback_router
+  Router* router = nullptr;  // cached_router, wrapping google_router when GOOGLE_MAPS_API_KEY is set, else fallback_router
   std::unique_ptr<TransitFeed> makeTransitFeed() const;  // a fresh feed per trip
 
   // services
