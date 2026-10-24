@@ -2,6 +2,7 @@
 // Predicted mode is the most frequent, with the stated preference as a tiebreaker. Owner: T13.
 #pragma once
 
+#include <map>
 #include <string>
 #include <vector>
 
@@ -17,6 +18,11 @@ class TransportLearner {
   // preferred: the onboarding answer for this trip type, used when there is no data or a tie.
   std::string predict(const std::string& destination_type, int distance_m, const std::string& preferred) const;
   std::vector<TransportCount> counts() const;
+
+ private:
+  static std::string mostFrequent(const std::map<std::string, int>& counts, const std::string& preferred);
+  // destination_type -> distance bucket -> mode -> trips
+  std::map<std::string, std::map<std::string, std::map<std::string, int>>> counts_;
 };
 
 }  // namespace enro

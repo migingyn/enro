@@ -5,6 +5,7 @@
 #include "app/App.hpp"
 #include "http/Routes.hpp"
 #include "models/Json.hpp"
+#include "planner/DayPlanner.hpp"
 #include "util/Log.hpp"
 #include "util/Time.hpp"
 
@@ -27,26 +28,39 @@ void registerApiRoutes(CrowApp& app, AppContext& ctx) {
   });
 
   // GET /api/users/:id/plan?date=YYYY-MM-DD
-  CROW_ROUTE(app, "/api/users/<string>/plan")([&ctx](const crow::request&, const std::string&) {
-    // STUB
-    // TODO(T07): events = ctx.repos->events(user, midnight(date), +1 day); for each non-canceled event build a
-    // LeavePlan with ctx.ready_to_leave (mode from ctx.transport, stats from ctx.punctuality); wake block from
-    // ctx.wake_ladder->plan; return DayPlan and broadcast it as `plan`.
-    return fixtureResponse(ctx, "plan");
+  CROW_ROUTE(app, "/api/users/<string>/plan")([&ctx](const crow::request& req, const std::string& user_id) {
+    if (!ctx.repos->user(user_id)) return errorResponse(404, "not_found", "no user " + user_id);
+    const char* date = req.url_params.get("date");
+    DayPlan day = DayPlanner(ctx).build(user_id, date ? date : "");
+    nlohmann::json body = day;
+    ctx.dashboard->broadcast("plan", body);
+    return jsonResponse(body);
   });
 
   // GET /api/users/:id/consequences?delay=minutes
-  CROW_ROUTE(app, "/api/users/<string>/consequences")([&ctx](const crow::request&, const std::string&) {
-    // STUB
-    // TODO(T08): ctx.consequences->evaluate(user, today's events, today's plans, delay).
-    return fixtureResponse(ctx, "consequences");
+  CROW_ROUTE(app, "/api/users/<string>/consequences")([&ctx](const crow::request& req, const std::string& user_id) {
+    if (!ctx.repos->user(user_id)) return errorResponse(404, "not_found", "no user " + user_id);
+    int delay = 10;
+    if (const char* d = req.url_params.get("delay")) {
+      try {
+        delay = std::stoi(d);
+      } catch (...) {
+        return errorResponse(400, "bad_request", "delay must be a whole number of minutes");
+      }
+    }
+    return jsonResponse(DayPlanner(ctx).consequences(user_id, delay));
   });
 
   // GET /api/users/:id/punctuality
-  CROW_ROUTE(app, "/api/users/<string>/punctuality")([&ctx](const std::string&) {
-    // STUB
-    // TODO(T13): ctx.punctuality->report(user_id) once the model learns from the seeded history.
-    return fixtureResponse(ctx, "punctuality");
+  CROW_ROUTE(app, "/api/users/<string>/punctuality")([&ctx](const std::string& user_id) {
+    PunctualityReport r = ctx.punctuality->report(user_id);
+    // No history loaded yet (backend/seed/demo_history.json missing): show the contract example instead of
+    // an empty card.
+    if (r.by_event_type.empty()) {
+      LOG_WARN("punctuality", "no learned history, serving contracts/examples/punctuality.json");
+      return fixtureResponse(ctx, "punctuality");
+    }
+    return jsonResponse(r);
   });
 
   // POST /api/contacts/:id/confirm
@@ -78,9 +92,16 @@ void registerApiRoutes(CrowApp& app, AppContext& ctx) {
       res["call_id"] = ctx.wake_ladder->start(user_id);
       res["message"] = "Wake ladder started. CALL_1 ringing now. Open /call/" + res["call_id"].get<std::string>();
     } else if (scenario == "leave_reminder") {
-      // STUB
-      // TODO(T07): pick the next event's LeavePlan; reminder text and channel from ctx.reflex->interruptChannel.
-      nlohmann::json input = {{"urgency", "FIRM"}, {"minutes_to_leave", 10}, {"in_transit", false}};
+      DayPlan day = DayPlanner(ctx).build(user_id);
+      long long now = time::nowTs();
+      const LeavePlan* next = day.plans.empty() ? nullptr : &day.plans.front();
+      for (auto& p : day.plans)
+        if (p.leave_by >= now) { next = &p; break; }
+      nlohmann::json input = {{"event_id", next ? next->event_id : ""},
+                              {"urgency", next ? nlohmann::json(next->urgency) : nlohmann::json("FIRM")},
+                              {"minutes_to_leave", next ? std::max(0LL, (next->leave_by - now) / 60) : 10},
+                              {"in_transit", false},
+                              {"time_of_day", time::hhmmIn(now, day.timezone)}};
       ctx.recordDecision(user_id, "interrupt_channel", ctx.reflex->interruptChannel(input), input);
       res["call_id"] = ctx.wake_ladder->callNow(user_id, "leave_reminder", 1);
       res["message"] = "Leave reminder call ringing.";
