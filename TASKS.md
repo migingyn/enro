@@ -68,10 +68,25 @@ These files wire everything together. To avoid conflicts, tasks do **not** edit 
 
 | File | Owner |
 |---|---|
-| `backend/src/main.cpp`, `backend/src/http/Routes.*`, `backend/src/http/ApiRoutes.cpp`, `backend/CMakeLists.txt` | Mikey |
+| `backend/src/main.cpp`, `backend/src/app/**` (provider selection), `backend/src/http/Routes.*`, `backend/src/http/ApiRoutes.cpp`, `backend/src/http/DashboardSocket.*`, `backend/CMakeLists.txt`, `.github/workflows/**` | Mikey |
+| `backend/src/config/**`, `backend/src/store/**`, `backend/src/util/**` (env, fixtures, SQLite, repos, seeding, log/time) | Mikey (add a Repos method when you need a query) |
+| `.env.example`, `scripts/check_contracts.py`, `scripts/smoke_api.py` | Mikey |
 | `frontend/src/App.tsx`, `frontend/src/api/client.ts`, `frontend/package.json` | Frontend |
 | `contracts/**`, `backend/src/models/**`, `frontend/src/api/types.ts` | Whole team (see below) |
 | `backend/config/personas.json` | T12 owns prompt fields, T21 owns voice fields |
+
+### Files the PRD tree doesn't list (added in S2)
+
+| File | Owner | Why |
+|---|---|---|
+| `http/OnboardingRoutes.cpp`, `ai/FakeLlm.*`, `ai/SpeechClient.hpp` | T01 | Realtime key and onboarding profile extraction are OpenAI work |
+| `http/SimCallSocket.cpp`, `voice/SimProvider.*` | T02 | Part of the voice provider layer |
+| `google/SeedSources.*`, `routing/GoogleRouter.cpp` | T03 | Google layer. Routes API is P1 and has no task of its own |
+| `audio/AudioCache.*` | T05 | Cache wiring |
+| `/api/location` departure check (stub in `ApiRoutes.cpp`) | T10 | P1 departure verification has no task of its own |
+| `reflex/RulesReflex.*` | T14 | Rules are the Jev fallback |
+| `transit/TripRunner.*` | T15 | Replay loop |
+| `backend/tests/test_<module>.cpp` | The task named in the file's first line | One test file per module |
 
 ## Working agreement (PRD 15.4)
 
