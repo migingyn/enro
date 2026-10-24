@@ -47,7 +47,8 @@ Stage, commit, push, and open a PR in one pass, following the working agreement 
    gh pr view --json mergeable,mergeStateStatus,statusCheckRollup -q '{m: .mergeable, s: .mergeStateStatus, checks: [.statusCheckRollup[]? | .conclusion]}'
    ```
 
-   - `MERGEABLE`, your step 2 checks passed, and no CI check is `FAILURE`: run `gh pr merge --squash --delete-branch`. If CI is still running, use `gh pr merge --squash --delete-branch --auto` so GitHub merges when it goes green. Then `git switch main && git pull`.
+   - CI still running (checks `PENDING`, state `UNSTABLE`): wait with `gh pr checks <n> --watch --fail-fast`. Right after a push the checks may not be registered yet and `--watch` returns at once, so confirm with `gh pr checks <n>` that every check says `pass` before merging. **Do not use `gh pr merge --auto`**: this repo has no branch protection, so `--auto` merges immediately without waiting for CI.
+   - `MERGEABLE`, your step 2 checks passed, and every CI check is `SUCCESS` (or skipped): run `gh pr merge --squash --delete-branch`, then `git switch main && git pull`.
    - `CONFLICTING` (or `DIRTY`): do **not** merge. Run `git fetch origin && git merge origin/main`, then list each conflicted file with `git diff --name-only --diff-filter=U`. For each one, show both sides and say which task owns the file (TASKS.md). Resolve the ones that are clearly mechanical (both sides added different lines, a lockfile), and **ask the user** about any where both sides changed the same logic or a contract. After resolving, rerun step 2 checks, commit, push, and return to step 8.
    - A CI check failed: do not merge. Show the failing check and its log (`gh pr checks`) and work with the user on it.
    - `BLOCKED` by review rules: report it and leave the PR open.
