@@ -37,7 +37,7 @@ TEST_CASE("later events start from the previous one, but the interview keeps its
   CHECK(plan("evt_cse110_dis").reasoning[0] == "prep 0 min (already on campus after CSE 110 Lecture)");
   CHECK(plan("evt_interview").prep_minutes == 45);
   CHECK(plan("evt_interview").mode == "bus");
-  CHECK(plan("evt_lunch").mode == "walk");
+  CHECK(plan("evt_lunch").mode == "bus");  // lunch starts at the Qualcomm interview, ~5 km away (places.json)
 }
 
 TEST_CASE("default date is the next day with events, and consequences use the day's plan") {

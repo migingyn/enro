@@ -74,7 +74,8 @@ LeavePlan ReadyToLeave::plan(const LeaveInput& in) const {
   }
 
   // travel_minutes = eta(mode, origin, destination) * learned_travel_factor[mode]
-  RouteEta eta = router_.eta(p.mode, in.origin, Place{e.location, std::nullopt, std::nullopt});
+  Place to = in.destination.label.empty() ? Place{e.location, std::nullopt, std::nullopt} : in.destination;
+  RouteEta eta = router_.eta(p.mode, in.origin, to);
   double factor = in.mode_stats.travel_factor > 0 ? in.mode_stats.travel_factor : 1.0;
   p.travel_minutes = std::max(1, static_cast<int>(std::lround(eta.minutes * factor)));
   p.reasoning.push_back("travel " + std::to_string(p.travel_minutes) + " min = " + std::to_string(eta.minutes) + " min " +
