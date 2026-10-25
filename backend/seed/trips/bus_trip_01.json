@@ -1,0 +1,324 @@
+{
+  "trip_id": "bus_trip_01",
+  "route": "201",
+  "agency": "MTS",
+  "origin": "Gilman Transit Center, UC San Diego",
+  "destination": "Qualcomm Building Q, 6455 Lusk Blvd",
+  "scheduled_arrival_ts": 1793036640,
+  "planned_stops": [
+    {
+      "name": "Gilman Transit Center",
+      "lat": 32.8775,
+      "lng": -117.2335
+    },
+    {
+      "name": "Voigt Dr & Campus Point",
+      "lat": 32.8862,
+      "lng": -117.2262
+    },
+    {
+      "name": "Genesee Ave & Regents Rd",
+      "lat": 32.877,
+      "lng": -117.2185
+    },
+    {
+      "name": "Genesee Ave & Executive Dr",
+      "lat": 32.8805,
+      "lng": -117.213
+    },
+    {
+      "name": "Genesee Ave & Nobel Dr",
+      "lat": 32.889,
+      "lng": -117.2075
+    },
+    {
+      "name": "Sorrento Valley Blvd & Lusk",
+      "lat": 32.9,
+      "lng": -117.2005
+    },
+    {
+      "name": "Lusk Blvd & Pacific Heights",
+      "lat": 32.9047,
+      "lng": -117.1957
+    }
+  ],
+  "points": [
+    {
+      "seq": 0,
+      "ts": 1793034840,
+      "lat": 32.8775,
+      "lng": -117.2335,
+      "next_stop": "Voigt Dr & Campus Point",
+      "on_route": true
+    },
+    {
+      "seq": 1,
+      "ts": 1793034900,
+      "lat": 32.87908,
+      "lng": -117.23217,
+      "next_stop": "Voigt Dr & Campus Point",
+      "on_route": true
+    },
+    {
+      "seq": 2,
+      "ts": 1793034960,
+      "lat": 32.88066,
+      "lng": -117.23085,
+      "next_stop": "Voigt Dr & Campus Point",
+      "on_route": true
+    },
+    {
+      "seq": 3,
+      "ts": 1793035020,
+      "lat": 32.88225,
+      "lng": -117.22952,
+      "next_stop": "Voigt Dr & Campus Point",
+      "on_route": true
+    },
+    {
+      "seq": 4,
+      "ts": 1793035080,
+      "lat": 32.88383,
+      "lng": -117.22819,
+      "next_stop": "Voigt Dr & Campus Point",
+      "on_route": true
+    },
+    {
+      "seq": 5,
+      "ts": 1793035140,
+      "lat": 32.88541,
+      "lng": -117.22686,
+      "next_stop": "Voigt Dr & Campus Point",
+      "on_route": true
+    },
+    {
+      "seq": 6,
+      "ts": 1793035200,
+      "lat": 32.88536,
+      "lng": -117.2255,
+      "next_stop": "Genesee Ave & Regents Rd",
+      "on_route": true
+    },
+    {
+      "seq": 7,
+      "ts": 1793035260,
+      "lat": 32.88369,
+      "lng": -117.2241,
+      "next_stop": "Genesee Ave & Regents Rd",
+      "on_route": true
+    },
+    {
+      "seq": 8,
+      "ts": 1793035320,
+      "lat": 32.88202,
+      "lng": -117.2227,
+      "next_stop": "Genesee Ave & Regents Rd",
+      "on_route": true
+    },
+    {
+      "seq": 9,
+      "ts": 1793035380,
+      "lat": 32.88035,
+      "lng": -117.2213,
+      "next_stop": "Genesee Ave & Regents Rd",
+      "on_route": true
+    },
+    {
+      "seq": 10,
+      "ts": 1793035440,
+      "lat": 32.87867,
+      "lng": -117.2199,
+      "next_stop": "Genesee Ave & Regents Rd",
+      "on_route": true
+    },
+    {
+      "seq": 11,
+      "ts": 1793035500,
+      "lat": 32.877,
+      "lng": -117.2185,
+      "next_stop": "Genesee Ave & Executive Dr",
+      "on_route": true
+    },
+    {
+      "seq": 12,
+      "ts": 1793035560,
+      "lat": 32.87764,
+      "lng": -117.2175,
+      "next_stop": "Genesee Ave & Executive Dr",
+      "on_route": true
+    },
+    {
+      "seq": 13,
+      "ts": 1793035620,
+      "lat": 32.87827,
+      "lng": -117.2165,
+      "next_stop": "Genesee Ave & Executive Dr",
+      "on_route": true
+    },
+    {
+      "seq": 14,
+      "ts": 1793035680,
+      "lat": 32.87891,
+      "lng": -117.2155,
+      "next_stop": "Genesee Ave & Executive Dr",
+      "on_route": true
+    },
+    {
+      "seq": 15,
+      "ts": 1793035740,
+      "lat": 32.88175,
+      "lng": -117.2156,
+      "next_stop": "Genesee Ave & Executive Dr",
+      "on_route": false
+    },
+    {
+      "seq": 16,
+      "ts": 1793035800,
+      "lat": 32.88238,
+      "lng": -117.2146,
+      "next_stop": "Genesee Ave & Executive Dr",
+      "on_route": false
+    },
+    {
+      "seq": 17,
+      "ts": 1793035860,
+      "lat": 32.8798,
+      "lng": -117.2134,
+      "next_stop": "Genesee Ave & Executive Dr",
+      "on_route": false
+    },
+    {
+      "seq": 18,
+      "ts": 1793035920,
+      "lat": 32.88502,
+      "lng": -117.2126,
+      "next_stop": "Genesee Ave & Executive Dr",
+      "on_route": false
+    },
+    {
+      "seq": 19,
+      "ts": 1793035980,
+      "lat": 32.88656,
+      "lng": -117.2116,
+      "next_stop": "Genesee Ave & Executive Dr",
+      "on_route": false
+    },
+    {
+      "seq": 20,
+      "ts": 1793036040,
+      "lat": 32.88811,
+      "lng": -117.2106,
+      "next_stop": "Genesee Ave & Executive Dr",
+      "on_route": false
+    },
+    {
+      "seq": 21,
+      "ts": 1793036100,
+      "lat": 32.88745,
+      "lng": -117.2085,
+      "next_stop": "Genesee Ave & Nobel Dr",
+      "on_route": true
+    },
+    {
+      "seq": 22,
+      "ts": 1793036160,
+      "lat": 32.889,
+      "lng": -117.2075,
+      "next_stop": "Sorrento Valley Blvd & Lusk",
+      "on_route": true
+    },
+    {
+      "seq": 23,
+      "ts": 1793036220,
+      "lat": 32.891,
+      "lng": -117.20623,
+      "next_stop": "Sorrento Valley Blvd & Lusk",
+      "on_route": true
+    },
+    {
+      "seq": 24,
+      "ts": 1793036280,
+      "lat": 32.893,
+      "lng": -117.20495,
+      "next_stop": "Sorrento Valley Blvd & Lusk",
+      "on_route": true
+    },
+    {
+      "seq": 25,
+      "ts": 1793036340,
+      "lat": 32.895,
+      "lng": -117.20368,
+      "next_stop": "Sorrento Valley Blvd & Lusk",
+      "on_route": true
+    },
+    {
+      "seq": 26,
+      "ts": 1793036400,
+      "lat": 32.897,
+      "lng": -117.20241,
+      "next_stop": "Sorrento Valley Blvd & Lusk",
+      "on_route": true
+    },
+    {
+      "seq": 27,
+      "ts": 1793036460,
+      "lat": 32.899,
+      "lng": -117.20114,
+      "next_stop": "Sorrento Valley Blvd & Lusk",
+      "on_route": true
+    },
+    {
+      "seq": 28,
+      "ts": 1793036520,
+      "lat": 32.90043,
+      "lng": -117.20006,
+      "next_stop": "Lusk Blvd & Pacific Heights",
+      "on_route": true
+    },
+    {
+      "seq": 29,
+      "ts": 1793036580,
+      "lat": 32.90128,
+      "lng": -117.19919,
+      "next_stop": "Lusk Blvd & Pacific Heights",
+      "on_route": true
+    },
+    {
+      "seq": 30,
+      "ts": 1793036640,
+      "lat": 32.90214,
+      "lng": -117.19832,
+      "next_stop": "Lusk Blvd & Pacific Heights",
+      "on_route": true
+    },
+    {
+      "seq": 31,
+      "ts": 1793036700,
+      "lat": 32.90299,
+      "lng": -117.19745,
+      "next_stop": "Lusk Blvd & Pacific Heights",
+      "on_route": true
+    },
+    {
+      "seq": 32,
+      "ts": 1793036760,
+      "lat": 32.90385,
+      "lng": -117.19657,
+      "next_stop": "Lusk Blvd & Pacific Heights",
+      "on_route": true
+    },
+    {
+      "seq": 33,
+      "ts": 1793036820,
+      "lat": 32.9047,
+      "lng": -117.1957,
+      "next_stop": "Lusk Blvd & Pacific Heights",
+      "on_route": true
+    }
+  ],
+  "detour": {
+    "start_seq": 15,
+    "end_seq": 20,
+    "reason": "Road closure on Genesee Ave"
+  }
+}
