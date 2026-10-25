@@ -1,0 +1,35 @@
+{
+  "durationSeconds": 21,
+  "fps": 60,
+  "card": {
+    "path": "/Users/kevinpoopz/Documents/ChatGPT/SIC october hack/output/lookahead-video/enro-lookahead-card.mp4",
+    "width": 900,
+    "height": 1020
+  },
+  "rightHalf": {
+    "path": "/Users/kevinpoopz/Documents/ChatGPT/SIC october hack/output/lookahead-video/enro-lookahead-right-half-green.mp4",
+    "width": 1920,
+    "height": 1080,
+    "x": 990,
+    "y": 30,
+    "background": "#00ff00"
+  },
+  "scenarios": [
+    {
+      "name": "Still lying down",
+      "medianArrival": "9:14",
+      "pLate": 0.99951171875
+    },
+    {
+      "name": "Getting ready",
+      "medianArrival": "8:55",
+      "pLate": 0.0556640625
+    },
+    {
+      "name": "Heading out",
+      "medianArrival": "8:35",
+      "pLate": 0
+    }
+  ],
+  "inputs": "Staged sensor scenarios; local 2,048-sample model, no live sensor access."
+}

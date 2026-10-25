@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f5f4ef">
+  <title>Enro · Lookahead</title>
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./overlay.js"></script>
+</head>
+<body>
+  <header class="studio-header"><a class="wordmark" href="./">enro<span> / lookahead</span></a><span class="studio-label">DEMO FILM STUDIO <span class="tiny-dot"></span></span></header>
+  <main class="studio">
+    <aside class="director" aria-label="Recording controls">
+      <p class="eyebrow">THE NEXT 60 MINUTES</p>
+      <h1>A little ahead<br>of what happens.</h1>
+      <p class="intro">A living map of the morning.<br>Change the moment. See the arrival.</p>
+      <div class="section-label"><span>01 / SET THE SCENE</span><span>8:05 AM</span></div>
+      <div class="scenario-list" aria-label="Demo scenario">
+        <button class="scenario selected" data-stage="resting" aria-pressed="true"><span class="scenario-number">1</span><span><strong>Still lying down</strong><small>Time is slipping away</small></span><span class="choice-dot"></span></button>
+        <button class="scenario" data-stage="preparing" aria-pressed="false"><span class="scenario-number">2</span><span><strong>Getting ready</strong><small>The morning is moving</small></span><span class="choice-dot"></span></button>
+        <button class="scenario" data-stage="departing" aria-pressed="false"><span class="scenario-number">3</span><span><strong>Heading out</strong><small>Time back on your side</small></span><span class="choice-dot"></span></button>
+      </div>
+      <div class="assumptions">
+        <label for="traffic">Extra traffic <output id="traffic-value" for="traffic">0 min</output></label><input id="traffic" type="range" min="0" max="20" step="1" value="0">
+        <label for="delay">Busy for another <output id="delay-value" for="delay">0 min</output></label><input id="delay" type="range" min="0" max="15" step="1" value="0">
+      </div>
+      <div class="section-label"><span>02 / RECORD THE MOMENT</span></div>
+      <div class="record-actions"><button id="play" class="button primary" aria-pressed="false">Play 18s sequence <span>↗</span></button><button id="motion" class="button secondary" aria-pressed="false">Pause motion</button></div>
+      <div class="capture-links"><a id="capture-link" href="?capture=1">Open just the overlay ↗</a><a id="corner-link" href="?corner=1">Open corner overlay ↗</a></div>
+      <p class="shortcut-note"><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> switch scene <span>·</span> <kbd>Space</kbd> play<br><kbd>M</kbd> pause motion <span>·</span> <kbd>R</kbd> reset</p>
+      <details class="method"><summary>What is being simulated?</summary><p>2,048 possible mornings, sampled from illustrative ranges for starting, getting ready, travel, and the walk to the destination. The selected scene supplies the inputs. Forecasts are calculated locally; these inputs are not live sensor readings.</p><p>The graph illustrates those factors and sampled paths. Its dots are not autonomous agents. Probabilities describe the chosen assumptions, not measured predictive accuracy.</p><p>All scenes compare alternatives at 8:05 AM for a 9:00 AM commitment. Playback is a staged comparison, not a running clock.</p></details>
+    </aside>
+    <section class="preview-area" aria-label="Video composition preview">
+      <div class="preview-meta"><span>COMPOSITION PREVIEW</span><span>01  ·  A MORNING, RECONSIDERED</span></div>
+      <div class="artboard">
+        <div class="footage-copy" aria-hidden="true"><span class="frame-corner"></span><p>Your morning.<br>A few moves ahead.</p><span class="footage-caption">YOUR DEMO FOOTAGE GOES HERE</span></div>
+        <div class="frame-meta" aria-hidden="true"><span>ENRO / 00:08:05</span><span>VIDEO OVERLAY</span></div>
+        <article id="overlay" class="overlay" aria-label="Illustrative arrival forecast">
+          <header class="overlay-header"><div><span class="overlay-brand">enro</span><span class="overlay-title">LOOKAHEAD</span></div><span class="demo-badge"><i></i> Demo scenario</span></header>
+          <div class="graph-heading"><span id="scene-label">Still lying down</span><span class="event-time">COMMITMENT <b>9:00 AM</b></span></div>
+          <div class="graph-wrap"><canvas id="graph" role="img" aria-label="Animated dependency graph connecting start delay, preparation, travel, and arrival"></canvas><span class="graph-caption">One morning. Many possible paths.</span></div>
+          <section class="forecast" aria-live="polite" aria-atomic="true"><div class="eta"><span class="metric-label">PREDICTED ARRIVAL</span><div><strong id="eta"> · </strong><span id="eta-period">AM</span></div></div><div class="risk"><span id="timing-status" class="timing-status">Calculating</span><span><b id="late-risk"> · </b> chance of being late</span></div></section>
+          <div class="distribution"><svg id="histogram" viewBox="0 0 460 34" preserveAspectRatio="none" role="img" aria-label="Distribution of simulated arrival times"></svg><div class="distribution-labels"><span id="range-start"> · </span><span>9:00 commitment</span><span id="range-end"> · </span></div></div>
+          <footer class="overlay-footer"><span><i class="result-dot"></i><b id="sample-count">2,048</b> sampled mornings</span><span id="forecast-note">Forecast updated</span></footer>
+        </article>
+      </div>
+      <div class="preview-bottom"><p><span class="note-arrow">↳</span> Let the graph sit quietly in the corner.<br><span>Make the changing arrival time the reveal.</span></p><span id="sequence-state">READY TO REHEARSE</span></div>
+    </section>
+  </main>
+  <noscript>This interactive demo requires JavaScript. It does not connect to sensors or place calls.</noscript>
+</body>
+</html>

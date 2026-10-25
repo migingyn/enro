@@ -21,3 +21,11 @@ __pycache__/
 .claude/settings.local.json
 .vscode/
 .idea/
+
+# Local prototype state and public build outputs
+.data/
+.vercel/
+site-dist/
+prototype/dist/
+.playwright-cli/
+*.log
