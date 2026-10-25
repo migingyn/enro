@@ -2,6 +2,7 @@
 // Owner: T05. Wrap whichever router App selects: CachedRouter cached(*ctx.router);
 #pragma once
 
+#include <atomic>
 #include <string>
 
 #include "cache/LruCache.hpp"
@@ -17,10 +18,10 @@ class CachedRouter : public Router {
 
   RouteEta eta(const std::string& mode, const Place& from, const Place& to) override {
     std::string key = mode + '|' + placeKey(from) + '|' + placeKey(to);
+    if (++lookups_ % 100 == 0) LOG_INFO("cache", "route cache hit rate " << cache_.hitRate());
     if (auto hit = cache_.get(key)) return *hit;
     RouteEta r = inner_.eta(mode, from, to);
     cache_.put(key, r);
-    if (++lookups_ % 100 == 0) LOG_INFO("cache", "route cache hit rate " << cache_.hitRate());
     return r;
   }
 
@@ -34,7 +35,7 @@ class CachedRouter : public Router {
 
   Router& inner_;
   LruCache<std::string, RouteEta> cache_;
-  size_t lookups_ = 0;
+  std::atomic<size_t> lookups_{0};  // counts hits too, so the log line fires every 100 lookups
 };
 
 }  // namespace enro
