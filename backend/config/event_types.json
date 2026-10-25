@@ -49,5 +49,11 @@
     "bike": 15,
     "bus": 18,
     "drive": 35
+  },
+  "mode_legs": {
+    "bus": {
+      "walk_to_stop_minutes": 6,
+      "walk_from_stop_minutes": 4
+    }
   }
 }

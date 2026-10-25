@@ -22,6 +22,7 @@ struct LeaveInput {
   std::string mode;              // from TransportLearner (T13) or the user's preferred_mode
   PunctualityStats type_stats;   // learned, for event.event_type
   PunctualityStats mode_stats;   // learned, for mode
+  PunctualityStats walk_stats;   // learned, for walking legs of transit trips (to and from the stop)
   int events_today = 1;
   long long now = 0;             // 0 = planning ahead (slack counts as neutral)
   // Set when the user is already out (at the previous event): no prep, travel from previous_location.
