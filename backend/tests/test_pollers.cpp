@@ -39,9 +39,31 @@ TEST_CASE("the inbox poll triages every delivered message once and reschedules i
   app->scheduler->tick(now);
   int first = emailDecisions(*app);
   CHECK(first == 14);  // 15 seed messages, msg_1003 held back for the live email drop
-  CHECK(app->queue->nextDueAt() == now + 60);
-  app->scheduler->tick(now + 60);
+  long long next = app->queue->nextDueAt();
+  CHECK(next > now);
+  app->scheduler->tick(next);
   CHECK(emailDecisions(*app) == first);  // nothing new arrived
+}
+
+TEST_CASE("polls every POLL_SECONDS with an event coming up, every POLL_IDLE_SECONDS otherwise") {
+  auto app = test::fakeApp({{"POLL_SECONDS", "60"}, {"POLL_IDLE_SECONDS", "7200"}, {"POLL_ACTIVE_HOURS", "12"}});
+  long long now = 2000000000;  // far from the seed calendar
+  CHECK(app->pollers->intervalSeconds("u_x", now) == 7200);
+
+  app->repos->upsertEvent({"evt_soon", "u_x", "Interview", "x", "interview", "calendar", now + 3 * 3600,
+                           now + 4 * 3600, false});
+  CHECK(app->pollers->intervalSeconds("u_x", now) == 60);
+  CHECK(app->pollers->intervalSeconds("u_other", now) == 7200);  // per user
+
+  auto canceled = *app->repos->event("evt_soon");
+  canceled.canceled = true;
+  app->repos->upsertEvent(canceled);
+  CHECK(app->pollers->intervalSeconds("u_x", now) == 7200);  // canceled events don't count
+
+  app->repos->upsertEvent({"evt_later", "u_x", "Class", "x", "class", "calendar", now + 20 * 3600,
+                           now + 21 * 3600, false});
+  CHECK(app->pollers->intervalSeconds("u_x", now) == 7200);  // outside the window
+  CHECK(app->pollers->intervalSeconds("u_x", now + 10 * 3600) == 60);  // inside it later on
 }
 
 TEST_CASE("the calendar poll adds new events but never undoes a change an email made") {
