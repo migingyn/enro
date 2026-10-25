@@ -37,6 +37,9 @@ TripRunInfo TripRunner::start(const std::string& trip_id, double speed) {
       }
       TripTick tick = ctx_.commentator->tick(trip, positions[i]);
       ctx_.dashboard->broadcast("trip_tick", tick);
+      // Speaking or rerouting is an agent action: log it for the dashboard (PRD 7.1).
+      if (tick.verdict != "IGNORE")
+        ctx_.recordDecision("u_demo", "transit_speak", ctx_.commentator->lastVerdict(), ctx_.commentator->lastInputs());
     }
     running_ = false;
     LOG_INFO("trip", "replay of " << trip.trip_id << " finished");
