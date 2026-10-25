@@ -172,6 +172,7 @@ std::unique_ptr<AppContext> buildApp(Env env) {
   c.punctuality = std::make_unique<PunctualityModel>(c.transport.get());
   c.queue = std::make_unique<TaskQueue>(*c.repos);
   c.scheduler = std::make_unique<Scheduler>(*c.queue);
+  c.pollers = std::make_unique<Pollers>(c);
   c.intents = std::make_unique<IntentClassifier>(*c.llm);
   c.lines = std::make_unique<LineGenerator>(*c.llm, c.personas, c.scripts);
   c.triage = std::make_unique<EmailTriage>(c);
@@ -195,6 +196,7 @@ std::unique_ptr<AppContext> buildApp(Env env) {
   // Scheduler handlers, one line per owner (T04 queue + loop).
   c.wake_ladder->registerHandlers(*c.scheduler);  // WAKE_CALL (T10)
   c.departure->registerHandlers(*c.scheduler);    // DEPARTURE_CHECK (T10)
+  c.pollers->registerHandlers(*c.scheduler);      // POLL_CALENDAR, POLL_GMAIL (T04)
 
   LOG_INFO("providers", "voice=" << c.providers.voice << " llm=" << c.providers.llm << " speech=" << c.providers.speech
                                  << " reflex=" << c.providers.reflex << " calendar=" << c.providers.calendar

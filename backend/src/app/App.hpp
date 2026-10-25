@@ -32,6 +32,7 @@
 #include "reflex/Reflex.hpp"
 #include "cache/CachedRouter.hpp"
 #include "routing/Router.hpp"
+#include "scheduler/Pollers.hpp"
 #include "scheduler/Scheduler.hpp"
 #include "scheduler/TaskQueue.hpp"
 #include "sim/LoadSimulator.hpp"
@@ -91,6 +92,7 @@ struct AppContext {
   std::unique_ptr<TransportLearner> transport;
   std::unique_ptr<TaskQueue> queue;
   std::unique_ptr<Scheduler> scheduler;
+  std::unique_ptr<Pollers> pollers;  // POLL_CALENDAR / POLL_GMAIL
   std::unique_ptr<IntentClassifier> intents;
   std::unique_ptr<LineGenerator> lines;
   std::unique_ptr<EmailTriage> triage;
