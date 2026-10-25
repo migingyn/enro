@@ -83,10 +83,9 @@ std::vector<Event> EmailTriage::candidateEvents(const std::string& user_id) cons
   auto user = ctx_.repos->user(user_id);
   std::string tz = user && !user->timezone.empty() ? user->timezone : "America/Los_Angeles";
   long long from = time::midnightIn(DayPlanner(ctx_).defaultDate(user_id), tz);
-  std::vector<Event> out;
-  for (auto& e : ctx_.repos->events(user_id, from, from + kLookaheadDays * 86400LL))
-    if (!e.canceled) out.push_back(e);
-  return out;
+  // Canceled events stay candidates: an email about an event that is already canceled must match that
+  // event (a no-op), not fall through to a sibling like the lecture before a canceled section.
+  return ctx_.repos->events(user_id, from, from + kLookaheadDays * 86400LL);
 }
 
 std::optional<nlohmann::json> EmailTriage::extract(const std::string& user_id, const EmailMessage& m,
@@ -97,7 +96,7 @@ std::optional<nlohmann::json> EmailTriage::extract(const std::string& user_id, c
   for (auto& e : candidates) {
     events.push_back({{"event_id", e.id}, {"title", e.title}, {"location", e.location},
                       {"start", time::dateIn(e.start_ts, tz) + " " + time::hhmmIn(e.start_ts, tz)},
-                      {"start_ts", e.start_ts}});
+                      {"start_ts", e.start_ts}, {"canceled", e.canceled}});
   }
   nlohmann::json input = {{"email", {{"from", m.from}, {"subject", m.subject}, {"snippet", m.snippet}}},
                           {"timezone", tz},
@@ -140,6 +139,8 @@ std::vector<TriageResult> EmailTriage::process(const std::string& user_id, const
       out.push_back(*cached);
       continue;
     }
+    std::string seen_key = "email_triaged:" + m.id;  // survives restarts, unlike the LRU
+    if (ctx_.repos->kv(seen_key)) continue;
     // Reflex sees metadata + snippet only.
     nlohmann::json input = {{"message_id", m.id}, {"from", m.from}, {"subject", m.subject}, {"snippet", m.snippet}};
     ReflexVerdict v = ctx_.reflex->emailRelevance(input);
@@ -158,6 +159,7 @@ std::vector<TriageResult> EmailTriage::process(const std::string& user_id, const
       }
     }
     seen_.put(m.id, r);
+    ctx_.repos->setKv(seen_key, v.verdict);
     out.push_back(std::move(r));
   }
   if (plan_changed) ctx_.dashboard->broadcast("plan", DayPlanner(ctx_).build(user_id));
