@@ -59,6 +59,25 @@ SeedReport seedDemo(AppContext& ctx) {
     LOG_WARN("seed", "demo_history.json missing, punctuality model starts empty");
   }
 
+  // Real phones for a live demo come from .env only (the repo is public): DEMO_USER_PHONE rings instead of
+  // the demo user's 555 number, DEMO_CONTACT_PHONE replaces the first CONFIRMED contact's number.
+  if (ctx.env.has("DEMO_USER_PHONE")) {
+    for (auto& u : repos.users()) {
+      u.phone = ctx.env.get("DEMO_USER_PHONE");
+      repos.upsertUser(u);
+    }
+  }
+  if (ctx.env.has("DEMO_CONTACT_PHONE")) {
+    for (auto& u : repos.users()) {
+      for (auto& c : repos.contacts(u.id)) {
+        if (c.consent != ConsentStatus::CONFIRMED) continue;
+        c.phone = ctx.env.get("DEMO_CONTACT_PHONE");
+        repos.upsertContact(c);
+        break;
+      }
+    }
+  }
+
   LOG_INFO("seed", "seeded users=" << r.users << " contacts=" << r.contacts << " events=" << r.events
                                    << " outcomes=" << r.outcomes);
   return r;

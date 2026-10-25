@@ -17,19 +17,26 @@ std::string escape(const std::string& text) {
   return out;
 }
 
-std::string say(const std::string& text) {
-  // STUB
-  // TODO(T02): voice / language attributes per persona.
-  return "<Say>" + escape(text) + "</Say>";
+std::string say(const std::string& text, const std::string& voice) {
+  if (voice.empty()) return "<Say>" + escape(text) + "</Say>";
+  return "<Say voice=\"" + escape(voice) + "\" language=\"en-US\">" + escape(text) + "</Say>";
+}
+
+std::string voiceFor(const std::string& persona) {
+  // Twilio's built-in Polly voices. A deeper voice for the personas that yell.
+  if (persona == "drill_sergeant" || persona == "coach") return "Polly.Matthew";
+  return "Polly.Joanna";
 }
 
 std::string play(const std::string& url) { return "<Play>" + escape(url) + "</Play>"; }
 
 std::string gatherSpeech(const std::string& action_url, const std::string& inner) {
-  // STUB
-  // TODO(T02): tune speechTimeout, timeout, hints for snooze phrases.
-  return "<Gather input=\"speech\" action=\"" + escape(action_url) + "\" method=\"POST\" speechTimeout=\"auto\">" +
-         inner + "</Gather>";
+  // Speech or one keypad digit (1 = I'm up, 0 = stop). actionOnEmptyResult posts silence back too, so the
+  // route decides what happens next instead of Twilio falling off the end of the document.
+  return "<Gather input=\"speech dtmf\" action=\"" + escape(action_url) +
+         "\" method=\"POST\" numDigits=\"1\" timeout=\"4\" speechTimeout=\"auto\" actionOnEmptyResult=\"true\" hints=\"" +
+         escape("I'm up, I am up, five more minutes, ten more minutes, snooze, leaving, stop") + "\">" + inner +
+         "</Gather>";
 }
 
 std::string redirect(const std::string& url) { return "<Redirect method=\"POST\">" + escape(url) + "</Redirect>"; }

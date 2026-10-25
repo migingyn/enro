@@ -60,3 +60,17 @@ TEST_CASE("the demo email is held back until the email drop, and the bus trip ha
   while (auto p = feed->next()) off_route += !p->on_route;
   CHECK(off_route > 0);
 }
+
+TEST_CASE("DEMO_USER_PHONE and DEMO_CONTACT_PHONE swap in real phones from .env, never from the repo") {
+  auto app = test::fakeApp({{"DEMO_USER_PHONE", "+15551230001"}, {"DEMO_CONTACT_PHONE", "+15551230002"}});
+  seedDemo(*app);
+  CHECK(app->repos->user("u_demo")->phone == "+15551230001");
+  bool confirmed_swapped = false;
+  for (auto& c : app->repos->contacts("u_demo")) {
+    if (c.consent == ConsentStatus::CONFIRMED) confirmed_swapped |= c.phone == "+15551230002";
+    else CHECK(c.phone != "+15551230002");  // only the confirmed contact gets the real number
+  }
+  CHECK(confirmed_swapped);
+  CHECK(seedDemo(*app).users == 0);  // reapplied on every boot, even when nothing is reseeded
+  CHECK(app->repos->user("u_demo")->phone == "+15551230001");
+}
