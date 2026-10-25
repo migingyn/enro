@@ -16,9 +16,14 @@ void registerOAuthRoutes(CrowApp& app, AppContext& ctx) {
   CROW_ROUTE(app, "/oauth/google/callback")([&ctx](const crow::request& req) {
     const char* code = req.url_params.get("code");
     const char* state = req.url_params.get("state");
-    if (!code) return errorResponse(400, "missing_code", "Google did not return an authorization code");
-    bool ok = ctx.google_auth->handleCallback(code, state ? state : "u_demo");
     std::string frontend = ctx.env.get("FRONTEND_URL", "http://localhost:5173");
+    // User declined on Google's consent screen.
+    if (req.url_params.get("error")) return redirectResponse(frontend + "/onboarding?error=google");
+    if (!code) return errorResponse(400, "missing_code", "Google did not return an authorization code");
+    // state is random and single use (issued by authUrl); it is the only thing that says whose tokens these are.
+    auto user_id = ctx.google_auth->consumeState(state ? state : "");
+    if (!user_id) return errorResponse(400, "bad_state", "OAuth state is unknown, expired, or already used. Start again");
+    bool ok = ctx.google_auth->handleCallback(code, *user_id);
     return redirectResponse(frontend + (ok ? "/done" : "/onboarding?error=google"));
   });
 }

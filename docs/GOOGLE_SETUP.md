@@ -16,7 +16,7 @@ Fake mode needs none of this: `CALENDAR_SOURCE=seed`, `EMAIL_SOURCE=seed`, and a
 4. Put `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in `.env`. Never commit them or any token. Set `CALENDAR_SOURCE=google` and/or `EMAIL_SOURCE=gmail`.
 5. Sign in at `/oauth/google/start`. The callback lands on the frontend `/done` page, or `/onboarding?error=google` on failure.
 
-**Scopes** (from `GoogleAuth::kScopes` on main): `https://www.googleapis.com/auth/calendar.readonly` and `https://www.googleapis.com/auth/gmail.readonly`. Read-only only (PRD 13). The prototype used the narrower `calendar.events.readonly`, which is enough to list events. T03 can switch if it doesn't need calendar metadata.
+**Scopes** (from `GoogleAuth::kScopes`): `https://www.googleapis.com/auth/calendar.events.readonly` and `https://www.googleapis.com/auth/gmail.readonly`. Read-only only (PRD 13).
 
 Prototype lessons for T03:
 
