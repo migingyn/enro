@@ -4,6 +4,7 @@ import type {
   Call,
   ConsequencesResponse,
   DashboardEvent,
+  DashboardEventType,
   Decision,
   DemoScenario,
   DemoTriggerResponse,
@@ -26,8 +27,6 @@ import { WakeLadder } from '../components/WakeLadder';
 import { USE_MOCKS } from '../lib/env';
 import { fmtTimeSec } from '../lib/time';
 
-// TODO(T18): placeholder judge dashboard layout
-
 type Data<K extends DashboardEvent['type']> = Extract<DashboardEvent, { type: K }>['data'];
 
 function ofType<K extends DashboardEvent['type']>(events: DashboardEvent[], type: K): Data<K>[] {
@@ -39,6 +38,8 @@ const SCENARIOS: { id: DemoScenario; label: string }[] = [
   { id: 'leave_reminder', label: 'Leave reminder' },
   { id: 'email_drop', label: 'Email drop' },
 ];
+
+const EVENT_TYPES: DashboardEventType[] = ['plan', 'decision', 'call_state', 'turn', 'trip_tick', 'sim_result'];
 
 export default function Dashboard() {
   const { events, status } = useDashboardSocket();
@@ -63,7 +64,17 @@ export default function Dashboard() {
   // Events are newest first; a pushed plan or sim result replaces the fetched one.
   const plans = useMemo(() => ofType(events, 'plan'), [events]);
   const decisions: Decision[] = useMemo(() => ofType(events, 'decision'), [events]);
-  const calls: Call[] = useMemo(() => ofType(events, 'call_state'), [events]);
+  // Latest state per call, most recently updated first.
+  const calls: Call[] = useMemo(() => {
+    const seen = new Map<string, Call>();
+    for (const c of ofType(events, 'call_state')) if (!seen.has(c.id)) seen.set(c.id, c);
+    return [...seen.values()];
+  }, [events]);
+  const counts = useMemo(() => {
+    const m = new Map<DashboardEventType, number>(EVENT_TYPES.map((t) => [t, 0]));
+    for (const e of events) m.set(e.type, (m.get(e.type) ?? 0) + 1);
+    return m;
+  }, [events]);
   const turns: Turn[] = useMemo(() => ofType(events, 'turn').reverse(), [events]);
   const ticks: TripTick[] = useMemo(() => ofType(events, 'trip_tick'), [events]);
   const sims = useMemo(() => ofType(events, 'sim_result'), [events]);
@@ -84,7 +95,7 @@ export default function Dashboard() {
   };
 
   return (
-    <main className="mx-auto max-w-7xl space-y-4 p-4">
+    <main className="mx-auto min-h-screen max-w-7xl space-y-4 bg-neutral-50 p-4">
       <header className="flex flex-wrap items-center gap-3">
         <h1 className="text-xl font-bold">Enro · judge dashboard</h1>
         <span className="rounded bg-neutral-200 px-2 py-0.5 text-xs">
@@ -103,6 +114,14 @@ export default function Dashboard() {
           ))}
         </div>
       </header>
+
+      <ul className="flex flex-wrap gap-2 text-xs">
+        {EVENT_TYPES.map((t) => (
+          <li key={t} className="rounded-full border border-neutral-200 bg-white px-2 py-0.5 font-mono">
+            {t} <span className="font-semibold">{counts.get(t)}</span>
+          </li>
+        ))}
+      </ul>
 
       {trigger && (
         <p className="rounded bg-neutral-100 p-2 text-sm">
@@ -137,7 +156,7 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="space-y-4">
-          <WakeLadder wake={plan?.wake ?? null} call={calls[0] ?? null} />
+          <WakeLadder wake={plan?.wake ?? null} calls={calls} />
           <Transcript turns={turns} />
           <ReflexFeed decisions={decisions} />
           <PunctualityCard stats={punctuality} />
@@ -149,7 +168,7 @@ export default function Dashboard() {
         <ul className="mt-2 space-y-0.5 font-mono">
           {events.slice(0, 50).map((e, i) => (
             <li key={i}>
-              {fmtTimeSec(e.ts)} {e.type}
+              {fmtTimeSec(e.ts)} <span className="font-semibold">{e.type}</span> {JSON.stringify(e.data).slice(0, 120)}
             </li>
           ))}
         </ul>

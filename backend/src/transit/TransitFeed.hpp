@@ -18,9 +18,16 @@ struct VehiclePosition {
   bool on_route = true;
 };
 
+struct PlannedStop {
+  std::string name;
+  double lat = 0, lng = 0;
+};
+
 struct TripInfo {
   std::string trip_id, route, destination;
   long long scheduled_arrival_ts = 0;
+  long long start_ts = 0;           // first recorded position; with the stops it gives the planned pace
+  std::vector<PlannedStop> stops;   // planned route, origin first, destination last
 };
 
 class TransitFeed {

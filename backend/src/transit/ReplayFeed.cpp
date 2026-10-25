@@ -16,10 +16,13 @@ bool ReplayFeed::open(const std::string& trip_id) {
   }
   info_ = {j->value("trip_id", trip_id), j->value("route", ""), j->value("destination", ""),
            j->value("scheduled_arrival_ts", 0LL)};
+  for (auto& s : j->value("planned_stops", nlohmann::json::array()))
+    info_.stops.push_back({s.value("name", ""), s.value("lat", 0.0), s.value("lng", 0.0)});
   for (auto& p : (*j)["points"]) {
     points_.push_back({p.value("seq", 0), p.value("ts", 0LL), p.value("lat", 0.0), p.value("lng", 0.0),
                        p.value("next_stop", ""), p.value("on_route", true)});
   }
+  if (!points_.empty()) info_.start_ts = points_.front().ts;
   LOG_INFO("transit", "loaded " << points_.size() << " positions for " << trip_id);
   return !points_.empty();
 }

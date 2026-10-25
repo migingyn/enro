@@ -1,4 +1,6 @@
 // T14: Reflex (RulesReflex + JevReflex).
+#include <chrono>
+
 #include <doctest/doctest.h>
 
 #include "reflex/JevReflex.hpp"
@@ -24,6 +26,17 @@ TEST_CASE("every decision returns one of its allowed verdicts") {
 TEST_CASE("JevReflex without a key falls back to rules") {
   JevReflex j(Env::fromMap({}));
   CHECK(j.emailRelevance({}).source == "rules");
+}
+
+TEST_CASE("Jev timeout falls back to rules within JEV_TIMEOUT_MS") {
+  // 10.255.255.1 is unroutable, so the connect hangs until the timeout.
+  JevReflex j(Env::fromMap({{"TYPESAFE_API_KEY", "test"}, {"JEV_BASE_URL", "http://10.255.255.1"}, {"JEV_TIMEOUT_MS", "150"}}));
+  auto start = std::chrono::steady_clock::now();
+  // emailRelevance is a Jev question (snooze is arithmetic and never calls Jev).
+  auto v = j.emailRelevance({{"from", "a@b.c"}, {"subject", "hi"}});
+  auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start).count();
+  CHECK(v.source == "rules");
+  CHECK(ms < 1000);
 }
 
 TEST_CASE("rules: 'canceled' in subject from a course address -> PLAN_CHANGE") {

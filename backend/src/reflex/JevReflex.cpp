@@ -62,7 +62,7 @@ std::string str(const json& j, const char* key) { return j.is_object() && j.cont
 JevReflex::JevReflex(const Env& env, Transport transport)
     : api_key_(env.get("TYPESAFE_API_KEY")),
       model_(env.get("JEV_MODEL", "jev-latest")),
-      base_url_(env.get("TYPESAFE_BASE_URL", "https://api.typesafe.ai")),
+      base_url_(env.get("JEV_BASE_URL", "https://api.typesafe.ai")),
       timeout_ms_(env.getInt("JEV_TIMEOUT_MS", 800)),
       transport_(std::move(transport)) {
   if (api_key_.empty()) {

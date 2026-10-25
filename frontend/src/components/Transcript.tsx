@@ -2,29 +2,44 @@ import type { Turn } from '../api/types';
 import { fmtTimeSec } from '../lib/time';
 import { Empty, Panel } from './Panel';
 
-// TODO(T18): placeholder transcript, group by call
-
+/** Call transcript, oldest first, grouped by call. */
 export function Transcript({ turns }: { turns: Turn[] }) {
+  const groups: { callId: string; turns: Turn[] }[] = [];
+  for (const t of turns) {
+    const last = groups[groups.length - 1];
+    if (last && last.callId === t.call_id) last.turns.push(t);
+    else groups.push({ callId: t.call_id, turns: [t] });
+  }
+
   return (
     <Panel title="Transcript">
-      {turns.length === 0 ? (
+      {groups.length === 0 ? (
         <Empty>No call turns yet.</Empty>
       ) : (
-        <ul className="max-h-72 space-y-2 overflow-y-auto text-sm">
-          {turns.map((t, i) => (
-            <li key={i} className={t.speaker === 'agent' ? '' : 'text-right'}>
-              <div className="text-xs text-neutral-500">
-                {t.speaker} · {t.call_id} · {fmtTimeSec(t.ts)}
-                {t.intent && <> · {t.intent}</>}
-              </div>
-              <div
-                className={`inline-block rounded px-2 py-1 ${t.speaker === 'agent' ? 'bg-neutral-100' : 'bg-neutral-800 text-white'}`}
-              >
-                {t.text}
-              </div>
-            </li>
+        <div className="max-h-80 space-y-3 overflow-y-auto text-sm">
+          {groups.map((g, gi) => (
+            <div key={gi}>
+              <div className="mb-1 text-xs font-medium text-neutral-400">call {g.callId}</div>
+              <ul className="space-y-2">
+                {g.turns.map((t, i) => (
+                  <li key={i} className={t.speaker === 'agent' ? '' : 'text-right'}>
+                    <div className="text-xs text-neutral-500">
+                      {t.speaker} · {fmtTimeSec(t.ts)}
+                      {t.intent && <> · {t.intent}</>}
+                    </div>
+                    <div
+                      className={`inline-block max-w-[85%] rounded-2xl px-3 py-1.5 text-left ${
+                        t.speaker === 'agent' ? 'bg-neutral-100' : 'bg-neutral-800 text-white'
+                      }`}
+                    >
+                      {t.text}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </Panel>
   );

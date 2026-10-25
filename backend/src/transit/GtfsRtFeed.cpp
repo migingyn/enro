@@ -13,9 +13,11 @@ GtfsRtFeed::GtfsRtFeed(const Env& env)
 }
 
 bool GtfsRtFeed::open(const std::string& trip_id) {
-  // STUB
-  // TODO(T15): remember trip_id, fetch the first VehiclePositions + TripUpdates snapshot.
+  // STUB: live GTFS-RT is P1. It needs protobuf, classes generated from gtfs-realtime.proto (not in
+  // the repo yet) and network, so it can't be built or tested in fake mode. Replay is the demo path.
+  // TODO(T15): fetch the first VehiclePositions + TripUpdates snapshot with cpr.
   info_.trip_id = trip_id;
+  LOG_WARN("transit", "GTFS-RT feed not implemented yet; use TRANSIT_SOURCE=replay");
   return false;
 }
 
