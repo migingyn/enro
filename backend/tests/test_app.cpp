@@ -30,7 +30,14 @@ TEST_CASE("real providers are selectable without keys and never crash") {
 }
 
 TEST_CASE("commented-out alternates fall back to fakes") {
-  auto app = test::fakeApp({{"VOICE_PROVIDER", "retell"}, {"LLM_PROVIDER", "anthropic"}});
+  auto app = test::fakeApp({{"VOICE_PROVIDER", "retell"}});
   CHECK(app->providers.voice == "sim");
-  CHECK(app->providers.llm == "fake");
+}
+
+TEST_CASE("anthropic selects Claude for text and keeps speech off Claude") {
+  auto app = test::fakeApp({{"LLM_PROVIDER", "anthropic"}});
+  CHECK(app->providers.llm == "anthropic");
+  CHECK(app->providers.speech == "fake");
+  auto with_openai = test::fakeApp({{"LLM_PROVIDER", "anthropic"}, {"OPENAI_API_KEY", "x"}});
+  CHECK(with_openai->providers.speech == "openai");
 }

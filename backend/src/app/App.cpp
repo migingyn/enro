@@ -1,8 +1,8 @@
 #include "app/App.hpp"
 
+#include "ai/AnthropicClient.hpp"
 #include "ai/FakeLlm.hpp"
 #include "ai/OpenAIClient.hpp"
-// #include "ai/AnthropicClient.hpp"  // CLAUDE API ALTERNATE
 #include "google/CalendarClient.hpp"
 #include "google/GmailClient.hpp"
 #include "google/SeedSources.hpp"
@@ -40,9 +40,7 @@ void selectLlm(AppContext& ctx) {
     ctx.llm = openai;
     ctx.speech = openai;
   } else if (want == "anthropic") {
-    // CLAUDE API ALTERNATE: uncomment AnthropicClient.hpp/.cpp, then:
-    // ctx.llm = std::make_shared<AnthropicClient>(ctx.env);
-    unknownProvider("LLM_PROVIDER", want, "fake (AnthropicClient is commented out, see PRD 8.1)");
+    ctx.llm = std::make_shared<AnthropicClient>(ctx.env);
     // Voice always stays on OpenAI (Claude has no audio output).
     if (ctx.env.has("OPENAI_API_KEY")) ctx.speech = std::make_shared<OpenAIClient>(ctx.env);
   } else if (want != "fake") {

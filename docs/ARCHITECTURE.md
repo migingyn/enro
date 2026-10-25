@@ -129,25 +129,18 @@ Replay a recorded trip (vehicle positions plus timestamps) at configurable speed
 
 Model names and all keys come from env vars.
 
-#### 8.1 Claude API alternate (commented out)
+#### 8.1 Claude API alternate
 
-All text generation goes through an `LlmClient` interface with `chatJson(system, user, schema)` and `chat(system, messages)`. `OpenAIClient` implements it by default. `AnthropicClient` implements it too but stays fully commented out, ready to switch with `LLM_PROVIDER=anthropic`.
+All text generation goes through an `LlmClient` interface with `chatJson(system, user, schema)` and `chat(system, messages)`. `OpenAIClient` implements it by default. `AnthropicClient` (`backend/src/ai/AnthropicClient.*`) implements it too: set `LLM_PROVIDER=anthropic` and `ANTHROPIC_API_KEY`, and optionally `ANTHROPIC_MODEL` (default `claude-opus-5-5`).
 
 Scope of the switch
 - Covers line generation, intent classification, email extraction, and onboarding profile extraction.
 - Does not cover voice. TTS, transcription, and the Realtime onboarding session stay on OpenAI because the Claude API has no audio output.
 
-What the commented `AnthropicClient` should contain
-```cpp
-// CLAUDE API ALTERNATE
-// Switch with LLM_PROVIDER=anthropic and uncomment this file + its CMake entry.
-// POST https://api.anthropic.com/v1/messages
-// Headers: x-api-key: $ANTHROPIC_API_KEY, anthropic-version: <current>, content-type: application/json
-// Body: { model: $ANTHROPIC_MODEL, max_tokens, system, messages: [{role, content}] }
-// For chatJson, request JSON in the system prompt or use tool use with an input schema,
-// then parse the first tool_use block's input. Response text lives in content[].text.
-// Check current Anthropic docs for the version header, model names, and structured output options.
-```
+How `AnthropicClient` calls the API
+- `POST /v1/messages` with `anthropic-version: 2026-10-21`, `effort: low` (every call is on a live phone call or plan update), and `fallbacks: "default"` so a refused request is re-run server-side.
+- `chatJson` uses structured outputs (`output_config.format` with a JSON schema). Callers write plain JSON Schema; the client adds `additionalProperties: false` and drops unsupported constraints.
+- Any HTTP error, refusal, or bad JSON returns an empty result, and callers fall back to their rules.
 
 Why keep it
 - Fallback if OpenAI rate limits or goes down during the event.

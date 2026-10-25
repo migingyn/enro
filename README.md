@@ -132,7 +132,7 @@ Each task owner flips their own provider once it works. Everything else stays fa
 | Env var | Fake (default) | Real | Also needs |
 |---|---|---|---|
 | `VOICE_PROVIDER` | `sim` (browser call simulator) | `twilio` | `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_FROM_NUMBER`, `PUBLIC_BASE_URL` from `make tunnel` |
-| `LLM_PROVIDER` | `fake` (canned lines) | `openai` (`anthropic` stays commented out, PRD 8.1) | `OPENAI_API_KEY`, `OPENAI_CHAT_MODEL` |
+| `LLM_PROVIDER` | `fake` (canned lines) | `openai` or `anthropic` | `OPENAI_API_KEY` + `OPENAI_CHAT_MODEL`, or `ANTHROPIC_API_KEY` (+ optional `ANTHROPIC_MODEL`, default `claude-opus-5-5`) |
 | `REFLEX_PROVIDER` | `rules` | `jev` | `TYPESAFE_API_KEY`, `JEV_MODEL` |
 | `CALENDAR_SOURCE` | `seed` | `google` | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, then sign in at `/oauth/google/start` |
 | `EMAIL_SOURCE` | `seed` | `gmail` | same Google client |
