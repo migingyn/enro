@@ -22,7 +22,14 @@ std::string hashOf(const Event& e) { return std::to_string(std::hash<std::string
 
 }  // namespace
 
-int Pollers::intervalSeconds() const { return std::max(5, ctx_.env.getInt("POLL_SECONDS", 60)); }
+int Pollers::intervalSeconds(const std::string& user_id, long long now) const {
+  int active = std::max(5, ctx_.env.getInt("POLL_SECONDS", 60));
+  int idle = std::max(active, ctx_.env.getInt("POLL_IDLE_SECONDS", 7200));
+  long long window = static_cast<long long>(ctx_.env.getInt("POLL_ACTIVE_HOURS", 12)) * 3600;
+  for (auto& e : ctx_.repos->events(user_id, now, now + window))
+    if (!e.canceled) return active;
+  return idle;
+}
 
 void Pollers::registerHandlers(Scheduler& scheduler) {
   scheduler.on(TaskKind::POLL_CALENDAR, [this](const AgentTask& t) { handle(t); });
@@ -38,8 +45,10 @@ void Pollers::start(long long now) {
     }
   }
   ctx_.scheduler->wake();
-  LOG_INFO("poll", "calendar (" << ctx_.calendar->name() << ") and inbox (" << ctx_.email->name() << ") every "
-                                << intervalSeconds() << " s");
+  LOG_INFO("poll", "calendar (" << ctx_.calendar->name() << ") and inbox (" << ctx_.email->name()
+                                << "): every " << ctx_.env.getInt("POLL_SECONDS", 60) << " s with an event in the next "
+                                << ctx_.env.getInt("POLL_ACTIVE_HOURS", 12) << " h, else every "
+                                << ctx_.env.getInt("POLL_IDLE_SECONDS", 7200) << " s");
 }
 
 void Pollers::handle(const AgentTask& task) {
@@ -49,7 +58,8 @@ void Pollers::handle(const AgentTask& task) {
   if (task.kind == TaskKind::POLL_CALENDAR) pollCalendar(task.user_id, task.due_at);
   else pollInbox(task.user_id);
 
-  ctx_.queue->push({task.due_at + intervalSeconds(), task.user_id, task.kind, task.payload});
+  // Decided after the poll, so an event it just added (or an email just moved) counts.
+  ctx_.queue->push({task.due_at + intervalSeconds(task.user_id, task.due_at), task.user_id, task.kind, task.payload});
 }
 
 int Pollers::pollCalendar(const std::string& user_id, long long now) {
