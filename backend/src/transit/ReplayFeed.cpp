@@ -22,6 +22,7 @@ bool ReplayFeed::open(const std::string& trip_id) {
     points_.push_back({p.value("seq", 0), p.value("ts", 0LL), p.value("lat", 0.0), p.value("lng", 0.0),
                        p.value("next_stop", ""), p.value("on_route", true)});
   }
+  if (!points_.empty()) info_.start_ts = points_.front().ts;
   LOG_INFO("transit", "loaded " << points_.size() << " positions for " << trip_id);
   return !points_.empty();
 }
