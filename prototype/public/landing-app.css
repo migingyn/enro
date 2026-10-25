@@ -6,10 +6,10 @@ a, button, input, summary { -webkit-tap-highlight-color: transparent; }
 button:disabled { cursor: not-allowed; opacity: .45; }
 button, a { touch-action: manipulation; }
 .hero-copy { margin-top: 22px; color: var(--ink-2); font-size: 15px; line-height: 1.7; }
-.hero-action { text-decoration: none; background: var(--ink); box-shadow: 0 7px 20px -12px #13213a; }
-.hero-action:hover { background: var(--ink-2); }
-.demo-action { display: flex; align-items: center; justify-content: center; gap: 12px; width: fit-content; min-height: 44px; margin: 12px auto 0; padding: 8px 22px; border: 1px solid #13213a40; border-radius: 999px; color: var(--ink); font-size: 14px; font-weight: 600; text-decoration: none; background: #ffffff25; }
-.demo-action:hover { background: #ffffff65; }
+.hero-action { height: 46px; padding: 0 20px; gap: 10px; color: var(--ink); font-size: 14px; text-decoration: none; background: #ffffff25; border-color: #13213a40; box-shadow: none; }
+.hero-action:hover { background: #ffffff65; }
+.demo-action { display: flex; align-items: center; justify-content: center; gap: 14px; width: min(330px, 100%); min-height: 72px; margin: 12px auto 0; padding: 16px 30px; border: 1px solid #ffffff73; border-radius: 999px; color: #fff; font-size: 18px; font-weight: 700; text-decoration: none; background: var(--ink); box-shadow: 0 7px 20px -12px #13213a; }
+.demo-action:hover { background: var(--ink-2); }
 .demo-hint { margin-top: 6px; font-size: 11px; color: var(--muted); }
 .landing-footer { position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 0 clamp(20px, 5vw, 78px) 30px; color: var(--ink-2); font-size: 12px; }
 .landing-footer a { color: inherit; text-decoration: none; padding: 10px 0; font-weight: 600; }
