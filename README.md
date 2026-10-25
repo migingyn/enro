@@ -4,9 +4,9 @@
 
 <p align="center">A call to get you up. A little help getting out the door.</p>
 
-<p align="center"><a href="https://enro-sic.vercel.app">Try Enro</a> · <a href="https://enro-sic.vercel.app/demo">Explore the demo room</a> · <a href="https://enro-sic.vercel.app/dashboard">Team dashboard</a> · <a href="docs/INTEGRATION.md">Build status</a></p>
+<p align="center"><a href="https://enro-sic.vercel.app">Enro</a> · <a href="https://enro-sic.vercel.app/demo">Watch the film</a> · <a href="https://enro-sic.vercel.app/dashboard">Team dashboard</a> · <a href="docs/INTEGRATION.md">Build status</a></p>
 
-[![Enro demo room](docs/assets/demo-preview.png)](https://enro-sic.vercel.app/demo)
+[![Watch the Enro film](docs/assets/demo-preview.png)](https://enro-sic.vercel.app/demo)
 
 ![Phone sensors supported by the Enro prototype](docs/assets/phone-sensors.png)
 
@@ -16,7 +16,9 @@ Built for the SIC Invisible Interfaces challenge. The phone call is the daily in
 
 ## Try the demo
 
-[The public site](https://enro-sic.vercel.app) works without an account. Choose a sample event, change your travel mode, preview a call, and see how a delay changes your departure. The demo room also includes the Crossroads to Price Center scenario, sensor evidence, and the Lookahead studio. The team dashboard uses its contract fixtures.
+[Watch the 56 second film](https://enro-sic.vercel.app/demo). A Price Center appointment moves ten minutes earlier. Enro recalculates preparation and departure, calls with context, and checks the evidence that the phone is moving. The film uses sample data and includes the lesson from our seven shakes false positive.
+
+The page has a short explanation and transcript. The [interactive lab](https://enro-sic.vercel.app/demo/lab.html), sample day, Lookahead studio, and team dashboard remain available for a closer look. [Film notes](docs/DEMO_FILM.md) cover the storyboard and renderer.
 
 Public calls, events, sensor signals, and forecasts are illustrative. Your real inbox, phone number, location, and operator controls stay local.
 
@@ -24,7 +26,7 @@ Public calls, events, sensor signals, and forecasts are illustrative. Your real 
 
 | Part | What it does | Status |
 | :--- | :--- | :--- |
-| Public demo | Sample morning, call preview, departure changes, and Lookahead | Runs on Vercel with sample data |
+| Public demo | MP4 walkthrough, explanation, and optional interactive lab | Runs on Vercel with sample data |
 | Team build | C++ planner, durable scheduler, wake ladder, negotiation, learned punctuality, and React dashboard | Runs locally in fake mode; real providers are configured separately |
 | Phone prototype | Twilio calls, Google event imports, route planning, and native phone sensor ingestion | Working local integration in `prototype/` |
 | Walking check | Fresh counter increments, Activity, and spoken response | Experimental; revised rule still needs physical validation |
@@ -66,7 +68,7 @@ The revised experiment also requires fresh walking or running Activity. Phone po
 | `frontend/` | React onboarding, dashboard, replay, and browser call simulator |
 | `contracts/` | Shared schemas and fixtures |
 | `prototype/` | TypeScript phone integration, tests, design originals, research, and demo exports |
-| `prototype/public/demo/` | Interactive story, sample day, and Lookahead studio |
+| `prototype/public/demo/` | Product film, interactive lab, sample day, and Lookahead studio |
 | `docs/` | Architecture, team setup, integration notes, pitch, privacy, and scale |
 | `scripts/build_demo.mjs` | Builds the public site with fixtures and no operator pages |
 
