@@ -77,7 +77,7 @@ The prototype's runtime snapshot showed 0 motion samples, 0 calls, 0 events, and
 - The prototype's research (official Luma page plus the reproduced Hacker Guide) recorded a **6:30 PM PT submission deadline**, with a 5:45 PM feature-freeze target.
 - **Unresolved discrepancy:** `PRD.md` section 16 plans a **24-hour** timeline. These schedules are not equivalent. Someone should confirm the real deadline with the organizers and update PRD 16 / `docs/DEMO.md`. This doc doesn't pick one.
 - Track: the prototype research leaned Consumer AI, which matches PRD 2 (Track 4). No final track selection was recorded there.
-- Research notes on past winners (`research/MATTHEW_KIM_RESEARCH.md`): a specific problem, a visible change, technology that actually enables it, and evidence judges can inspect. Describe awards precisely. Gist was top five, not first.
+- Lessons from past winners: a specific problem, a visible change, technology that actually enables it, and evidence judges can inspect. Describe awards precisely. Gist was top five, not first.
 
 ## Demo causal chain
 
