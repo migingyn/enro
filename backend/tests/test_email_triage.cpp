@@ -121,3 +121,27 @@ TEST_CASE("an extraction naming an unknown event changes nothing") {
   CHECK_FALSE(out[0].extracted);
   CHECK_FALSE(t.app->repos->event("evt_cse110_dis")->canceled);
 }
+
+TEST_CASE("an email whose event is already canceled never cancels a different event") {
+  Triage t("PLAN_CHANGE");
+  t.app->triage->process("u_demo", {canceledSection()});
+  REQUIRE(t.app->repos->event("evt_cse110_dis")->canceled);
+  // The same email again, with a fresh triage instance (as after a restart): the lecture must survive.
+  EmailTriage fresh(*t.app);
+  auto again = canceledSection();
+  again.id = "msg_1003_resent";
+  fresh.process("u_demo", {again});
+  CHECK(t.app->repos->event("evt_cse110_dis")->canceled);
+  CHECK_FALSE(t.app->repos->event("evt_cse110_lec")->canceled);
+}
+
+TEST_CASE("a message triaged before a restart is not triaged again") {
+  Triage t("PLAN_CHANGE");
+  t.app->triage->process("u_demo", {canceledSection()});
+  int calls = t.llm->calls;
+  auto decisions = t.app->repos->recentDecisions(500).size();
+  EmailTriage after_restart(*t.app);  // empty in-memory cache, same database
+  after_restart.process("u_demo", {canceledSection()});
+  CHECK(t.llm->calls == calls);
+  CHECK(t.app->repos->recentDecisions(500).size() == decisions);
+}
