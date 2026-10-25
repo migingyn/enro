@@ -5,7 +5,7 @@ import { simCallMessages } from '../api/fixtures';
 import { USE_MOCKS, wsUrl } from '../lib/env';
 import { fmtTimeSec, nowTs } from '../lib/time';
 
-// TODO(T20): placeholder phone UI for the browser call simulator
+const QUICK_REPLIES = ['Five more minutes', "I'm up", 'Leave me alone', "I'm out the door"];
 
 type Phase = 'waiting' | 'ringing' | 'in_call' | 'ended';
 
@@ -99,66 +99,104 @@ export default function CallSimulator() {
     send({ type: 'answer', ts: nowTs(), data: { call_id: callId } });
   };
   const decline = () => send({ type: 'decline', ts: nowTs(), data: { call_id: callId } });
-  const say = (e: React.FormEvent) => {
-    e.preventDefault();
-    const text = draft.trim();
+  const sayText = (raw: string) => {
+    const text = raw.trim();
     if (!text) return;
     setLines((l) => [...l, { speaker: 'user', text, ts: nowTs() }]);
-    setDraft('');
     send({ type: 'speech', ts: nowTs(), data: { call_id: callId, text } });
   };
+  const say = (e: React.FormEvent) => {
+    e.preventDefault();
+    sayText(draft);
+    setDraft('');
+  };
+
+  const status =
+    phase === 'waiting'
+      ? 'Waiting for a call...'
+      : phase === 'ringing'
+        ? `Incoming ${ring?.purpose ?? ''} call · attempt ${ring?.attempt ?? 1}`
+        : phase === 'in_call'
+          ? 'On call'
+          : `Call ended${hangupReason ? ` · ${hangupReason}` : ''}`;
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-sm flex-col gap-4 p-6">
-      <header className="text-center">
-        <div className="text-xs uppercase tracking-wide text-neutral-500">call simulator · {callId}</div>
-        <div className="text-2xl font-bold">{ring?.caller ?? 'Enro'}</div>
-        <div className="text-sm text-neutral-600">
-          {phase === 'waiting' && 'Waiting for a call...'}
-          {phase === 'ringing' && ring && `Incoming ${ring.purpose} call, attempt ${ring.attempt}`}
-          {phase === 'in_call' && 'On call'}
-          {phase === 'ended' && `Call ended${hangupReason ? ` (${hangupReason})` : ''}`}
-        </div>
-      </header>
+    <main className="flex min-h-screen items-center justify-center bg-neutral-200 p-4">
+      <div className="flex h-[720px] max-h-[95vh] w-full max-w-sm flex-col overflow-hidden rounded-[2.5rem] border-8 border-neutral-900 bg-neutral-950 text-white shadow-2xl">
+        <header className="px-6 pb-4 pt-8 text-center">
+          <div className="text-[10px] uppercase tracking-widest text-neutral-500">call simulator · {callId}</div>
+          <div className="mx-auto mt-4 flex h-20 w-20 items-center justify-center rounded-full bg-emerald-600 text-3xl font-bold">
+            {(ring?.caller ?? 'Enro').slice(0, 1)}
+          </div>
+          <div className="mt-3 text-2xl font-semibold">{ring?.caller ?? 'Enro'}</div>
+          <div className="text-sm text-neutral-400">{status}</div>
+        </header>
 
-      {phase === 'ringing' && (
-        <div className="flex justify-center gap-6">
-          <button onClick={decline} className="h-16 w-16 rounded-full bg-red-600 text-sm text-white">
-            Decline
-          </button>
-          <button onClick={answer} className="h-16 w-16 animate-pulse rounded-full bg-emerald-600 text-sm text-white">
-            Answer
-          </button>
-        </div>
-      )}
+        <ul className="flex-1 space-y-3 overflow-y-auto px-4 text-sm">
+          {lines.map((l, i) => (
+            <li key={i} className={l.speaker === 'agent' ? 'text-left' : 'text-right'}>
+              <div className="mb-0.5 text-[10px] text-neutral-500">
+                {l.speaker === 'agent' ? 'Enro' : 'You'} · {fmtTimeSec(l.ts)}
+                {l.urgency && <> · {l.urgency}</>}
+              </div>
+              <div
+                className={`inline-block max-w-[85%] rounded-2xl px-3 py-2 text-left ${
+                  l.speaker === 'agent' ? 'bg-neutral-800' : 'bg-emerald-600'
+                } ${l.urgency === 'URGENT' ? 'ring-1 ring-red-500' : ''}`}
+              >
+                {l.text}
+              </div>
+            </li>
+          ))}
+        </ul>
 
-      <ul className="flex-1 space-y-2 text-sm">
-        {lines.map((l, i) => (
-          <li key={i} className={l.speaker === 'agent' ? '' : 'text-right'}>
-            <div className="text-xs text-neutral-500">
-              {l.speaker} · {fmtTimeSec(l.ts)}
-              {l.urgency && <> · {l.urgency}</>}
+        <footer className="space-y-3 p-4">
+          {phase === 'ringing' && (
+            <div className="flex justify-around py-4">
+              <button onClick={decline} className="h-16 w-16 rounded-full bg-red-600 text-xs font-medium hover:bg-red-500">
+                Decline
+              </button>
+              <button onClick={answer} className="h-16 w-16 animate-pulse rounded-full bg-emerald-600 text-xs font-medium hover:bg-emerald-500">
+                Answer
+              </button>
             </div>
-            <div className={`inline-block rounded px-2 py-1 ${l.speaker === 'agent' ? 'bg-neutral-100' : 'bg-neutral-800 text-white'}`}>
-              {l.text}
-            </div>
-          </li>
-        ))}
-      </ul>
+          )}
 
-      {phase === 'in_call' && (
-        <form onSubmit={say} className="flex gap-2">
-          <input
-            value={draft}
-            onChange={(e) => setDraft(e.target.value)}
-            placeholder="Say something..."
-            className="flex-1 rounded border border-neutral-300 px-2 py-1"
-          />
-          <button type="submit" className="rounded bg-neutral-900 px-3 py-1 text-white">
-            Send
-          </button>
-        </form>
-      )}
+          {phase === 'in_call' && (
+            <>
+              <div className="flex flex-wrap gap-2">
+                {QUICK_REPLIES.map((q) => (
+                  <button
+                    key={q}
+                    onClick={() => sayText(q)}
+                    className="rounded-full bg-neutral-800 px-3 py-1 text-xs hover:bg-neutral-700"
+                  >
+                    {q}
+                  </button>
+                ))}
+              </div>
+              <form onSubmit={say} className="flex gap-2">
+                <input
+                  value={draft}
+                  onChange={(e) => setDraft(e.target.value)}
+                  placeholder="Say something..."
+                  className="min-w-0 flex-1 rounded-full bg-neutral-800 px-4 py-2 text-sm text-white placeholder:text-neutral-500 focus:outline-none"
+                />
+                <button type="submit" className="rounded-full bg-emerald-600 px-4 py-2 text-sm font-medium hover:bg-emerald-500">
+                  Send
+                </button>
+              </form>
+              <div className="flex justify-center">
+                <button onClick={decline} className="h-12 w-12 rounded-full bg-red-600 text-[10px] font-medium hover:bg-red-500">
+                  End
+                </button>
+              </div>
+            </>
+          )}
+
+          {phase === 'ended' && <p className="pb-4 text-center text-sm text-neutral-400">Call ended. Refresh to wait for the next one.</p>}
+        </footer>
+      </div>
     </main>
   );
 }
