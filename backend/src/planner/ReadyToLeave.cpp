@@ -77,9 +77,25 @@ LeavePlan ReadyToLeave::plan(const LeaveInput& in) const {
   Place to = in.destination.label.empty() ? Place{e.location, std::nullopt, std::nullopt} : in.destination;
   RouteEta eta = router_.eta(p.mode, in.origin, to);
   double factor = in.mode_stats.travel_factor > 0 ? in.mode_stats.travel_factor : 1.0;
-  p.travel_minutes = std::max(1, static_cast<int>(std::lround(eta.minutes * factor)));
-  p.reasoning.push_back("travel " + std::to_string(p.travel_minutes) + " min = " + std::to_string(eta.minutes) + " min " +
-                        p.mode + " ETA x learned factor " + factor2(factor));
+  int ride = std::max(1, static_cast<int>(std::lround(eta.minutes * factor)));
+  // Transit trips start and end on foot: walk to the stop and from the stop, at the learned walking pace.
+  int walk_to = 0, walk_from = 0;
+  if (event_types_.contains("mode_legs") && event_types_["mode_legs"].contains(p.mode)) {
+    auto& legs = event_types_["mode_legs"][p.mode];
+    double wf = in.walk_stats.travel_factor > 0 ? in.walk_stats.travel_factor : 1.0;
+    walk_to = static_cast<int>(std::lround(legs.value("walk_to_stop_minutes", 0) * wf));
+    walk_from = static_cast<int>(std::lround(legs.value("walk_from_stop_minutes", 0) * wf));
+  }
+  p.travel_minutes = walk_to + ride + walk_from;
+  if (walk_to + walk_from > 0) {
+    p.reasoning.push_back("travel " + std::to_string(p.travel_minutes) + " min = walk to stop " + std::to_string(walk_to) +
+                          " + " + p.mode + " " + std::to_string(ride) + " (" + std::to_string(eta.minutes) +
+                          " min ETA x learned factor " + factor2(factor) + ") + walk from stop " +
+                          std::to_string(walk_from));
+  } else {
+    p.reasoning.push_back("travel " + std::to_string(p.travel_minutes) + " min = " + std::to_string(eta.minutes) +
+                          " min " + p.mode + " ETA x learned factor " + factor2(factor));
+  }
 
   // leave_by = event.start - travel_minutes - buffer
   p.buffer_minutes = buffer(e.event_type);

@@ -99,6 +99,7 @@ DayPlan DayPlanner::build(const std::string& user_id, const std::string& date_in
     // Habits learned on campus don't apply to long trips: nobody walks back from Sorrento Valley.
     if (in.mode == "walk" && meters > kMaxWalkMeters) in.mode = "bus";
     in.mode_stats = ctx_.punctuality->forMode(in.mode);
+    in.walk_stats = ctx_.punctuality->forMode("walk");
     day.plans.push_back(ctx_.ready_to_leave->plan(in));
     prev = e;
   }
