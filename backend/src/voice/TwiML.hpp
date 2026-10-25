@@ -7,8 +7,10 @@
 namespace enro::twiml {
 
 std::string escape(const std::string& text);  // XML-escape
-std::string say(const std::string& text);
+std::string say(const std::string& text, const std::string& voice = "");
+std::string voiceFor(const std::string& persona);  // Polly voice for a persona id
 std::string play(const std::string& url);
+// <Gather input="speech dtmf" numDigits=1 timeout=4 speechTimeout=auto actionOnEmptyResult>
 std::string gatherSpeech(const std::string& action_url, const std::string& inner = "");
 std::string redirect(const std::string& url);
 std::string hangup();
