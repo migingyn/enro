@@ -1,0 +1,31 @@
+{
+  "durationSeconds": 56,
+  "width": 1600,
+  "height": 900,
+  "fps": 30,
+  "audio": false,
+  "mode": "Scripted walkthrough using sample data",
+  "original": {
+    "eventAt": 1110,
+    "travel": 20,
+    "buffer": 10,
+    "prep": 45,
+    "arriveAt": 1100,
+    "leaveAt": 1080,
+    "wakeAt": 1035
+  },
+  "updated": {
+    "eventAt": 1100,
+    "travel": 20,
+    "buffer": 10,
+    "prep": 45,
+    "arriveAt": 1090,
+    "leaveAt": 1070,
+    "wakeAt": 1025
+  },
+  "checks": {
+    "shakingConfirmed": false,
+    "walkingConfirmed": true
+  },
+  "physicalValidation": "Revised walking rule is not yet physically validated"
+}
