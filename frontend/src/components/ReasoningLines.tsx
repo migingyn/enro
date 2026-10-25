@@ -1,8 +1,7 @@
 import type { PlanResponse } from '../api/types';
 import { Empty, Panel } from './Panel';
 
-// TODO(T18): placeholder, show reasoning inline with the timeline once designed
-
+/** Planner reasoning: day-level lines, then per-event leave-by math. */
 export function ReasoningLines({ plan }: { plan: PlanResponse | null }) {
   if (!plan) {
     return (

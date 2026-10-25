@@ -1,10 +1,10 @@
 import type { ReactNode } from 'react';
 
-// TODO(T18): placeholder card chrome, restyle with the dashboard
+/** Card chrome shared by every dashboard panel. */
 export function Panel({ title, actions, children }: { title: string; actions?: ReactNode; children: ReactNode }) {
   return (
-    <section className="rounded-lg border border-neutral-200 bg-white p-4 shadow-sm">
-      <div className="mb-3 flex items-center justify-between gap-2">
+    <section className="rounded-xl border border-neutral-200 bg-white p-4 shadow-sm">
+      <div className="mb-3 flex items-center justify-between gap-2 border-b border-neutral-100 pb-2">
         <h2 className="text-sm font-semibold uppercase tracking-wide text-neutral-500">{title}</h2>
         {actions}
       </div>
@@ -24,6 +24,13 @@ const URGENCY_CLASS: Record<string, string> = {
   OK: 'bg-emerald-100 text-emerald-800',
   AT_RISK: 'bg-amber-100 text-amber-800',
   MISSED: 'bg-red-100 text-red-800',
+  rules: 'bg-sky-100 text-sky-800',
+  llm: 'bg-violet-100 text-violet-800',
+  completed: 'bg-emerald-100 text-emerald-800',
+  in_progress: 'bg-sky-100 text-sky-800',
+  ringing: 'bg-amber-100 text-amber-800',
+  no_answer: 'bg-red-100 text-red-800',
+  failed: 'bg-red-100 text-red-800',
 };
 
 /** Small pill for an urgency or consequence status. */

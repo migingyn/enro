@@ -1,4 +1,6 @@
 // T14: Reflex (RulesReflex + JevReflex).
+#include <chrono>
+
 #include <doctest/doctest.h>
 
 #include "reflex/JevReflex.hpp"
@@ -26,8 +28,31 @@ TEST_CASE("JevReflex without a key falls back to rules") {
   CHECK(j.emailRelevance({}).source == "rules");
 }
 
-TEST_CASE("TODO(T14): Jev timeout falls back to rules within JEV_TIMEOUT_MS" * doctest::skip()) {}
-TEST_CASE("TODO(T14): Jev verdicts carry source jev and latency_ms" * doctest::skip()) {}
+TEST_CASE("Jev timeout falls back to rules within JEV_TIMEOUT_MS") {
+  // 10.255.255.1 is unroutable, so the connect hangs until the timeout.
+  JevReflex j(Env::fromMap({{"TYPESAFE_API_KEY", "test"}, {"JEV_BASE_URL", "http://10.255.255.1"}, {"JEV_TIMEOUT_MS", "150"}}));
+  auto start = std::chrono::steady_clock::now();
+  auto v = j.snooze({{"requested_minutes", 5}});
+  auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start).count();
+  CHECK(v.source == "rules");
+  CHECK(ms < 1000);
+}
+
+TEST_CASE("Jev verdicts carry source jev and confidence") {
+  auto verdicts = nlohmann::json::array({"GRANT", "COUNTER", "REFUSE"});
+  auto typesafe = JevReflex::parseVerdict({{"answers", {{{"choice", "COUNTER"}, {"probability", 0.82}}}}}, verdicts);
+  REQUIRE(typesafe);
+  CHECK(typesafe->verdict == "COUNTER");
+  CHECK(typesafe->source == "jev");
+  CHECK(typesafe->confidence == doctest::Approx(0.82));
+
+  nlohmann::json chat = {{"choices", {{{"message", {{"content", R"({"verdict":"GRANT","confidence":0.6})"}}}}}}};
+  auto router = JevReflex::parseVerdict(chat, verdicts);
+  REQUIRE(router);
+  CHECK(router->verdict == "GRANT");
+
+  CHECK_FALSE(JevReflex::parseVerdict({{"choice", "MAYBE"}}, verdicts));
+}
 TEST_CASE("rules: 'canceled' in subject from a course address -> PLAN_CHANGE") {
   RulesReflex r;
   auto v = r.emailRelevance({{"message_id", "msg_1003"},

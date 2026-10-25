@@ -2,8 +2,7 @@ import type { ConsequencesResponse, PlanResponse } from '../api/types';
 import { fmtTime } from '../lib/time';
 import { Badge, Empty, Panel } from './Panel';
 
-// TODO(T18): placeholder list, turn into a real timeline
-
+/** Day timeline: each event with its leave-by plan and consequence status. */
 export function PlanTimeline({
   plan,
   consequences,
@@ -24,12 +23,17 @@ export function PlanTimeline({
 
   return (
     <Panel title={`Plan for ${plan.date}`}>
-      <ol className="space-y-3">
+      <ol className="relative ml-2 space-y-4 border-l-2 border-neutral-200">
         {plan.events.map((ev) => {
           const lp = leaveFor.get(ev.id);
           const c = risk.get(ev.id);
           return (
-            <li key={ev.id} className={`border-l-2 pl-3 ${ev.canceled ? 'border-neutral-200 opacity-50' : 'border-neutral-400'}`}>
+            <li key={ev.id} className={`relative pl-5 ${ev.canceled ? 'opacity-50' : ''}`}>
+              <span
+                className={`absolute -left-[7px] top-1.5 h-3 w-3 rounded-full border-2 border-white ${
+                  ev.canceled ? 'bg-neutral-300' : c && c.status !== 'OK' ? 'bg-red-500' : 'bg-neutral-800'
+                }`}
+              />
               <div className="flex flex-wrap items-center gap-2">
                 <span className="font-mono text-sm">{fmtTime(ev.start_ts)}</span>
                 <span className={`font-medium ${ev.canceled ? 'line-through' : ''}`}>{ev.title}</span>
@@ -39,7 +43,7 @@ export function PlanTimeline({
               </div>
               <div className="text-xs text-neutral-500">{ev.location}</div>
               {lp && (
-                <div className="mt-1 text-sm text-neutral-700">
+                <div className="mt-1 rounded bg-neutral-50 px-2 py-1 text-sm text-neutral-700">
                   reminder {fmtTime(lp.reminder_at)} · leave by {fmtTime(lp.leave_by)} · {lp.mode}{' '}
                   {lp.travel_minutes} min · score {lp.urgency_score}
                 </div>

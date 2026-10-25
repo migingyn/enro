@@ -25,12 +25,15 @@ class JevReflex : public Reflex {
   ReflexVerdict snooze(const nlohmann::json& request) override;
   ReflexVerdict stopCondition(const nlohmann::json& state) override;
 
+  // Reads a TypeSafe or OpenRouter response body. nullopt unless the verdict is allowed.
+  static std::optional<ReflexVerdict> parseVerdict(const nlohmann::json& body, const nlohmann::json& verdicts);
+
  private:
   // One HTTP call: decision name + allowed verdicts + input. nullopt on timeout or error.
   std::optional<ReflexVerdict> ask(const std::string& decision, const nlohmann::json& verdicts,
                                    const nlohmann::json& input);
 
-  std::string api_key_, model_, openrouter_key_;
+  std::string api_key_, model_, openrouter_key_, base_url_;  // JEV_BASE_URL overrides the host
   int timeout_ms_ = 400;
   RulesReflex fallback_;
 };

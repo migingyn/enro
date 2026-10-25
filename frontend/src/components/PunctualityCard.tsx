@@ -1,7 +1,7 @@
 import type { PunctualityResponse, PunctualityStats } from '../api/types';
 import { Empty, Panel } from './Panel';
 
-// TODO(T18): placeholder tables, chart the learned biases
+/** What Enro has learned about how late the user really runs. */
 
 function StatsTable({ title, rows }: { title: string; rows: Record<string, PunctualityStats> }) {
   return (
@@ -19,7 +19,12 @@ function StatsTable({ title, rows }: { title: string; rows: Record<string, Punct
         {Object.entries(rows).map(([key, s]) => (
           <tr key={key} className="border-t border-neutral-100">
             <td className="py-1">{key}</td>
-            <td>{s.prep_bias >= 0 ? '+' : ''}{s.prep_bias.toFixed(1)} min</td>
+            <td>
+              <div className="flex items-center gap-1">
+                <span className="inline-block h-2 rounded bg-amber-400" style={{ width: `${Math.min(Math.abs(s.prep_bias) * 4, 48)}px` }} />
+                {s.prep_bias >= 0 ? '+' : ''}{s.prep_bias.toFixed(1)} min
+              </div>
+            </td>
             <td>{s.travel_factor.toFixed(2)}</td>
             <td>{s.arrival_delta >= 0 ? '+' : ''}{s.arrival_delta.toFixed(1)} min</td>
             <td>{s.samples}</td>
@@ -53,7 +58,7 @@ export function PunctualityCard({ stats }: { stats: PunctualityResponse | null }
           <ul className="flex flex-wrap gap-2">
             {stats.channel_response.map((c, i) => (
               <li key={i} className="rounded bg-neutral-100 px-2 py-0.5">
-                {c.channel} / {c.time_of_day}: {Math.round(c.answer_rate * 100)}%
+                {c.channel} / {c.time_of_day}: <span className="font-medium">{Math.round(c.answer_rate * 100)}%</span>
               </li>
             ))}
           </ul>
