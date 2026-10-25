@@ -1,0 +1,147 @@
+{
+  "events": [
+    {
+      "id": "evt_cse110_lec",
+      "user_id": "u_demo",
+      "title": "CSE 110 Lecture",
+      "location": "Center Hall 105, UC San Diego",
+      "event_type": "class",
+      "source": "calendar",
+      "start_ts": 1793026800,
+      "end_ts": 1793029800,
+      "canceled": false
+    },
+    {
+      "id": "evt_cse110_dis",
+      "user_id": "u_demo",
+      "title": "CSE 110 Discussion",
+      "location": "WLH 2005, UC San Diego",
+      "event_type": "class",
+      "source": "calendar",
+      "start_ts": 1793030400,
+      "end_ts": 1793033400,
+      "canceled": false
+    },
+    {
+      "id": "evt_interview",
+      "user_id": "u_demo",
+      "title": "Qualcomm SWE Intern Interview",
+      "location": "Qualcomm Building Q, 6455 Lusk Blvd, San Diego",
+      "event_type": "interview",
+      "source": "calendar",
+      "start_ts": 1793037600,
+      "end_ts": 1793041200,
+      "canceled": false
+    },
+    {
+      "id": "evt_lunch",
+      "user_id": "u_demo",
+      "title": "Lunch with Alex",
+      "location": "Price Center, UC San Diego",
+      "event_type": "casual",
+      "source": "calendar",
+      "start_ts": 1793044800,
+      "end_ts": 1793048400,
+      "canceled": false
+    },
+    {
+      "id": "evt_study",
+      "user_id": "u_demo",
+      "title": "COGS 108 Study Group",
+      "location": "Geisel Library 2nd floor",
+      "event_type": "meeting",
+      "source": "calendar",
+      "start_ts": 1793062800,
+      "end_ts": 1793068200,
+      "canceled": false
+    },
+    {
+      "id": "evt_cogs108_sec_1027",
+      "user_id": "u_demo",
+      "title": "COGS 108 Section",
+      "location": "Peterson Hall 104, UC San Diego",
+      "event_type": "class",
+      "source": "calendar",
+      "start_ts": 1793134800,
+      "end_ts": 1793137800,
+      "canceled": false
+    },
+    {
+      "id": "evt_gym_1027",
+      "user_id": "u_demo",
+      "title": "Gym",
+      "location": "RIMAC Arena, UC San Diego",
+      "event_type": "casual",
+      "source": "calendar",
+      "start_ts": 1793147400,
+      "end_ts": 1793151000,
+      "canceled": false
+    },
+    {
+      "id": "evt_cse110_lec_1028",
+      "user_id": "u_demo",
+      "title": "CSE 110 Lecture",
+      "location": "Center Hall 105, UC San Diego",
+      "event_type": "class",
+      "source": "calendar",
+      "start_ts": 1793199600,
+      "end_ts": 1793202600,
+      "canceled": false
+    },
+    {
+      "id": "evt_cse110_oh_1028",
+      "user_id": "u_demo",
+      "title": "CSE 110 Office Hours",
+      "location": "Geisel Library 2nd floor",
+      "event_type": "meeting",
+      "source": "calendar",
+      "start_ts": 1793224800,
+      "end_ts": 1793228400,
+      "canceled": false
+    },
+    {
+      "id": "evt_cogs108_mid_1029",
+      "user_id": "u_demo",
+      "title": "COGS 108 Midterm",
+      "location": "Peterson Hall 108, UC San Diego",
+      "event_type": "exam",
+      "source": "calendar",
+      "start_ts": 1793296800,
+      "end_ts": 1793301600,
+      "canceled": false
+    },
+    {
+      "id": "evt_gym_1029",
+      "user_id": "u_demo",
+      "title": "Gym",
+      "location": "RIMAC Arena, UC San Diego",
+      "event_type": "casual",
+      "source": "calendar",
+      "start_ts": 1793320200,
+      "end_ts": 1793323800,
+      "canceled": false
+    },
+    {
+      "id": "evt_cse110_lec_1030",
+      "user_id": "u_demo",
+      "title": "CSE 110 Lecture",
+      "location": "Center Hall 105, UC San Diego",
+      "event_type": "class",
+      "source": "calendar",
+      "start_ts": 1793372400,
+      "end_ts": 1793375400,
+      "canceled": false
+    },
+    {
+      "id": "evt_dinner_1030",
+      "user_id": "u_demo",
+      "title": "Dinner with Alex on Convoy",
+      "location": "Convoy St, San Diego",
+      "event_type": "casual",
+      "source": "calendar",
+      "start_ts": 1793412000,
+      "end_ts": 1793417400,
+      "canceled": false
+    }
+  ]
+}

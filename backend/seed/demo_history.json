@@ -1,0 +1,892 @@
+{
+  "user_id": "u_demo",
+  "from": "2026-10-05",
+  "to": "2026-10-23",
+  "outcomes": [
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_cse110_lec_2026-10-05",
+      "event_type": "class",
+      "mode": "walk",
+      "planned_leave": 1791211260,
+      "actual_leave": 1791211977,
+      "arrival": 1791212897,
+      "start_ts": 1791212400,
+      "predicted_travel_minutes": 14,
+      "date": "2026-10-05"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_cse110_dis_2026-10-05",
+      "event_type": "class",
+      "mode": "walk",
+      "planned_leave": 1791215460,
+      "actual_leave": 1791216225,
+      "arrival": 1791216662,
+      "start_ts": 1791216000,
+      "predicted_travel_minutes": 6,
+      "date": "2026-10-05"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_lunch_2026-10-05",
+      "event_type": "casual",
+      "mode": "walk",
+      "planned_leave": 1791229560,
+      "actual_leave": 1791230144,
+      "arrival": 1791230781,
+      "start_ts": 1791230400,
+      "predicted_travel_minutes": 9,
+      "date": "2026-10-05"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_cogs108_sec_2026-10-06",
+      "event_type": "class",
+      "mode": "walk",
+      "planned_leave": 1791319560,
+      "actual_leave": 1791320290,
+      "arrival": 1791320840,
+      "start_ts": 1791320400,
+      "predicted_travel_minutes": 9,
+      "date": "2026-10-06"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_meeting_2026-10-06",
+      "event_type": "meeting",
+      "mode": "walk",
+      "planned_leave": 1791326820,
+      "actual_leave": 1791326832,
+      "arrival": 1791327394,
+      "start_ts": 1791327600,
+      "predicted_travel_minutes": 8,
+      "date": "2026-10-06"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_cse110_lec_2026-10-07",
+      "event_type": "class",
+      "mode": "walk",
+      "planned_leave": 1791384060,
+      "actual_leave": 1791384764,
+      "arrival": 1791385683,
+      "start_ts": 1791385200,
+      "predicted_travel_minutes": 14,
+      "date": "2026-10-07"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_casual_2026-10-07",
+      "event_type": "casual",
+      "mode": "bus",
+      "planned_leave": 1791421020,
+      "actual_leave": 1791421189,
+      "arrival": 1791423139,
+      "start_ts": 1791423000,
+      "predicted_travel_minutes": 28,
+      "date": "2026-10-07"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_lunch_2026-10-08",
+      "event_type": "casual",
+      "mode": "walk",
+      "planned_leave": 1791488760,
+      "actual_leave": 1791489164,
+      "arrival": 1791489779,
+      "start_ts": 1791489600,
+      "predicted_travel_minutes": 9,
+      "date": "2026-10-08"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_cogs108_sec_2026-10-08",
+      "event_type": "class",
+      "mode": "walk",
+      "planned_leave": 1791492360,
+      "actual_leave": 1791492738,
+      "arrival": 1791493311,
+      "start_ts": 1791493200,
+      "predicted_travel_minutes": 9,
+      "date": "2026-10-08"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_meeting_2026-10-08",
+      "event_type": "meeting",
+      "mode": "walk",
+      "planned_leave": 1791499620,
+      "actual_leave": 1791499882,
+      "arrival": 1791500413,
+      "start_ts": 1791500400,
+      "predicted_travel_minutes": 8,
+      "date": "2026-10-08"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_cse110_lec_2026-10-09",
+      "event_type": "class",
+      "mode": "walk",
+      "planned_leave": 1791556860,
+      "actual_leave": 1791557705,
+      "arrival": 1791558601,
+      "start_ts": 1791558000,
+      "predicted_travel_minutes": 14,
+      "date": "2026-10-09"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_casual_2026-10-09",
+      "event_type": "casual",
+      "mode": "bus",
+      "planned_leave": 1791593820,
+      "actual_leave": 1791594037,
+      "arrival": 1791596047,
+      "start_ts": 1791595800,
+      "predicted_travel_minutes": 28,
+      "date": "2026-10-09"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_cse110_lec_2026-10-12",
+      "event_type": "class",
+      "mode": "walk",
+      "planned_leave": 1791816060,
+      "actual_leave": 1791816644,
+      "arrival": 1791817574,
+      "start_ts": 1791817200,
+      "predicted_travel_minutes": 14,
+      "date": "2026-10-12"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_cse110_dis_2026-10-12",
+      "event_type": "class",
+      "mode": "walk",
+      "planned_leave": 1791820260,
+      "actual_leave": 1791820869,
+      "arrival": 1791821280,
+      "start_ts": 1791820800,
+      "predicted_travel_minutes": 6,
+      "date": "2026-10-12"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_interview_2026-10-12",
+      "event_type": "interview",
+      "mode": "bus",
+      "planned_leave": 1791821820,
+      "actual_leave": 1791822392,
+      "arrival": 1791824230,
+      "start_ts": 1791824400,
+      "predicted_travel_minutes": 28,
+      "date": "2026-10-12"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_lunch_2026-10-12",
+      "event_type": "casual",
+      "mode": "walk",
+      "planned_leave": 1791834360,
+      "actual_leave": 1791834711,
+      "arrival": 1791835349,
+      "start_ts": 1791835200,
+      "predicted_travel_minutes": 9,
+      "date": "2026-10-12"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_cogs108_sec_2026-10-13",
+      "event_type": "class",
+      "mode": "walk",
+      "planned_leave": 1791924360,
+      "actual_leave": 1791924824,
+      "arrival": 1791925467,
+      "start_ts": 1791925200,
+      "predicted_travel_minutes": 9,
+      "date": "2026-10-13"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_meeting_2026-10-13",
+      "event_type": "meeting",
+      "mode": "walk",
+      "planned_leave": 1791931620,
+      "actual_leave": 1791931833,
+      "arrival": 1791932374,
+      "start_ts": 1791932400,
+      "predicted_travel_minutes": 8,
+      "date": "2026-10-13"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_cse110_lec_2026-10-14",
+      "event_type": "class",
+      "mode": "walk",
+      "planned_leave": 1791988860,
+      "actual_leave": 1791989567,
+      "arrival": 1791990513,
+      "start_ts": 1791990000,
+      "predicted_travel_minutes": 14,
+      "date": "2026-10-14"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_casual_2026-10-14",
+      "event_type": "casual",
+      "mode": "bus",
+      "planned_leave": 1792025820,
+      "actual_leave": 1792026113,
+      "arrival": 1792028164,
+      "start_ts": 1792027800,
+      "predicted_travel_minutes": 28,
+      "date": "2026-10-14"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_lunch_2026-10-15",
+      "event_type": "casual",
+      "mode": "walk",
+      "planned_leave": 1792093560,
+      "actual_leave": 1792093962,
+      "arrival": 1792094558,
+      "start_ts": 1792094400,
+      "predicted_travel_minutes": 9,
+      "date": "2026-10-15"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_cogs108_sec_2026-10-15",
+      "event_type": "class",
+      "mode": "walk",
+      "planned_leave": 1792097160,
+      "actual_leave": 1792097693,
+      "arrival": 1792098357,
+      "start_ts": 1792098000,
+      "predicted_travel_minutes": 9,
+      "date": "2026-10-15"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_meeting_2026-10-15",
+      "event_type": "meeting",
+      "mode": "walk",
+      "planned_leave": 1792104420,
+      "actual_leave": 1792104626,
+      "arrival": 1792105154,
+      "start_ts": 1792105200,
+      "predicted_travel_minutes": 8,
+      "date": "2026-10-15"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_cse110_lec_2026-10-16",
+      "event_type": "class",
+      "mode": "walk",
+      "planned_leave": 1792161660,
+      "actual_leave": 1792162452,
+      "arrival": 1792163434,
+      "start_ts": 1792162800,
+      "predicted_travel_minutes": 14,
+      "date": "2026-10-16"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_casual_2026-10-16",
+      "event_type": "casual",
+      "mode": "bus",
+      "planned_leave": 1792198620,
+      "actual_leave": 1792198922,
+      "arrival": 1792201027,
+      "start_ts": 1792200600,
+      "predicted_travel_minutes": 28,
+      "date": "2026-10-16"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_cse110_lec_2026-10-19",
+      "event_type": "class",
+      "mode": "walk",
+      "planned_leave": 1792420860,
+      "actual_leave": 1792421499,
+      "arrival": 1792422485,
+      "start_ts": 1792422000,
+      "predicted_travel_minutes": 14,
+      "date": "2026-10-19"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_cse110_dis_2026-10-19",
+      "event_type": "class",
+      "mode": "walk",
+      "planned_leave": 1792425060,
+      "actual_leave": 1792425704,
+      "arrival": 1792426072,
+      "start_ts": 1792425600,
+      "predicted_travel_minutes": 6,
+      "date": "2026-10-19"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_interview_2026-10-19",
+      "event_type": "interview",
+      "mode": "bus",
+      "planned_leave": 1792437420,
+      "actual_leave": 1792437931,
+      "arrival": 1792439660,
+      "start_ts": 1792440000,
+      "predicted_travel_minutes": 28,
+      "date": "2026-10-19"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_lunch_2026-10-19",
+      "event_type": "casual",
+      "mode": "walk",
+      "planned_leave": 1792439160,
+      "actual_leave": 1792439558,
+      "arrival": 1792440181,
+      "start_ts": 1792440000,
+      "predicted_travel_minutes": 9,
+      "date": "2026-10-19"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_cogs108_sec_2026-10-20",
+      "event_type": "class",
+      "mode": "walk",
+      "planned_leave": 1792529160,
+      "actual_leave": 1792529865,
+      "arrival": 1792530476,
+      "start_ts": 1792530000,
+      "predicted_travel_minutes": 9,
+      "date": "2026-10-20"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_meeting_2026-10-20",
+      "event_type": "meeting",
+      "mode": "walk",
+      "planned_leave": 1792536420,
+      "actual_leave": 1792536518,
+      "arrival": 1792537060,
+      "start_ts": 1792537200,
+      "predicted_travel_minutes": 8,
+      "date": "2026-10-20"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_cse110_lec_2026-10-21",
+      "event_type": "class",
+      "mode": "walk",
+      "planned_leave": 1792593660,
+      "actual_leave": 1792594382,
+      "arrival": 1792595366,
+      "start_ts": 1792594800,
+      "predicted_travel_minutes": 14,
+      "date": "2026-10-21"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_casual_2026-10-21",
+      "event_type": "casual",
+      "mode": "bus",
+      "planned_leave": 1792630620,
+      "actual_leave": 1792631132,
+      "arrival": 1792633185,
+      "start_ts": 1792632600,
+      "predicted_travel_minutes": 28,
+      "date": "2026-10-21"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_lunch_2026-10-22",
+      "event_type": "casual",
+      "mode": "walk",
+      "planned_leave": 1792698360,
+      "actual_leave": 1792698541,
+      "arrival": 1792699148,
+      "start_ts": 1792699200,
+      "predicted_travel_minutes": 9,
+      "date": "2026-10-22"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_cogs108_sec_2026-10-22",
+      "event_type": "class",
+      "mode": "walk",
+      "planned_leave": 1792701960,
+      "actual_leave": 1792702763,
+      "arrival": 1792703375,
+      "start_ts": 1792702800,
+      "predicted_travel_minutes": 9,
+      "date": "2026-10-22"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_meeting_2026-10-22",
+      "event_type": "meeting",
+      "mode": "walk",
+      "planned_leave": 1792709220,
+      "actual_leave": 1792709512,
+      "arrival": 1792710005,
+      "start_ts": 1792710000,
+      "predicted_travel_minutes": 8,
+      "date": "2026-10-22"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_cse110_lec_2026-10-23",
+      "event_type": "class",
+      "mode": "walk",
+      "planned_leave": 1792766460,
+      "actual_leave": 1792767202,
+      "arrival": 1792768173,
+      "start_ts": 1792767600,
+      "predicted_travel_minutes": 14,
+      "date": "2026-10-23"
+    },
+    {
+      "user_id": "u_demo",
+      "event_id": "evt_casual_2026-10-23",
+      "event_type": "casual",
+      "mode": "bus",
+      "planned_leave": 1792803420,
+      "actual_leave": 1792803676,
+      "arrival": 1792805615,
+      "start_ts": 1792805400,
+      "predicted_travel_minutes": 28,
+      "date": "2026-10-23"
+    }
+  ],
+  "wake_ups": [
+    {
+      "date": "2026-10-05",
+      "alarm_ts": 1791208800,
+      "awake_ts": 1791209661,
+      "calls_needed": 3,
+      "snooze_requests": [
+        {
+          "requested_minutes": 5,
+          "actual_minutes": 12
+        }
+      ],
+      "event_type": "class"
+    },
+    {
+      "date": "2026-10-06",
+      "alarm_ts": 1791295200,
+      "awake_ts": 1791295600,
+      "calls_needed": 0,
+      "snooze_requests": [],
+      "event_type": "meeting"
+    },
+    {
+      "date": "2026-10-07",
+      "alarm_ts": 1791381600,
+      "awake_ts": 1791382107,
+      "calls_needed": 1,
+      "snooze_requests": [
+        {
+          "requested_minutes": 5,
+          "actual_minutes": 9
+        }
+      ],
+      "event_type": "class"
+    },
+    {
+      "date": "2026-10-08",
+      "alarm_ts": 1791468000,
+      "awake_ts": 1791468517,
+      "calls_needed": 1,
+      "snooze_requests": [],
+      "event_type": "meeting"
+    },
+    {
+      "date": "2026-10-09",
+      "alarm_ts": 1791554400,
+      "awake_ts": 1791554988,
+      "calls_needed": 1,
+      "snooze_requests": [
+        {
+          "requested_minutes": 5,
+          "actual_minutes": 10
+        }
+      ],
+      "event_type": "class"
+    },
+    {
+      "date": "2026-10-12",
+      "alarm_ts": 1791813600,
+      "awake_ts": 1791814370,
+      "calls_needed": 2,
+      "snooze_requests": [
+        {
+          "requested_minutes": 10,
+          "actual_minutes": 22
+        }
+      ],
+      "event_type": "class"
+    },
+    {
+      "date": "2026-10-13",
+      "alarm_ts": 1791900000,
+      "awake_ts": 1791900550,
+      "calls_needed": 1,
+      "snooze_requests": [],
+      "event_type": "meeting"
+    },
+    {
+      "date": "2026-10-14",
+      "alarm_ts": 1791986400,
+      "awake_ts": 1791987160,
+      "calls_needed": 2,
+      "snooze_requests": [
+        {
+          "requested_minutes": 5,
+          "actual_minutes": 12
+        }
+      ],
+      "event_type": "class"
+    },
+    {
+      "date": "2026-10-15",
+      "alarm_ts": 1792072800,
+      "awake_ts": 1792073117,
+      "calls_needed": 0,
+      "snooze_requests": [],
+      "event_type": "meeting"
+    },
+    {
+      "date": "2026-10-16",
+      "alarm_ts": 1792159200,
+      "awake_ts": 1792159904,
+      "calls_needed": 2,
+      "snooze_requests": [
+        {
+          "requested_minutes": 10,
+          "actual_minutes": 20
+        }
+      ],
+      "event_type": "class"
+    },
+    {
+      "date": "2026-10-19",
+      "alarm_ts": 1792418400,
+      "awake_ts": 1792419064,
+      "calls_needed": 2,
+      "snooze_requests": [
+        {
+          "requested_minutes": 5,
+          "actual_minutes": 11
+        }
+      ],
+      "event_type": "class"
+    },
+    {
+      "date": "2026-10-20",
+      "alarm_ts": 1792504800,
+      "awake_ts": 1792505106,
+      "calls_needed": 0,
+      "snooze_requests": [],
+      "event_type": "meeting"
+    },
+    {
+      "date": "2026-10-21",
+      "alarm_ts": 1792591200,
+      "awake_ts": 1792591577,
+      "calls_needed": 0,
+      "snooze_requests": [
+        {
+          "requested_minutes": 5,
+          "actual_minutes": 11
+        }
+      ],
+      "event_type": "class"
+    },
+    {
+      "date": "2026-10-22",
+      "alarm_ts": 1792677600,
+      "awake_ts": 1792677962,
+      "calls_needed": 0,
+      "snooze_requests": [],
+      "event_type": "meeting"
+    },
+    {
+      "date": "2026-10-23",
+      "alarm_ts": 1792764000,
+      "awake_ts": 1792764690,
+      "calls_needed": 2,
+      "snooze_requests": [
+        {
+          "requested_minutes": 5,
+          "actual_minutes": 11
+        }
+      ],
+      "event_type": "class"
+    }
+  ],
+  "channel_events": [
+    {
+      "ts": 1791209100,
+      "channel": "call",
+      "answered": true
+    },
+    {
+      "ts": 1791212700,
+      "channel": "text",
+      "answered": true
+    },
+    {
+      "ts": 1791230700,
+      "channel": "earbud",
+      "answered": true
+    },
+    {
+      "ts": 1791231600,
+      "channel": "earbud",
+      "answered": true
+    },
+    {
+      "ts": 1791234300,
+      "channel": "call",
+      "answered": true
+    },
+    {
+      "ts": 1791295560,
+      "channel": "call",
+      "answered": true
+    },
+    {
+      "ts": 1791299160,
+      "channel": "text",
+      "answered": true
+    },
+    {
+      "ts": 1791317160,
+      "channel": "earbud",
+      "answered": true
+    },
+    {
+      "ts": 1791318060,
+      "channel": "earbud",
+      "answered": true
+    },
+    {
+      "ts": 1791320760,
+      "channel": "call",
+      "answered": true
+    },
+    {
+      "ts": 1791382020,
+      "channel": "call",
+      "answered": true
+    },
+    {
+      "ts": 1791385620,
+      "channel": "text",
+      "answered": true
+    },
+    {
+      "ts": 1791403620,
+      "channel": "earbud",
+      "answered": true
+    },
+    {
+      "ts": 1791404520,
+      "channel": "earbud",
+      "answered": true
+    },
+    {
+      "ts": 1791407220,
+      "channel": "call",
+      "answered": true
+    },
+    {
+      "ts": 1791468480,
+      "channel": "call",
+      "answered": true
+    },
+    {
+      "ts": 1791472080,
+      "channel": "text",
+      "answered": false
+    },
+    {
+      "ts": 1791490080,
+      "channel": "earbud",
+      "answered": true
+    },
+    {
+      "ts": 1791490980,
+      "channel": "earbud",
+      "answered": false
+    },
+    {
+      "ts": 1791493680,
+      "channel": "call",
+      "answered": true
+    },
+    {
+      "ts": 1791554940,
+      "channel": "call",
+      "answered": true
+    },
+    {
+      "ts": 1791558540,
+      "channel": "text",
+      "answered": false
+    },
+    {
+      "ts": 1791576540,
+      "channel": "earbud",
+      "answered": true
+    },
+    {
+      "ts": 1791577440,
+      "channel": "earbud",
+      "answered": false
+    },
+    {
+      "ts": 1791580140,
+      "channel": "call",
+      "answered": true
+    },
+    {
+      "ts": 1791814200,
+      "channel": "call",
+      "answered": true
+    },
+    {
+      "ts": 1791817800,
+      "channel": "text",
+      "answered": false
+    },
+    {
+      "ts": 1791835800,
+      "channel": "earbud",
+      "answered": true
+    },
+    {
+      "ts": 1791839400,
+      "channel": "call",
+      "answered": true
+    },
+    {
+      "ts": 1791900660,
+      "channel": "call",
+      "answered": true
+    },
+    {
+      "ts": 1791904260,
+      "channel": "text",
+      "answered": false
+    },
+    {
+      "ts": 1791922260,
+      "channel": "earbud",
+      "answered": true
+    },
+    {
+      "ts": 1791925860,
+      "channel": "call",
+      "answered": true
+    },
+    {
+      "ts": 1791987120,
+      "channel": "call",
+      "answered": false
+    },
+    {
+      "ts": 1791990720,
+      "channel": "text",
+      "answered": false
+    },
+    {
+      "ts": 1792008720,
+      "channel": "earbud",
+      "answered": true
+    },
+    {
+      "ts": 1792012320,
+      "channel": "call",
+      "answered": true
+    },
+    {
+      "ts": 1792073580,
+      "channel": "call",
+      "answered": false
+    },
+    {
+      "ts": 1792077180,
+      "channel": "text",
+      "answered": false
+    },
+    {
+      "ts": 1792095180,
+      "channel": "earbud",
+      "answered": true
+    },
+    {
+      "ts": 1792098780,
+      "channel": "call",
+      "answered": true
+    },
+    {
+      "ts": 1792160040,
+      "channel": "call",
+      "answered": false
+    },
+    {
+      "ts": 1792181640,
+      "channel": "earbud",
+      "answered": true
+    },
+    {
+      "ts": 1792185240,
+      "channel": "call",
+      "answered": false
+    },
+    {
+      "ts": 1792419300,
+      "channel": "call",
+      "answered": false
+    },
+    {
+      "ts": 1792440900,
+      "channel": "earbud",
+      "answered": true
+    },
+    {
+      "ts": 1792444500,
+      "channel": "call",
+      "answered": false
+    },
+    {
+      "ts": 1792505760,
+      "channel": "call",
+      "answered": false
+    },
+    {
+      "ts": 1792527360,
+      "channel": "earbud",
+      "answered": true
+    },
+    {
+      "ts": 1792613820,
+      "channel": "earbud",
+      "answered": true
+    },
+    {
+      "ts": 1792700280,
+      "channel": "earbud",
+      "answered": true
+    },
+    {
+      "ts": 1792786740,
+      "channel": "earbud",
+      "answered": true
+    }
+  ]
+}

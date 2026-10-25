@@ -1,0 +1,45 @@
+{
+  "user": {
+    "id": "u_demo",
+    "name": "Sam Rivera",
+    "phone": "+18585550142",
+    "timezone": "America/Los_Angeles",
+    "home_area": "La Jolla, Nobel Dr near UC San Diego",
+    "archetype_id": "best_friend",
+    "alarm_time": "07:00",
+    "grace_minutes": 5,
+    "preferred_mode": {
+      "campus": "walk",
+      "off_campus": "bus",
+      "night": "drive"
+    },
+    "prep_minutes": {
+      "casual": 15,
+      "formal": 40
+    },
+    "warmth": 0.7,
+    "harshness": 0.4,
+    "humor": 0.6,
+    "verbosity": 0.4
+  },
+  "contacts": [
+    {
+      "id": "c_mom",
+      "user_id": "u_demo",
+      "spoken_name": "Mom",
+      "relationship": "mother",
+      "phone": "+16195554417",
+      "consent": "CONFIRMED",
+      "added_ts": 1792825200
+    },
+    {
+      "id": "c_jules",
+      "user_id": "u_demo",
+      "spoken_name": "Jules",
+      "relationship": "roommate",
+      "phone": "+18585550199",
+      "consent": "PENDING",
+      "added_ts": 1792825320
+    }
+  ]
+}
