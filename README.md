@@ -153,6 +153,15 @@ Create a **Web application** OAuth client in Google Cloud Console:
 
 Trial accounts only call verified numbers, so verify every demo phone early. Point the number's voice webhook at `$PUBLIC_BASE_URL/twilio/voice` and its messaging webhook at `$PUBLIC_BASE_URL/twilio/sms`.
 
+## Prototype learnings
+
+A parallel TypeScript prototype (branch `prototype-handoff-2026-10-24`) worked through real-phone calling, phone motion, and Google setup. Its lessons, ported to this backend's routes:
+
+- [`docs/PROTOTYPE_LEARNINGS.md`](docs/PROTOTYPE_LEARNINGS.md): decisions, safety rules, motion details, and what's still unproven, mapped to tasks
+- [`docs/PHONE_TEST.md`](docs/PHONE_TEST.md): physical-phone runbook (tunnel, Twilio webhooks, Sensor Logger, acceptance steps)
+- [`docs/GOOGLE_SETUP.md`](docs/GOOGLE_SETUP.md): OAuth client, scopes, Routes key, travel-mode nuances
+- [`docs/research/`](docs/research/): the prototype's historical research notes, verbatim
+
 ## Repo layout
 
 | Path | What |
