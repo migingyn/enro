@@ -1,6 +1,8 @@
 # Enro film
 
-The public demo opens with a 56 second silent MP4 and a short explanation. The native video controls support pause, seeking, and fullscreen. Reduced motion and data saver preferences disable autoplay. A transcript and visual descriptions cover the story without playback.
+The public demo opens with a 56 second silent MP4 and a short explanation. On the landing page, the film button grows into the film where the browser supports cross-document view transitions.
+
+The page draws the film through WebGL, as a sheet that bows and splits its color channels with scroll speed and settles into an exact copy of the video at rest. Click the film to pause or play, drag sideways to scrub, use the chapter rail or the arrow keys to move between scenes, and open full screen for the native player. Each story section under the film has a button that plays its scene. Reduced motion turns off autoplay, the WebGL sheet, the cursor, and the heading reveal. Without WebGL the native video stays in place. Data saver disables autoplay. A transcript and visual descriptions cover the story without playback.
 
 The structure takes inspiration from [Matthew Kim's Gist](https://mykm.dev/projects/gist): one visible transformation, a large embedded film, and the evidence behind the result. The project chat's useful lesson was to show event changes, plan updates, calls, and movement in one observable sequence. This is original Enro artwork. No Gist video, code, audio, or graphics are reused.
 
@@ -20,7 +22,7 @@ Every frame is marked as a scripted walkthrough. It uses sample inputs and makes
 
 ## Rebuild
 
-The checked in MP4 is H.264, 1600 × 900, 30 fps, with fast start metadata and no audio track. Vercel serves the existing file and does not need the rendering tools.
+The checked in MP4 is H.264, 1600 × 900, 30 fps, with fast start metadata, a keyframe every second so scrubbing stays responsive, and no audio track. Vercel serves the existing file and does not need the rendering tools.
 
 To regenerate, install `@napi-rs/canvas@0.1.100` in a temporary tools directory and have `ffmpeg` on PATH. Point `CANVAS_MODULES` at that directory's `node_modules`.
 

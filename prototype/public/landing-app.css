@@ -86,3 +86,8 @@ button, a { touch-action: manipulation; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+/* The public film button grows into the film on the next page (cross-document view transition). */
+@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }
+.demo-action[href="/demo/"] { view-transition-name: enro-film; }
+::view-transition-old(enro-film), ::view-transition-new(enro-film) { height: 100%; object-fit: cover; }
+@media (prefers-reduced-motion: no-preference) { ::view-transition-group(enro-film) { animation-duration: .6s; animation-timing-function: cubic-bezier(.2, .75, .15, 1); } }

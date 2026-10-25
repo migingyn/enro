@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Enro | A call at the right time</title>
   <meta name="description" content="Watch Enro turn a changed appointment into a new departure plan and a phone call. A 56 second product walkthrough.">
+  <style>/* Inline so the page opts in before its first render: the landing's film button grows into the film. */
+@media(prefers-reduced-motion:no-preference){@view-transition{navigation:auto}::view-transition-group(enro-film){animation-duration:.6s;animation-timing-function:cubic-bezier(.2,.75,.15,1)}}
+::view-transition-old(enro-film),::view-transition-new(enro-film){height:100%;object-fit:cover}</style>
+  <link rel="stylesheet" href="/fonts/fonts.css">
   <link rel="stylesheet" href="./film.css">
   <script src="./film.js" defer></script>
 </head>
@@ -12,29 +16,100 @@
   <header><a class="brand" href="/" aria-label="Enro home">enro</a><a class="back" href="/">Back to Enro ↗</a></header>
   <main>
     <section class="intro" aria-labelledby="film-title">
-      <div><p class="eyebrow">SIC · Invisible interfaces</p><h1 id="film-title">A little ahead<span>of your next move.</span></h1></div>
+      <div><p class="eyebrow">SIC · Invisible interfaces</p><h1 id="film-title"><span class="line"><span>A little ahead</span></span> <span class="line"><span>of your next move.</span></span></h1></div>
       <div class="film-meta">The Enro film · 56 seconds · Silent</div>
     </section>
-    <figure class="caption-wrap">
-      <div class="film-frame"><video controls muted loop playsinline preload="metadata" poster="./film/poster.jpg" aria-label="Enro product film. Sample appointment, travel plan, phone call, and motion evidence." aria-describedby="film-description">
-        <source src="./film/enro.mp4" type="video/mp4">
-        <track kind="descriptions" src="./film/descriptions.vtt" srclang="en" label="English descriptions">
-        Your browser cannot play this video. <a href="./film/enro.mp4">Download the MP4</a> or read the transcript below.
-      </video></div>
+    <figure class="film-stage">
+      <div class="film-frame" tabindex="0" role="group" aria-roledescription="film" aria-label="Enro film. Click to pause or play, drag sideways to scrub, arrow keys change chapter.">
+        <video id="film" controls muted loop playsinline preload="metadata" poster="./film/poster.jpg" aria-label="Enro product film. Sample appointment, travel plan, phone call, and motion evidence." aria-describedby="film-description">
+          <source src="./film/enro.mp4" type="video/mp4">
+          <track kind="descriptions" src="./film/descriptions.vtt" srclang="en" label="English descriptions">
+          Your browser cannot play this video. <a href="./film/enro.mp4">Download the MP4</a> or read the transcript below.
+        </video>
+      </div>
+      <div class="film-controls" hidden>
+        <button class="icon-button" type="button" data-action="play" data-state="paused" aria-label="Play film">
+          <svg class="i-play" viewBox="0 0 14 14" aria-hidden="true"><path d="M3.5 1.8v10.4l8.6-5.2z" fill="currentColor"/></svg>
+          <svg class="i-pause" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1.8h2.8v10.4H3zM8.2 1.8H11v10.4H8.2z" fill="currentColor"/></svg>
+        </button>
+        <p class="timecode"><span data-time="now">0:00</span> / 0:56<span class="now-chapter" data-chapter-name>The moment before</span></p>
+        <ol class="chapters" aria-label="Chapters">
+          <li style="--w:6"><button type="button" data-start="0" data-end="6" aria-label="The moment before, from 0:00"><i class="track"><b></b></i><span class="name">The moment before</span><span class="at">0:00</span></button></li>
+          <li style="--w:8"><button type="button" data-start="6" data-end="14" aria-label="The commitment, from 0:06"><i class="track"><b></b></i><span class="name">The commitment</span><span class="at">0:06</span></button></li>
+          <li style="--w:9"><button type="button" data-start="14" data-end="23" aria-label="The plan, from 0:14"><i class="track"><b></b></i><span class="name">The plan</span><span class="at">0:14</span></button></li>
+          <li style="--w:9"><button type="button" data-start="23" data-end="32" aria-label="The call, from 0:23"><i class="track"><b></b></i><span class="name">The call</span><span class="at">0:23</span></button></li>
+          <li style="--w:8"><button type="button" data-start="32" data-end="40" aria-label="The check, from 0:32"><i class="track"><b></b></i><span class="name">The check</span><span class="at">0:32</span></button></li>
+          <li style="--w:8"><button type="button" data-start="40" data-end="48" aria-label="The response, from 0:40"><i class="track"><b></b></i><span class="name">The response</span><span class="at">0:40</span></button></li>
+          <li style="--w:8"><button type="button" data-start="48" data-end="56" aria-label="The departure, from 0:48"><i class="track"><b></b></i><span class="name">The departure</span><span class="at">0:48</span></button></li>
+        </ol>
+        <button class="icon-button" type="button" data-action="fullscreen" aria-label="Watch full screen">
+          <svg viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1.8 5V1.8H5M9 1.8h3.2V5M12.2 9v3.2H9M5 12.2H1.8V9"/></svg>
+        </button>
+      </div>
       <figcaption><span>Crossroads → Price Center</span><span>Scripted walkthrough · Sample data · No live calls</span></figcaption>
     </figure>
-    <section class="explainer" id="film-description">
-      <div><p class="eyebrow">How it works</p><h2>The appointment moves.<br>Your plan moves with it.</h2><p>Enro reads the event time and relevant email updates, then works backward through travel, an arrival buffer, and time to get ready. When it is time to act, your phone rings with a reason to get going.</p></div>
-      <div><p>Phone signals give the call context. Picking up the phone means it moved. Fresh step counts, walking activity, and a spoken check in provide more evidence that you are getting moving. Location, when enabled, can help check whether the phone has left the starting area.</p><p class="note">A real phone trial exposed a mistake: seven shakes registered as seven steps. The revised rule also checks Activity, but still needs physical validation. This film illustrates that rule. It is not a recording of a successful walking test.</p><p class="credits">Presentation inspired by Matthew Kim's <a href="https://mykm.dev/projects/gist" target="_blank" rel="noopener">Gist</a>. One story, with the evidence behind each decision.</p></div>
+
+    <section class="story" id="film-description" aria-label="How Enro decides">
+      <article class="beat">
+        <h2>The appointment moves. Your plan moves with it.</h2>
+        <div class="beat-body">
+          <p>Enro reads the event time and relevant email updates, then works backward through travel, an arrival buffer, and time to get ready.</p>
+          <ul class="facts">
+            <li>A sample email moves the Price Center appointment from 6:30 PM to 6:20 PM.</li>
+            <li>With 45 minutes to get ready, 20 minutes of travel, and a 10 minute buffer, preparation moves to 5:05 PM and departure to 5:50 PM.</li>
+          </ul>
+          <button class="watch" type="button" data-seek="6"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 1.2v7.6L8.6 5z" fill="currentColor"/></svg>Watch from 0:06</button>
+        </div>
+      </article>
+      <article class="beat">
+        <h2>When it is time to leave, the call explains why.</h2>
+        <div class="beat-body">
+          <p>Your phone rings with a reason to get going. At departure time the phone is still and no departure is confirmed, so Enro says the appointment moved and it is time to head out.</p>
+          <ul class="facts">
+            <li>The call is a scripted scene with sample data. The film places no real calls.</li>
+          </ul>
+          <button class="watch" type="button" data-seek="23"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 1.2v7.6L8.6 5z" fill="currentColor"/></svg>Watch from 0:23</button>
+        </div>
+      </article>
+      <article class="beat">
+        <h2>Moving the phone is only one clue.</h2>
+        <div class="beat-body">
+          <p>Phone signals give the call context. Picking up the phone means it moved. Fresh step counts, walking activity, and a spoken check in provide more evidence that you are getting moving.</p>
+          <ul class="facts">
+            <li>Seven counter increments and “I'm up” do not pass the revised rule when Activity says stationary.</li>
+            <li>Eight fresh counts, walking Activity, and a spoken check in pass the experimental movement rule.</li>
+          </ul>
+          <p class="note">A real phone trial exposed a mistake: seven shakes registered as seven steps. The revised rule also checks Activity, but still needs physical validation.</p>
+          <button class="watch" type="button" data-seek="32"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 1.2v7.6L8.6 5z" fill="currentColor"/></svg>Watch from 0:32</button>
+        </div>
+      </article>
+      <article class="beat">
+        <h2>Leaving is a separate check.</h2>
+        <div class="beat-body">
+          <p>Location, when enabled, can help check whether the phone has left the starting area. The route and arrival remain unconfirmed.</p>
+          <p class="note">This film illustrates the revised rule. It is not a recording of a successful walking test.</p>
+          <button class="watch" type="button" data-seek="48"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 1.2v7.6L8.6 5z" fill="currentColor"/></svg>Watch from 0:48</button>
+        </div>
+      </article>
     </section>
-    <details class="transcript"><summary>Read the film transcript</summary><ol>
-      <li><strong>A calendar time becomes a plan.</strong> A sample Price Center appointment starts at 6:30 PM. An email moves it to 6:20 PM.</li>
-      <li><strong>Enro works backward.</strong> With 20 minutes of travel, a 10 minute arrival buffer, and 45 minutes to get ready, preparation moves to 5:05 PM and departure to 5:50 PM.</li>
-      <li><strong>The phone rings with context.</strong> At departure time, the phone is still and no departure is confirmed. Enro says the appointment moved and it is time to head out.</li>
-      <li><strong>A pickup is not proof of walking.</strong> Seven counter increments and “I'm up” do not pass the revised rule when Activity says stationary.</li>
-      <li><strong>The response follows the evidence.</strong> In a second scripted scene, eight fresh counts, walking Activity, and a spoken check in pass the experimental movement rule.</li>
-      <li><strong>Leaving is a separate check.</strong> An optional location signal puts the phone outside the starting area. The route and arrival remain unconfirmed.</li>
-    </ol></details>
+
+    <section class="closing">
+      <details class="transcript"><summary>Read the film transcript</summary><ol>
+        <li><strong>A calendar time becomes a plan.</strong> A sample Price Center appointment starts at 6:30 PM. An email moves it to 6:20 PM.</li>
+        <li><strong>Enro works backward.</strong> With 20 minutes of travel, a 10 minute arrival buffer, and 45 minutes to get ready, preparation moves to 5:05 PM and departure to 5:50 PM.</li>
+        <li><strong>The phone rings with context.</strong> At departure time, the phone is still and no departure is confirmed. Enro says the appointment moved and it is time to head out.</li>
+        <li><strong>A pickup is not proof of walking.</strong> Seven counter increments and “I'm up” do not pass the revised rule when Activity says stationary.</li>
+        <li><strong>The response follows the evidence.</strong> In a second scripted scene, eight fresh counts, walking Activity, and a spoken check in pass the experimental movement rule.</li>
+        <li><strong>Leaving is a separate check.</strong> An optional location signal puts the phone outside the starting area. The route and arrival remain unconfirmed.</li>
+      </ol></details>
+      <p class="credits">Presentation inspired by Matthew Kim's <a href="https://mykm.dev/projects/gist" target="_blank" rel="noopener">Gist</a>. One story, with the evidence behind each decision.</p>
+    </section>
+
+    <a class="next" href="./lab.html">
+      <span class="next-kicker">Next</span>
+      <span class="next-title">Explore the demo room<svg class="next-mark" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 50 L3 67.1 A50 50 0 1 1 15.3 86 Z"/></svg></span>
+      <span class="next-copy">Stage the phone signals yourself and see what Enro can conclude.</span>
+    </a>
   </main>
   <footer><span>En route. On time.</span><nav aria-label="Project links"><a href="./lab.html">Interactive lab</a><a href="/dashboard/">Team dashboard</a><a href="https://github.com/migingyn/enro" target="_blank" rel="noopener">GitHub</a><a href="./film/enro.mp4" download>Download film</a></nav></footer>
 </body>
