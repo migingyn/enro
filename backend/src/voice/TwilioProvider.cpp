@@ -185,7 +185,9 @@ std::string TwilioProvider::placeCall(const CallRequest& req) {
                                            {"StatusCallbackEvent", "completed"},
                                            {"Timeout", "25"},
                                            {"TimeLimit", "120"},
-                                           {"Record", "false"}},
+                                           {"Record", "false"},
+                                           // Voicemail must count as "not answered" so the ladder escalates.
+                                           {"MachineDetection", "Enable"}},
                               cpr::Timeout{15000});
   if (r.error.code == cpr::ErrorCode::OPERATION_TIMEDOUT) {
     LOG_ERROR("twilio", "call " << req.call_id << " UNCERTAIN: request timed out, Twilio may have placed it. Not retrying.");

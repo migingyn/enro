@@ -74,3 +74,9 @@ TEST_CASE("DEMO_USER_PHONE and DEMO_CONTACT_PHONE swap in real phones from .env,
   CHECK(seedDemo(*app).users == 0);  // reapplied on every boot, even when nothing is reseeded
   CHECK(app->repos->user("u_demo")->phone == "+15551230001");
 }
+
+TEST_CASE("DEMO_USER_PHONE may list several numbers; the first one is used") {
+  auto app = test::fakeApp({{"DEMO_USER_PHONE", " +15551230009 , +15551230008"}});
+  seedDemo(*app);
+  CHECK(app->repos->user("u_demo")->phone == "+15551230009");
+}

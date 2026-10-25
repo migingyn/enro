@@ -74,6 +74,14 @@ void registerTwilioRoutes(CrowApp& app, AppContext& ctx) {
     std::string call_id = callIdOf(req);
     if (call_id.empty()) return xmlResponse(finish("This is Enro. Something went wrong on our side. Goodbye."));
 
+    // Answering-machine detection: a voicemail box is not Sam. Hang up without a word and treat it as
+    // no answer, so the wake ladder moves on to the next call.
+    std::string answered_by = params.count("AnsweredBy") ? params["AnsweredBy"] : "";
+    if (answered_by.rfind("machine", 0) == 0 || answered_by == "fax") {
+      LOG_INFO("twilio", call_id << " reached " << answered_by << ", treating as no answer");
+      tw->handleWebhookEvent(call_id, "no_answer", "");
+      return xmlResponse(twiml::response(twiml::hangup()));
+    }
     tw->beginTurn(call_id);
     tw->handleWebhookEvent(call_id, "answered", "");
     auto out = tw->endTurn(call_id);
@@ -91,6 +99,9 @@ void registerTwilioRoutes(CrowApp& app, AppContext& ctx) {
     std::string speech = params.count("SpeechResult") ? params["SpeechResult"] : "";
     std::string digits = params.count("Digits") ? params["Digits"] : "";
 
+    // A call that already ended (status callback won the race) or went to voicemail stays closed.
+    if (auto c = ctx.repos->call(call_id); c && (c->state == "completed" || c->state == "no_answer"))
+      return xmlResponse(twiml::response(twiml::hangup()));
     // Stop beats everything else, including the loop bounds and the Conversation.
     if (twilio::isStop(speech, digits)) {
       LOG_INFO("twilio", call_id << " stopped by the user");
