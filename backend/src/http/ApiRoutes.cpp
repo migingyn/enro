@@ -73,10 +73,14 @@ void registerApiRoutes(CrowApp& app, AppContext& ctx) {
 
   // POST /api/location  (Beacon page, departure verification, P1)
   CROW_ROUTE(app, "/api/location").methods(crow::HTTPMethod::POST)([&ctx](const crow::request& req) {
-    if (!jsonBody(req)) return errorResponse(400, "bad_request", "expected JSON body (location_request)");
-    // STUB
-    // TODO(T10): distance from home; departed when > ~300 m, then cancel DEPARTURE_CHECK nudges.
-    return fixtureResponse(ctx, "location");
+    auto body = jsonBody(req);
+    if (!body || !body->contains("lat") || !body->contains("lng"))
+      return errorResponse(400, "bad_request", "expected JSON body (location_request)");
+    auto r = ctx.departure->onLocation(body->value("user_id", "u_demo"), (*body)["lat"].get<double>(),
+                                       (*body)["lng"].get<double>(), body->value("accuracy_m", 50.0),
+                                       body->value("ts", time::nowTs()));
+    if (!r.ok) return errorResponse(404, "not_found", "unknown user");
+    return jsonResponse({{"ok", true}, {"departed", r.departed}, {"distance_from_home_m", r.distance_from_home_m}});
   });
 
   // POST /api/demo/trigger  {user_id, scenario}
