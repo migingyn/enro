@@ -6,6 +6,81 @@ It knows you'll be late before you do.
 
 Enro is a background AI agent that wakes you up, gets you out the door, and learns how late you really run. You talk to it by voice. After a three-minute setup it has no interface. Full spec: [`PRD.md`](PRD.md). Task board: [`TASKS.md`](TASKS.md). Agent rules: [`AGENTS.md`](AGENTS.md).
 
+## How it works
+
+Signals come in, the planner decides when you must leave, the reflex decides whether to speak, and the scheduler acts. Every action becomes a `Decision` row and a dashboard event. Detail in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+
+```mermaid
+flowchart TD
+    cal["Calendar / Gmail<br/>(seed or Google)"] --> triage[EmailTriage]
+    beacon[Location beacon] --> planner
+    transit["Trip replay / GTFS-RT"] --> planner
+    triage --> planner
+
+    subgraph planner [Planner]
+        urgency[Urgency] --> rtl[ReadyToLeave] --> cons[ConsequenceEngine]
+    end
+
+    model["PunctualityModel<br/>TransportLearner"] -. biases .-> planner
+    planner --> reflex{"Reflex (Jev / rules)<br/>speak or stay silent?"}
+    reflex --> sched["Scheduler<br/>(TaskQueue min-heap)"]
+    sched --> ladder["WakeLadder / Conversation"]
+    ladder --> voice["VoiceProvider<br/>(sim / twilio)"]
+    ladder --> contacts["ContactService<br/>(consent gate)"] --> sms[SMS]
+    sched --> decisions[("Decision rows in SQLite")]
+    decisions --> ws["/ws/dashboard<br/>(judges watch this)"]
+```
+
+### Morning wake ladder (PRD 7.6)
+
+```mermaid
+stateDiagram-v2
+    [*] --> Alarm: user alarm time
+    Alarm --> CALL_1: +5 min, no awake signal
+    CALL_1 --> CALL_2: +3 min, no answer
+    CALL_2 --> CALL_3: +3 min, no answer
+    CALL_3 --> NotifyContacts: in parallel, confirmed contacts only
+    CALL_1 --> AwakeCheck: answered
+    CALL_2 --> AwakeCheck: answered
+    CALL_3 --> AwakeCheck: answered
+    AwakeCheck --> AWAKE: passes "What's your first thing today?"
+    AWAKE --> Verify: 5 min verification call
+    Verify --> [*]
+```
+
+### Task dependencies
+
+Done tasks are green, open ones are grey, and tasks that need a local machine (keys, phone, mic, bus ride) have a dashed border. Status as of 2026-10-24. [`TASKS.md`](TASKS.md) and `make todos` are the live source.
+
+```mermaid
+flowchart LR
+    S1[S1 Contracts] --> S2[S2 Backend frame] & S3[S3 Seed data] & S4[S4 Frontend shell] & S5[S5 Tooling]
+
+    S2 --> T04[T04 Scheduler] & T05[T05 LRU cache] & T06[T06 Urgency] & T13[T13 Punctuality model]
+    T06 --> T07[T07 Ready-to-Leave] --> T08[T08 Consequences] --> T11[T11 Negotiation]
+    T07 --> T16[T16 Load sim] --> T23[T23 SCALE.md]
+
+    S2 --> T01[T01 OpenAI] & T02[T02 Twilio] & T03[T03 Google] & T14[T14 Jev reflex]
+    T01 --> T12[T12 Line generator]
+    T02 -. live .-> T10[T10 Wake ladder]
+    T03 -. live .-> T09[T09 Email triage]
+    S3 --> T09
+    T12 & T14 --> T15[T15 Trip replay]
+    T24[T24 Record bus trip] -.-> T15
+
+    S4 --> T17[T17 Onboarding] & T18[T18 Dashboard] & T19[T19 Replay panels] & T20[T20 Pages]
+    T01 -. realtime key .-> T17
+    T18 --> T22[T22 Pitch and demo]
+    T21[T21 Visual identity] -.-> T22
+
+    classDef done fill:#d1f2d1,stroke:#2e7d32,color:#1b3d1b
+    classDef open fill:#eeeeee,stroke:#757575,color:#212121
+    classDef local fill:#eeeeee,stroke:#757575,color:#212121,stroke-dasharray:5 3
+    class S1,S2,S4,S5,T04,T05,T06,T07,T08,T09,T10,T11,T12,T13,T16,T23 done
+    class S3,T15,T18,T19,T20 open
+    class T01,T02,T03,T14,T17,T21,T22,T24 local
+```
+
 ## Quick start (fake mode, zero keys)
 
 Needs CMake 3.20+, a C++20 compiler (Apple Clang 15+ or GCC 12+), Node 20+, and Python 3 with `pip install jsonschema websocket-client`.
