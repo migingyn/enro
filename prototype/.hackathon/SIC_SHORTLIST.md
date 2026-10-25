@@ -145,6 +145,6 @@ Subjective scores, 1–5, for the narrowly scoped versions. These are neither or
 | Track fit | 5: limits, stuck states, independent progress | 5: entirely spoken user path | 5: hands-busy owner and spoken customer path |
 | Feasibility in remaining time | 3: fresh browser implementation | 3: phone access gates progress | 3: phone and calendar access gate progress |
 
-Matthew's transferable method is visible here: one specific user, one important transformation, proof behind the claim, and a ruthless cut list. SIC's awards are overall, so do not add integrations just to accumulate sponsor names.
+The transferable method from past winners is visible here: one specific user, one important transformation, proof behind the claim, and a ruthless cut list. SIC's awards are overall, so do not add integrations just to accumulate sponsor names.
 
 Select Apply Once if its recovery spike works. If it fails, promote whichever phone candidate already has a proven end-to-end integration; Backfill has the clearer buyer, while Known has the stronger emotional demonstration. A failed spike should change the choice before visual polish consumes the build window.

@@ -82,4 +82,4 @@ Competitor evidence: WakeYa advertises conversational alarms, calendar context, 
 
 No toothbrushing classifier, sleep-stage inference, guarantees of wakefulness, unlimited nagging, persona marketplace, multiple household users, full inbox ingestion, or broad life-assistant scope. Build one real morning path first.
 
-Matthew Kim lesson to apply: make the technical mechanism visible to judges while keeping the user's interaction simple. The decisive proof is that changed source data changes the plan and observed behavior changes the agent's next action.
+Lesson from past winners: make the technical mechanism visible to judges while keeping the user's interaction simple. The decisive proof is that changed source data changes the plan and observed behavior changes the agent's next action.

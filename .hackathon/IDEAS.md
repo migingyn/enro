@@ -1,6 +1,6 @@
 # SIC idea comparison — October 24, 2026
 
-Latest follow-up: [three ideas applied to the Matthew Kim research](SIC_SHORTLIST.md). It conditionally recommends the failure-recovery job agent for this team, alongside the narrowed verification hotline and voice appointment filler. The earlier comparison below is preserved as background; no feasibility test has passed yet.
+Latest follow-up: [three ideas applied to past-winner research](SIC_SHORTLIST.md). It conditionally recommends the failure-recovery job agent for this team, alongside the narrowed verification hotline and voice appointment filler. The earlier comparison below is preserved as background; no feasibility test has passed yet.
 
 ## Recommendation
 
@@ -30,7 +30,7 @@ This review did not build software, provision accounts, place calls, contact cus
 | Track Solar idea | Surplus-aware charging, charger marketplace, battery delivery, flexible computing. Real compute jobs under changing simulated solar are the most feasible version without hardware; physical energy-control claims remain unproven without devices. Direct trading and charger marketplaces add infrastructure dependencies. |
 | Automation track 3 | Café restocking with budget, supplier fallback, verified order, and stop conditions; also apartment tours and group coordination. Strong closed workflow, but supplier access is the critical risk. |
 | Scam prevention Track 2: | Voice gatekeeper, CAPTCHA ideas, safe word, known-number verification, family escalation. Best impact/demo/track combination after narrowing to trusted callbacks and handling uncertainty honestly. |
-| Fun Matthew Kim Ideas | House ghost, ship pen pal, commute commentator. Ghost offers a memorable physical/voice demo if a bulb is ready. Bus rerouting has clearer utility than ship commentary but requires reliable route and live data. A talking ship alone does not coordinate physical movement for Dispatch. |
+| Fun ideas | House ghost, ship pen pal, commute commentator. Ghost offers a memorable physical/voice demo if a bulb is ready. Bus rerouting has clearer utility than ship commentary but requires reliable route and live data. A talking ship alone does not coordinate physical movement for Dispatch. |
 | Track 3 unsupervised market | Seller agent with minimum price, buyer negotiation, unknown-condition escalation, and single-buyer commitment. Excellent interactive demo, but marketplace access and end-to-end publishing are substantial dependencies. |
 | Zoom Agent | Transcript-to-SMS action items. Easy to explain, but insufficient distinctive behavior; text requires screen interaction and a one-shot summary does not establish Unsupervised fit. |
 | Small Business Owner Agent | Canceled slot triggers texts to waitlist. Clear business value and a small demonstrable workflow. Needs booking confirmation, expiry and conflict handling beyond existing notification products. |
