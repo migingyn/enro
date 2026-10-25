@@ -1,0 +1,154 @@
+{
+  "messages": [
+    {
+      "id": "msg_1001",
+      "from": "newsletter@ucsd.edu",
+      "subject": "This Week at UC San Diego",
+      "snippet": "Homecoming events, free boba at Price Center, and more.",
+      "received_ts": 1792857600,
+      "expected_verdict": "IGNORE",
+      "extract": null
+    },
+    {
+      "id": "msg_1002",
+      "from": "deals@bookstore.ucsd.edu",
+      "subject": "20% off hoodies this weekend",
+      "snippet": "Show your student ID at checkout.",
+      "received_ts": 1792870200,
+      "expected_verdict": "IGNORE",
+      "extract": null
+    },
+    {
+      "id": "msg_1003",
+      "from": "cse110-tas@ucsd.edu",
+      "subject": "Section canceled today",
+      "snippet": "Hi all, discussion section is canceled today. See you Wednesday.",
+      "received_ts": 1793025600,
+      "expected_verdict": "PLAN_CHANGE",
+      "extract": {
+        "event_id": "evt_cse110_dis",
+        "canceled": true,
+        "new_start_ts": null,
+        "new_location": null
+      }
+    },
+    {
+      "id": "msg_1004",
+      "from": "recruiting@qualcomm.com",
+      "subject": "Your interview on Monday",
+      "snippet": "Looking forward to meeting you at Building Q, 11:00 AM. Bring a photo ID.",
+      "received_ts": 1792796400,
+      "expected_verdict": "MAYBE",
+      "extract": null
+    },
+    {
+      "id": "msg_1005",
+      "from": "noreply@canvas.ucsd.edu",
+      "subject": "Assignment graded: HW3",
+      "snippet": "Your submission for CSE 110 HW3 has been graded.",
+      "received_ts": 1792984500,
+      "expected_verdict": "IGNORE",
+      "extract": null
+    },
+    {
+      "id": "msg_1006",
+      "from": "alex.kim@ucsd.edu",
+      "subject": "lunch monday?",
+      "snippet": "still on for price center at 1? starving already",
+      "received_ts": 1792987500,
+      "expected_verdict": "MAYBE",
+      "extract": null
+    },
+    {
+      "id": "msg_1007",
+      "from": "cogs108-staff@ucsd.edu",
+      "subject": "Study group moved to 7pm",
+      "snippet": "Monday's COGS 108 study group is moved to 7:00 PM, same place.",
+      "received_ts": 1792976400,
+      "expected_verdict": "PLAN_CHANGE",
+      "extract": {
+        "event_id": "evt_study",
+        "canceled": false,
+        "new_start_ts": 1793066400,
+        "new_location": null
+      }
+    },
+    {
+      "id": "msg_1008",
+      "from": "promo@doordash.com",
+      "subject": "$5 off your next order",
+      "snippet": "Hungry? Use code STUDY5.",
+      "received_ts": 1792990800,
+      "expected_verdict": "IGNORE",
+      "extract": null
+    },
+    {
+      "id": "msg_1009",
+      "from": "registrar@ucsd.edu",
+      "subject": "Enrollment appointment reminder",
+      "snippet": "Your winter enrollment time is Nov 6 at 9:00 AM.",
+      "received_ts": 1792688400,
+      "expected_verdict": "MAYBE",
+      "extract": null
+    },
+    {
+      "id": "msg_1010",
+      "from": "mts-alerts@sdmts.com",
+      "subject": "Service alert: Route 201",
+      "snippet": "Expect minor delays near Genesee Ave due to road work.",
+      "received_ts": 1792972800,
+      "expected_verdict": "MAYBE",
+      "extract": null
+    },
+    {
+      "id": "msg_1011",
+      "from": "cogs108-staff@ucsd.edu",
+      "subject": "Midterm room change",
+      "snippet": "The COGS 108 midterm on Thursday will be held in Center Hall 101, not Peterson 108.",
+      "received_ts": 1792981800,
+      "expected_verdict": "PLAN_CHANGE",
+      "extract": {
+        "event_id": "evt_cogs108_mid_1029",
+        "canceled": false,
+        "new_start_ts": null,
+        "new_location": "Center Hall 101, UC San Diego"
+      }
+    },
+    {
+      "id": "msg_1012",
+      "from": "hello@spotify.com",
+      "subject": "Your Daylist is ready",
+      "snippet": "Fresh tracks for your Monday morning.",
+      "received_ts": 1793019600,
+      "expected_verdict": "IGNORE",
+      "extract": null
+    },
+    {
+      "id": "msg_1013",
+      "from": "mom.rivera@gmail.com",
+      "subject": "good luck tomorrow!!",
+      "snippet": "You're going to crush the interview. Call me after?",
+      "received_ts": 1792983600,
+      "expected_verdict": "IGNORE",
+      "extract": null
+    },
+    {
+      "id": "msg_1014",
+      "from": "noreply@github.com",
+      "subject": "[enro] New pull request",
+      "snippet": "migingyn opened a pull request.",
+      "received_ts": 1792994400,
+      "expected_verdict": "IGNORE",
+      "extract": null
+    },
+    {
+      "id": "msg_1015",
+      "from": "cse110-tas@ucsd.edu",
+      "subject": "Office hours this week",
+      "snippet": "Office hours Wednesday 3-4 PM in Geisel as usual.",
+      "received_ts": 1792875600,
+      "expected_verdict": "MAYBE",
+      "extract": null
+    }
+  ]
+}

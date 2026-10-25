@@ -1,0 +1,53 @@
+{
+  "types": {
+    "interview": {
+      "base_prep_minutes": 45,
+      "buffer_minutes": 15,
+      "urgency_weight": 0.95
+    },
+    "exam": {
+      "base_prep_minutes": 30,
+      "buffer_minutes": 15,
+      "urgency_weight": 0.9
+    },
+    "flight": {
+      "base_prep_minutes": 60,
+      "buffer_minutes": 45,
+      "urgency_weight": 1.0
+    },
+    "class": {
+      "base_prep_minutes": 20,
+      "buffer_minutes": 5,
+      "urgency_weight": 0.5
+    },
+    "meeting": {
+      "base_prep_minutes": 15,
+      "buffer_minutes": 5,
+      "urgency_weight": 0.45
+    },
+    "casual": {
+      "base_prep_minutes": 15,
+      "buffer_minutes": 5,
+      "urgency_weight": 0.2
+    }
+  },
+  "urgency": {
+    "weights": {
+      "event_type": 0.4,
+      "slack": 0.3,
+      "load": 0.1,
+      "deadline": 0.1,
+      "bias": 0.1
+    },
+    "levels": {
+      "FIRM": 40,
+      "URGENT": 70
+    }
+  },
+  "mode_speeds_kmh": {
+    "walk": 4.8,
+    "bike": 15,
+    "bus": 18,
+    "drive": 35
+  }
+}

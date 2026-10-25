@@ -1,0 +1,70 @@
+{
+  "lines": {
+    "wake_call_1": [
+      "Morning {name}, it's Enro. {event} is coming up. Time to get up.",
+      "Hey {name}, rise and shine. You've got {event} today."
+    ],
+    "wake_call_2": [
+      "{name}, second call. {event} won't wait. Feet on the floor.",
+      "Call two, {name}. Up you get, {event} is on."
+    ],
+    "wake_call_3": [
+      "{name}! Get up! This is call three and {event} is on!",
+      "{name}, last call before I text your backup. Get up now!"
+    ],
+    "awake_check": [
+      "Prove you're up. What's your first thing today?",
+      "Quick check: tell me what's first on your day."
+    ],
+    "awake_verified": [
+      "Good, you're up. I'll check back in five minutes.",
+      "That's the answer. I'll ring again in five to make sure you stayed up."
+    ],
+    "leave_reminder_chill": [
+      "{name}, heads up: leave in about {minutes} minutes for {event}."
+    ],
+    "leave_reminder_firm": [
+      "{name}, you need to leave in {minutes} minutes for {event}. Start wrapping up."
+    ],
+    "leave_reminder_urgent": [
+      "{name}, leave now for {event}. Every minute counts."
+    ],
+    "departure_check": [
+      "Did you head out yet for {event}?",
+      "Are you on your way to {event}?"
+    ],
+    "snooze_grant": [
+      "Okay, {minutes} minutes. Even then you're on time. I'll call back."
+    ],
+    "snooze_counter": [
+      "Last three times you said five, it was eleven. I'll give you two. Feet on the floor.",
+      "You asked for {minutes}. History says that turns into a lot more. Two minutes, deal?"
+    ],
+    "snooze_refuse": [
+      "No snooze. {minutes} more minutes makes you late to {event}. Up now."
+    ],
+    "transit_comment": [
+      "Smooth ride so far, {minutes} minutes to go.",
+      "Bus is moving well, you're on pace."
+    ],
+    "transit_alert": [
+      "Heads up, the bus is running {minutes} minutes late. Still okay for {event}, barely."
+    ],
+    "transit_reroute": [
+      "Plot twist: the bus went off script. Hop off at the next stop and walk, you'll still beat the clock."
+    ],
+    "arrived": [
+      "Love it. Go. I'll keep an eye on the timing.",
+      "Nice, you're out the door. Go get it."
+    ],
+    "contact_sms": [
+      "Automated message from Enro: {name} hasn't picked up their wake-up calls and has {event}. You're their backup. Reply STOP to stop these texts."
+    ],
+    "contact_added_sms": [
+      "Automated message from Enro: {name} added you as a wake-up backup. Reply STOP to opt out."
+    ],
+    "onboarding_done": [
+      "I've got it from here, {name}. You're set."
+    ]
+  }
+}

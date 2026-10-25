@@ -1,0 +1,71 @@
+{
+  "instructions": "You are Enro. Interview the user in a warm, quick voice. Ask one question at a time. Read each emergency contact back with the last four digits of the number.",
+  "questions": [
+    {
+      "slot": "name",
+      "prompt": "Hey, I'm Enro. What should I call you?"
+    },
+    {
+      "slot": "phone",
+      "prompt": "What number should I call when it's time to get up?"
+    },
+    {
+      "slot": "home_area",
+      "prompt": "Roughly where do you live?"
+    },
+    {
+      "slot": "alarm_time",
+      "prompt": "What time does your own alarm usually go off? Do you set it yourself?"
+    },
+    {
+      "slot": "prep_minutes",
+      "prompt": "How long do you take to get ready for something casual? And for something formal, like an interview?"
+    },
+    {
+      "slot": "preferred_mode",
+      "prompt": "How do you usually get to class? And off campus?"
+    },
+    {
+      "slot": "harshness_pref",
+      "prompt": "When you're running late, how harsh do you want me to be? Gentle, honest, or drill sergeant?"
+    },
+    {
+      "slot": "contacts",
+      "prompt": "If you sleep through everything, who should I let know? Say their name, how you know them, and their number."
+    }
+  ],
+  "slot_schema": {
+    "name": {
+      "type": "string",
+      "description": "What to call the user"
+    },
+    "phone": {
+      "type": "string",
+      "description": "E.164 number for wake calls"
+    },
+    "home_area": {
+      "type": "string",
+      "description": "Neighborhood or street, used as the default origin"
+    },
+    "alarm_time": {
+      "type": "string",
+      "description": "HH:MM of the user's own alarm; also sets_own_alarm boolean"
+    },
+    "prep_minutes": {
+      "type": "object",
+      "description": "{casual: int, formal: int} minutes to get ready"
+    },
+    "preferred_mode": {
+      "type": "object",
+      "description": "trip type -> walk | bike | bus | drive"
+    },
+    "harshness_pref": {
+      "type": "number",
+      "description": "0 gentle .. 1 drill sergeant"
+    },
+    "contacts": {
+      "type": "array",
+      "description": "[{spoken_name, relationship, phone}], each read back with last four digits"
+    }
+  }
+}
