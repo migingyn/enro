@@ -60,7 +60,11 @@ def check(label, method, path, schema=None, body=None, status=200, content_type=
     return code, headers, raw
 
 
-check("health", "GET", "/health", "health")
+_, _, raw = check("health", "GET", "/health", "health")
+# Demo triggers place calls and texts. Never press them on a server that can reach real phones.
+REAL_VOICE = json.loads(raw).get("providers", {}).get("voice") not in (None, "sim")
+if REAL_VOICE:
+    print("      voice provider is real: skipping demo triggers (they would call real phones)")
 check("onboarding session", "POST", "/api/onboarding/session", "onboarding_session")
 req = json.loads((ROOT / "examples/onboarding_complete_request.json").read_text())
 check("onboarding complete", "POST", "/api/onboarding/complete", "onboarding_complete", body=req)
@@ -75,7 +79,7 @@ check("plan", "GET", "/api/users/u_demo/plan?date=2026-10-26", "plan")
 check("consequences", "GET", "/api/users/u_demo/consequences?delay=11", "consequences")
 check("punctuality", "GET", "/api/users/u_demo/punctuality", "punctuality")
 check("location", "POST", "/api/location", "location", body=json.loads((ROOT / "examples/location_request.json").read_text()))
-for scenario in ["wake_ladder", "leave_reminder", "email_drop"]:
+for scenario in ([] if REAL_VOICE else ["wake_ladder", "leave_reminder", "email_drop"]):
     check(f"demo trigger {scenario}", "POST", "/api/demo/trigger", "demo_trigger", body={"user_id": "u_demo", "scenario": scenario})
 check("demo trigger bad scenario", "POST", "/api/demo/trigger", "error", body={"user_id": "u_demo", "scenario": "nope"}, status=400)
 trip_status = 200 if (ROOT.parent / "backend/seed/trips/bus_trip_01.json").exists() else 404
