@@ -8,6 +8,8 @@
 
 [![Enro demo room](docs/assets/demo-preview.png)](https://enro-sic.vercel.app/demo)
 
+![Phone sensors supported by the Enro prototype](docs/assets/phone-sensors.png)
+
 Enro plans backward from your next commitment. It combines the event time, travel, time to get ready, and an arrival buffer. A phone call gives you a reason to get moving, with a reminder when it is time to leave.
 
 Built for the SIC Invisible Interfaces challenge. The phone call is the daily interaction. The website handles setup and makes the reasoning visible during the demo.
