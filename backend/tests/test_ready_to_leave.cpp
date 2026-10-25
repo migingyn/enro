@@ -117,3 +117,32 @@ TEST_CASE("missing config falls back to PRD defaults and an unknown factor count
   CHECK(p.travel_minutes == 10);
   CHECK(p.prep_minutes == 0);
 }
+
+TEST_CASE("bus walks come from the router when it knows them, else from mode_legs") {
+  struct WalkingRouter : Router {
+    int walk_to = -1, walk_from = -1;
+    std::string name() const override { return "walking"; }
+    RouteEta eta(const std::string& mode, const Place&, const Place&) override {
+      RouteEta e{9, 7700, mode, "google"};
+      e.walk_to_minutes = walk_to;
+      e.walk_from_minutes = walk_from;
+      return e;
+    }
+  };
+  auto types = eventTypes();
+  types["mode_legs"] = {{"bus", {{"walk_to_stop_minutes", 6}, {"walk_from_stop_minutes", 4}}}};
+  UrgencyScorer urgency({});
+  LeaveInput in = lectureInput();
+  in.mode = "bus";
+  in.mode_stats.travel_factor = 1.0;
+
+  WalkingRouter typical;  // no real walks: config's 6 + 4
+  CHECK(ReadyToLeave(types, typical, urgency).plan(in).travel_minutes == 6 + 9 + 4);
+
+  WalkingRouter google;  // the real route: 6 min to the stop, 17 min after the ride
+  google.walk_to = 6;
+  google.walk_from = 17;
+  auto p = ReadyToLeave(types, google, urgency).plan(in);
+  CHECK(p.travel_minutes == 6 + 9 + 17);
+  CHECK(p.reasoning[1] == "travel 32 min = walk to stop 6 + bus 9 (9 min ETA x learned factor 1.00) + walk from stop 17");
+}

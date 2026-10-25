@@ -146,7 +146,7 @@ Create a **Web application** OAuth client in Google Cloud Console:
 
 - Authorized redirect URI: `http://localhost:8080/oauth/google/callback`, plus `https://<ngrok-domain>/oauth/google/callback` when tunnelling
 - Authorized JavaScript origin: `http://localhost:5173`
-- Scopes: `calendar.readonly` and `gmail.readonly` only
+- Scopes: `calendar.events.readonly` and `gmail.readonly` only
 - Consent screen in Testing mode with each teammate added as a test user
 
 ### Twilio

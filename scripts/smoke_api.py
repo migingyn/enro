@@ -65,8 +65,12 @@ check("onboarding session", "POST", "/api/onboarding/session", "onboarding_sessi
 req = json.loads((ROOT / "examples/onboarding_complete_request.json").read_text())
 check("onboarding complete", "POST", "/api/onboarding/complete", "onboarding_complete", body=req)
 check("contact confirm", "POST", "/api/contacts/c_mom/confirm", "contact_confirm")
-check("oauth start -> redirect", "GET", "/oauth/google/start?user_id=u_demo", status=302)
-check("oauth callback -> /done", "GET", "/oauth/google/callback?code=fake&state=u_demo", status=302)
+_, start_headers, _ = check("oauth start -> redirect", "GET", "/oauth/google/start?user_id=u_demo", status=302)
+# The callback only accepts the random, single-use state that start issued, so follow its redirect.
+location = start_headers.get("Location", "")
+callback = location[location.find("/oauth/google/callback"):] if "/oauth/google/callback" in location else ""
+check("oauth callback -> /done", "GET", callback or "/oauth/google/callback?code=fake&state=missing", status=302)
+check("oauth callback reused state", "GET", callback or "/oauth/google/callback?code=fake&state=missing", status=400)
 check("plan", "GET", "/api/users/u_demo/plan?date=2026-10-26", "plan")
 check("consequences", "GET", "/api/users/u_demo/consequences?delay=11", "consequences")
 check("punctuality", "GET", "/api/users/u_demo/punctuality", "punctuality")
