@@ -1,4 +1,4 @@
-<p align="center"><a href="https://enro-sic.vercel.app"><img src="prototype/design/landing/enro logo.png" alt="enro" width="220"></a></p>
+<p align="center"><a href="https://enro-sic.vercel.app"><img src="prototype/design/landing/enro-logo.png" alt="enro" width="220"></a></p>
 
 <h1 align="center">En route. On time.</h1>
 
@@ -159,11 +159,11 @@ Trial accounts only call verified numbers, so verify every demo phone early. Poi
 
 ## Prototype learnings
 
-A parallel TypeScript prototype (branch `prototype-handoff-2026-10-24`) worked through real-phone calling, phone motion, and Google setup. Its lessons, ported to this backend's routes:
+A parallel TypeScript prototype (branch `prototype-handoff-2026-10-24`) worked through real phone calling, phone motion, and Google setup. Its lessons, ported to this backend's routes:
 
 - [`docs/PROTOTYPE_LEARNINGS.md`](docs/PROTOTYPE_LEARNINGS.md): decisions, safety rules, motion details, and what's still unproven, mapped to tasks
-- [`docs/PHONE_TEST.md`](docs/PHONE_TEST.md): physical-phone runbook (tunnel, Twilio webhooks, Sensor Logger, acceptance steps)
-- [`docs/GOOGLE_SETUP.md`](docs/GOOGLE_SETUP.md): OAuth client, scopes, Routes key, travel-mode nuances
+- [`docs/PHONE_TEST.md`](docs/PHONE_TEST.md): physical phone runbook (tunnel, Twilio webhooks, Sensor Logger, acceptance steps)
+- [`docs/GOOGLE_SETUP.md`](docs/GOOGLE_SETUP.md): OAuth client, scopes, Routes key, travel mode nuances
 - [`docs/research/`](docs/research/): the prototype's historical research notes, verbatim
 
 ## Repo layout
@@ -177,7 +177,7 @@ A parallel TypeScript prototype (branch `prototype-handoff-2026-10-24`) worked t
 | `docs/` | Vision, architecture, demo script, scale, privacy, risks |
 | `scripts/` | Contract check, smoke test, e2e, TTS prerender, how to record a bus trip |
 
-GTFS-realtime (live transit) needs protobuf, which is optional at build time: `brew install protobuf` or `apt install libprotobuf-dev protobuf-compiler`. Without it the backend uses trip replay only.
+GTFS realtime (live transit) needs protobuf, which is optional at build time: `brew install protobuf` or `apt install libprotobuf-dev protobuf-compiler`. Without it the backend uses trip replay only.
 
 ## Working agreement
 
