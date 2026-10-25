@@ -39,7 +39,7 @@ await writeFile(path.join(output, 'demo/index.html'), room);
 const team = await readFile(path.join(root, 'frontend/dist/index.html'), 'utf8');
 await writeFile(path.join(output, 'team.html'), team
   .replace('</head>', '<link rel="icon" href="/favicon.svg"><style>body{padding-top:36px}#demo-banner{position:fixed;top:0;left:0;right:0;z-index:9999;display:flex;justify-content:space-between;gap:12px;padding:8px 16px;background:#13213a;color:#e9f3ff;font:12px system-ui}#demo-banner a{color:inherit;text-decoration:underline}</style></head>')
-  .replace('<body>', '<body><aside id="demo-banner"><span>Team dashboard preview. Sample data and simulated calls.</span><a href="/demo/">Back to demo room</a></aside>'));
+  .replace(/<body([^>]*)>/, '<body$1><aside id="demo-banner"><span>Team dashboard preview. Sample data and simulated calls.</span><a href="/demo/">Back to demo room</a></aside>'));
 try { await cp(path.join(root, 'docs/assets/demo-preview.png'), path.join(output, 'preview.png')); } catch { /* First local build can precede the screenshot. */ }
 await writeFile(path.join(output, 'robots.txt'), 'User-agent: *\nAllow: /\n');
 console.log('Public demo built. No credentials, private state, or local operator pages were copied.');

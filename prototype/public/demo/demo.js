@@ -156,6 +156,7 @@ function renderPublicDemo() {
   $('planner-frame').dataset.src = './day/';
   $('planner-frame').title = 'Sample Enro morning planner';
   const evidence = $('view-evidence');
+  evidence.querySelector('h1').innerHTML = 'The test,<br>and what we learned.';
   evidence.querySelector('.intro').textContent = 'What the physical test established, and what still needs testing.';
   evidence.querySelector('.outline-link').href = 'https://github.com/migingyn/enro/blob/main/prototype/docs/PHONE_TEST.md';
   evidence.querySelector('.outline-link').textContent = 'Read the test record ↗';

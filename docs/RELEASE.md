@@ -13,3 +13,5 @@ The local phone prototype remains available for real Google, Twilio, routing, an
 The release checkout passed TypeScript checking, 145 prototype tests, 10 demo model tests, the prototype build, the React production build, 29 contract examples, and the C++ suite with 177 cases. The fake mode end to end run passed all 15 checks, including route smoke tests, scheduling demo beats, trip replay, load simulation, and dashboard events.
 
 The earlier physical test remains a false positive for walking. The software checks do not validate waking a person, reliable background delivery, or the revised walking classifier.
+
+The public browser flow was checked through event selection, plan math, the simulated call, and departure with a travel delay. The Crossroads preview rejects shaking and accepts staged walking plus a spoken response. The Lookahead scene updates its arrival forecast. All of these use sample inputs. The public landing page and scripts return successfully without login; private API and operator pages are absent.
