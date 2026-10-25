@@ -6,12 +6,14 @@
 #include "http/Routes.hpp"
 #include "store/Seed.hpp"
 #include "util/Log.hpp"
+#include "util/Time.hpp"
 
 int main() {
   auto ctx = enro::buildApp(enro::Env::load());
 
   if (ctx->env.demoMode()) enro::seedDemo(*ctx);
   ctx->scheduler->start();
+  ctx->pollers->start(enro::time::nowTs());  // calendar + inbox feed through every POLL_SECONDS
 
   enro::CrowApp app;
   app.loglevel(crow::LogLevel::Warning);
