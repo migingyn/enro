@@ -1,5 +1,7 @@
 # Prototype learnings
 
+This document preserves the earlier handoff snapshot. The prototype has since added real phone calls, Google imports, Routes, and native sensors. Its physical walking claim was corrected after the user reported shaking the phone. Read [the current integration status](INTEGRATION.md) and [corrected test record](../prototype/docs/PHONE_TEST.md) before using the historical status below.
+
 A parallel TypeScript/Express prototype (port 3333, plain HTML console) was built on Oct 24 2026 while this repo's C++ line was being set up. It focused on one live path: real Twilio call + phone motion + Google event → wake/leave time. This page records what it established so the C++ tasks don't relearn it. Snapshot as of the prototype's handoff (4:10 PM PT).
 
 - Full prototype, code and tests: branch **`prototype-handoff-2026-10-24`** (`TEAM_HANDOFF.md` there is the long version).

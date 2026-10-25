@@ -1,6 +1,6 @@
 # Real phone and motion test
 
-Runbook for the first physical-phone trial against this repo's C++ backend (port 8080). Adapted from the TypeScript prototype's runbook (branch `prototype-handoff-2026-10-24`), which was **never run on a physical phone**. Nothing below has passed yet. Record what actually happens.
+Runbook for the first physical phone trial against the C++ backend on port 8080. That backend still needs its own physical trial. The separate TypeScript prototype has since placed real calls and received phone sensors; its seven shake trial was a false positive for walking. See [the corrected prototype record](../prototype/docs/PHONE_TEST.md) and [the integration notes](INTEGRATION.md). The acceleration experiment below does not establish walking or wakefulness.
 
 Owners: T02 (Twilio voice), S7 (motion ingest), T10 (wake ladder). Background: [`PROTOTYPE_LEARNINGS.md`](PROTOTYPE_LEARNINGS.md).
 
