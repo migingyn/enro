@@ -282,3 +282,32 @@ TEST_CASE("a browser subscribed by user id rings for every call to that user") {
   sim.onBrowserMessage("u_demo", R"({"type":"decline","ts":0,"data":{"call_id":"call_b"}})");
   CHECK(events == std::vector<std::string>{"call_b:declined"});
 }
+
+TEST_CASE("voicemail (AnsweredBy=machine_*) hangs up and counts as no answer, so the ladder escalates") {
+  Webhooks w(twilioEnv());
+  w.addCall("call_vm");
+  auto res = w.post("/twilio/voice?call_id=call_vm", {{"CallSid", "CA_TEST"}, {"AnsweredBy", "machine_start"}});
+  CHECK(res.code == 200);
+  CHECK(res.body.find("<Hangup/>") != std::string::npos);
+  CHECK(res.body.find("<Gather") == std::string::npos);
+  CHECK(w.app->repos->call("call_vm")->state == "no_answer");
+  CHECK(w.app->repos->turns("call_vm").empty());  // nothing said to a voicemail box
+
+  w.addCall("call_human");
+  res = w.post("/twilio/voice?call_id=call_human", {{"CallSid", "CA_TEST"}, {"AnsweredBy", "human"}});
+  CHECK(res.body.find("<Gather") != std::string::npos);
+  CHECK(w.app->repos->call("call_human")->state == "in_progress");
+}
+
+TEST_CASE("webhooks for a call that already ended never reopen it") {
+  Webhooks w(twilioEnv());
+  w.addCall("call_done");
+  w.post("/twilio/voice?call_id=call_done", {{"CallSid", "CA_TEST"}});
+  w.post("/twilio/status?call_id=call_done", {{"CallSid", "CA_TEST"}, {"CallStatus", "completed"}});
+  REQUIRE(w.app->repos->call("call_done")->state == "completed");
+  auto turns = w.app->repos->turns("call_done").size();
+  auto res = w.post("/twilio/gather?call_id=call_done", {{"SpeechResult", "please leave a message after the tone"}});
+  CHECK(res.body.find("<Hangup/>") != std::string::npos);
+  CHECK(w.app->repos->call("call_done")->state == "completed");
+  CHECK(w.app->repos->turns("call_done").size() == turns);
+}

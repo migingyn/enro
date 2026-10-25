@@ -63,7 +63,11 @@ SeedReport seedDemo(AppContext& ctx) {
   // the demo user's 555 number, DEMO_CONTACT_PHONE replaces the first CONFIRMED contact's number.
   if (ctx.env.has("DEMO_USER_PHONE")) {
     for (auto& u : repos.users()) {
-      u.phone = ctx.env.get("DEMO_USER_PHONE");
+      std::string phones = ctx.env.get("DEMO_USER_PHONE");  // may be a comma-separated list: first is primary
+      std::string first = phones.substr(0, phones.find(','));
+      first.erase(0, first.find_first_not_of(" \t"));
+      first.erase(first.find_last_not_of(" \t") + 1);
+      u.phone = first;
       repos.upsertUser(u);
     }
   }
