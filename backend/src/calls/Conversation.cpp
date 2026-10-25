@@ -5,7 +5,6 @@
 
 #include "app/App.hpp"
 #include "models/Json.hpp"
-#include "motion/WakeEvidence.hpp"
 #include "planner/DayPlanner.hpp"
 #include "util/Time.hpp"
 
@@ -110,7 +109,6 @@ std::optional<AgentLine> Conversation::onEvent(const std::string& call_id, const
     call->state = "in_progress";
     ctx_.updateCall(*call);
     stage_[call_id] = "opened";
-    noteCallAnswered(ctx_, call_id);  // S7: only motion after this moment counts
 
     auto user = ctx_.repos->user(call->user_id);
     std::string name = user && !user->name.empty() ? user->name.substr(0, user->name.find(' ')) : "hey";
@@ -189,7 +187,6 @@ std::optional<AgentLine> Conversation::onEvent(const std::string& call_id, const
     if (checking && real_answer) {
       // Passed the awake check: a real answer, not a grunt.
       ctx_.wake_ladder->onAwake(call_id);
-      recordWakeEvidence(ctx_, *call);  // S7: was the phone moving since the answer? (evidence only)
       auto line = say(*call, "awake_verified", {}, "Good. You're up. I'll check back in five minutes.");
       line.end_call = true;
       stage_.erase(call_id);

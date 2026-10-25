@@ -21,7 +21,6 @@ void registerOAuthRoutes(CrowApp& app, AppContext& ctx);       // OAuthRoutes.cp
 void registerTwilioRoutes(CrowApp& app, AppContext& ctx);      // TwilioRoutes.cpp (T02)
 void registerDashboardSocket(CrowApp& app, AppContext& ctx);   // DashboardSocket.cpp (shared)
 void registerSimCallSocket(CrowApp& app, AppContext& ctx);     // SimCallSocket.cpp (T02)
-void registerMotionRoutes(CrowApp& app, AppContext& ctx);      // MotionRoutes.cpp (S7)
 // void registerRetellRoutes(CrowApp& app, AppContext& ctx);   // RetellRoutes.cpp (RETELL ALTERNATE)
 
 // ---- response helpers ----
