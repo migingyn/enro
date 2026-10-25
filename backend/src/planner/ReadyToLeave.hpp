@@ -18,6 +18,7 @@ struct LeaveInput {
   User user;
   Event event;
   Place origin;
+  Place destination;              // event.location with coordinates when known (Places); label-only otherwise
   std::string mode;              // from TransportLearner (T13) or the user's preferred_mode
   PunctualityStats type_stats;   // learned, for event.event_type
   PunctualityStats mode_stats;   // learned, for mode

@@ -11,6 +11,10 @@
 namespace enro {
 
 namespace {
+constexpr int kMaxWalkMeters = 3000;  // longer "walks" are planned as bus rides
+}  // namespace
+
+namespace {
 
 constexpr long long kDay = 24 * 3600;
 const char* kDefaultTz = "America/Los_Angeles";
@@ -80,17 +84,20 @@ DayPlan DayPlanner::build(const std::string& user_id, const std::string& date_in
       // Not the first event: the user is already out, coming from the previous one. Interviews, exams,
       // and flights still get their full prep.
       in.already_out = true;
-      in.origin = {prev->location, std::nullopt, std::nullopt};
+      in.origin = ctx_.places->resolve(prev->location);
       if (e->start_ts - prev->end_ts <= 30 * 60) in.after_title = prev->title;
     } else {
-      in.origin = {u.home_area, std::nullopt, std::nullopt};
+      in.origin = ctx_.places->resolve(u.home_area);
     }
     std::string trip = tripType(*e, day.timezone);
     auto pref = u.preferred_mode.find(trip);
     std::string preferred = pref != u.preferred_mode.end() ? pref->second : "walk";
-    int meters = FallbackRouter::distanceMeters(in.origin, {e->location, std::nullopt, std::nullopt});
+    in.destination = ctx_.places->resolve(e->location);  // coordinates from backend/config/places.json
+    int meters = FallbackRouter::distanceMeters(in.origin, in.destination);
     std::string predicted = ctx_.transport->predict(e->event_type, meters, preferred);
     in.mode = predicted.empty() ? preferred : predicted;
+    // Habits learned on campus don't apply to long trips: nobody walks back from Sorrento Valley.
+    if (in.mode == "walk" && meters > kMaxWalkMeters) in.mode = "bus";
     in.mode_stats = ctx_.punctuality->forMode(in.mode);
     day.plans.push_back(ctx_.ready_to_leave->plan(in));
     prev = e;
