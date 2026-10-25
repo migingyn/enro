@@ -1,0 +1,20 @@
+@import url('/fonts/fonts.css');
+:root { --ink: #13213a; --muted: #435d7d; --line: #c5d9ee; --lime: #a2cbf8; --display: 'Archivo', sans-serif; }
+body { background: linear-gradient(160deg, #bbdcfd, #a2cbf8 55%, #8fc0f5); color: var(--ink); font-family: 'Inter', sans-serif; }
+.topbar { background: #bbdcfdde; border-color: #ffffff70; }
+.brand, .footer-brand { color: #13213a; }
+.brand-mark { display: none; }
+.intro h1, .intro h1 span { color: #13213a; }
+.card, .call-item, .access-panel { background: #ecf5ffdd; border-color: #ffffffb0; border-radius: 18px; }
+.button.dark, .call-strip { background: #13213a; }
+.button.dark:hover:not(:disabled) { background: #2a3d5c; }
+.button.lime-button { background: #a2cbf8; color: #13213a; }
+.button.secondary, input, select { background: #f6faff; border-color: #c5d9ee; color: #13213a; }
+.text-link, .eyebrow, form label, .field-label, .setup-steps a, .setup-steps strong, .sensor-evidence dt, .departure-copy .departure-reason { color: #435d7d; }
+.formula, .walking-evidence, .integration-letter { background: #dcecff; color: #435d7d; }
+.formula strong, .journey strong, .plan-time-row strong { color: #13213a; }
+.tag, .connection-pill { background: #f6faff; border-color: #c5d9ee; color: #435d7d; }
+.tag.live, .walking-evidence.confirmed { background: #e8f5ef; color: #27664b; }
+.call-strip .eyebrow, .call-strip p:not(.eyebrow), .call-actions .fineprint { color: #c3d7ef; }
+.motion-heading h2, .empty-morning h2, .section-heading h2 { font-weight: 900; }
+.card-footer, .integration-row, .audit-item, footer { border-color: #c5d9ee; }

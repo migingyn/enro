@@ -1,0 +1,42 @@
+{
+  "name": "enro",
+  "version": "1.0.0",
+  "description": "Calls and departure reminders planned around your day",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test test/*.test.ts",
+    "tunnel": "cloudflared tunnel --url http://127.0.0.1:3333 --protocol http2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/migingyn/enro.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/migingyn/enro/issues"
+  },
+  "homepage": "https://github.com/migingyn/enro#readme",
+  "dependencies": {
+    "dotenv": "^18.0.9",
+    "express": "^5.3.0",
+    "ical.js": "^2.2.1",
+    "twilio": "^6.2.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=22.13"
+  }
+}

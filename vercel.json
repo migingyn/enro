@@ -1,0 +1,45 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "",
+  "buildCommand": "npm --prefix frontend ci && node scripts/build_demo.mjs",
+  "outputDirectory": "site-dist",
+  "trailingSlash": true,
+  "rewrites": [
+    {
+      "source": "/dashboard/",
+      "destination": "/team.html"
+    },
+    {
+      "source": "/onboarding/",
+      "destination": "/team.html"
+    },
+    {
+      "source": "/done/",
+      "destination": "/team.html"
+    },
+    {
+      "source": "/call/:id/",
+      "destination": "/team.html"
+    },
+    {
+      "source": "/beacon/",
+      "destination": "/team.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    }
+  ]
+}

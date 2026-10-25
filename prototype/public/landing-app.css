@@ -1,0 +1,88 @@
+/* App extensions to shiyo's landing and event approval design. */
+:root { --muted: #435d7d; }
+[hidden] { display: none !important; }
+a, button, input, summary { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 3px solid #13213a; outline-offset: 4px; }
+button:disabled { cursor: not-allowed; opacity: .45; }
+button, a { touch-action: manipulation; }
+.hero-copy { margin-top: 22px; color: var(--ink-2); font-size: 15px; line-height: 1.7; }
+.hero-action { text-decoration: none; background: var(--ink); box-shadow: 0 7px 20px -12px #13213a; }
+.hero-action:hover { background: var(--ink-2); }
+.demo-action { display: flex; align-items: center; justify-content: center; gap: 12px; width: fit-content; min-height: 44px; margin: 12px auto 0; padding: 8px 22px; border: 1px solid #13213a40; border-radius: 999px; color: var(--ink); font-size: 14px; font-weight: 600; text-decoration: none; background: #ffffff25; }
+.demo-action:hover { background: #ffffff65; }
+.demo-hint { margin-top: 6px; font-size: 11px; color: var(--muted); }
+.landing-footer { position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 0 clamp(20px, 5vw, 78px) 30px; color: var(--ink-2); font-size: 12px; }
+.landing-footer a { color: inherit; text-decoration: none; padding: 10px 0; font-weight: 600; }
+.landing-footer a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.day-page header { gap: 20px; }
+.connected { text-decoration: none; text-align: right; }
+.connected .dot { flex: none; background: #5d7391; box-shadow: none; }
+.connected .dot.live { background: #2f7a5b; box-shadow: 0 0 0 3px #2f7a5b20; }
+.day-page main { width: min(680px, 100%); }
+.intro p { line-height: 1.6; }
+.account-panel { border: 1px solid var(--card-line); border-radius: 18px; padding: 22px; background: var(--card); margin-top: 24px; }
+.panel-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; }
+.panel-heading h2, .plan-results>h2 { font-size: 17px; font-weight: 700; letter-spacing: -.02em; }
+.panel-heading a { font-size: 12px; }
+.account-list { margin-top: 10px; }
+.account-row { display: flex; justify-content: space-between; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid #13213a14; }
+.account-row:last-child { border-bottom: 0; }
+.account-email { min-width: 0; overflow-wrap: anywhere; font-size: 13px; font-weight: 500; }
+.account-label { font-size: 11px; color: #27664b; white-space: nowrap; }
+.account-row button { font: inherit; font-size: 12px; flex-shrink: 0; }
+.small-copy { font-size: 12px; color: var(--muted); line-height: 1.6; margin-top: 12px; }
+.outline-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 42px; border: 1px solid #13213a35; border-radius: 999px; color: var(--ink); background: #ffffff40; font: inherit; font-size: 12px; font-weight: 600; padding: 10px 16px; text-decoration: none; cursor: pointer; }
+.outline-button:hover:not(:disabled) { background: #ffffff80; }
+#sync { margin-top: 15px; }
+.app-notice { position: relative; padding: 15px 18px; margin-top: 24px; border-radius: 14px; background: #f6faff; font-size: 13px; line-height: 1.6; overflow-wrap: anywhere; }
+.app-notice.error { border-left: 3px solid #b4374a; }
+.empty-state { text-align: center; padding: 30px 16px; }
+.empty-clock { font-size: 45px; color: #435d7d; }
+.empty-state h2 { font-size: 19px; letter-spacing: -.02em; margin: 12px 0 9px; }
+.empty-state p { color: var(--muted); font-size: 13px; line-height: 1.8; }
+.info h2 { overflow-wrap: anywhere; line-height: 1.4; }
+.info .place { white-space: normal; overflow-wrap: anywhere; line-height: 1.5; margin-top: 5px; }
+.event-source { color: var(--muted); font-size: 11px; line-height: 1.5; overflow-wrap: anywhere; margin-top: 8px; }
+.event .btn { min-width: 44px; min-height: 44px; font: inherit; font-size: 18px; }
+.day-page .when .time { margin-top: 7px; line-height: 1.4; }
+.day-page .when .day { letter-spacing: .03em; line-height: 1.5; }
+.app-form { margin-top: 18px; }
+.app-form label, .app-form legend { display: block; font-size: 12px; font-weight: 600; margin: 15px 0 8px; }
+.app-form input:not([type=radio]) { width: 100%; min-width: 0; min-height: 46px; border: 1px solid #13213a25; border-radius: 10px; padding: 12px; background: #ffffff80; color: var(--ink); font: inherit; font-size: 14px; }
+.app-form input::placeholder { color: #627895; }
+.app-form .primary { margin-top: 18px; }
+.travel-options { border: 0; display: flex; gap: 10px; }
+.travel-options legend { margin-top: 20px; }
+.travel-options label { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; margin: 0; padding: 10px 20px; background: #ffffff70; border: 1px solid #13213a25; border-radius: 999px; cursor: pointer; }
+.travel-options label:has(input:checked) { color: white; background: var(--ink); border-color: var(--ink); }
+.travel-options input { accent-color: #6aaaf0; }
+.two-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.add-event summary { display: flex; justify-content: space-between; cursor: pointer; font-weight: 600; font-size: 14px; list-style: none; }
+.add-event summary::-webkit-details-marker { display: none; }
+.add-event summary span { font-size: 20px; line-height: 1; }
+.add-event[open] summary span { transform: rotate(45deg); }
+.back-link { display: block; text-align: center; color: var(--ink-2); font-size: 13px; margin-top: 26px; text-decoration: none; }
+.back-link:hover { text-decoration: underline; }
+.plan-results { margin-top: 28px; }
+.plan-results .event { margin: 12px 0; grid-template-columns: 1fr; }
+.plan-results .outline-button { margin-top: 10px; }
+.day-page .bar { width: min(648px, calc(100% - 32px)); bottom: max(16px, env(safe-area-inset-bottom)); }
+.day-page .bar .count { font-size: 13px; white-space: nowrap; }
+.day-page .primary { min-height: 46px; }
+@media (max-width: 560px) {
+  .landing-footer { flex-direction: column; gap: 4px; padding-bottom: 20px; text-align: center; }
+  .landing-footer span { font-size: 11px; }
+  .day-page header { padding: 24px 20px 0; }
+  .connected { font-size: 11px; }
+  .account-panel { padding: 18px; }
+  .day-page .event { grid-template-columns: 56px 1fr; }
+  .day-page .actions { grid-column: 2; justify-content: flex-start; }
+  .day-page .event .btn { font-size: 12px; gap: 7px; }
+  .day-page .bar { padding-left: 16px; gap: 8px; }
+  .day-page .primary { font-size: 13px; padding: 0 16px; }
+  .plan-results .event { grid-template-columns: 1fr; }
+  .account-email { font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

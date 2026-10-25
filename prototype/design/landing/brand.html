@@ -1,0 +1,930 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>enro Brand Guidelines</title>
+<meta name="description" content="How enro looks, sounds and moves: logo, color, type, texture, motion and voice.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #13213a;
+    --ink-2: #2a3d5c;
+    --muted: #5d7391;
+    --sky-1: #bbdcfd;
+    --sky-2: #a2cbf8;
+    --sky-3: #8fc0f5;
+    --signal: #6aaaf0;
+    --casual: #2f7a5b;
+    --urgent: #b4374a;
+    --card: rgba(236, 245, 255, 0.7);
+    --card-line: rgba(255, 255, 255, 0.85);
+    --grain-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.9 1.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--sky-2);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+
+  .stage {
+    position: relative;
+    min-height: 100vh;
+    background:
+      radial-gradient(ellipse 70% 40% at 38% 10%, var(--sky-1) 0%, transparent 70%),
+      linear-gradient(170deg, #acd3fb 0%, var(--sky-2) 40%, #9cc8f7 100%);
+  }
+  .stage::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.22;
+    mix-blend-mode: soft-light;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.2 0 0 0 0 0.35 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    z-index: 5;
+  }
+
+  /* ---------- shared brand pieces ---------- */
+  .wordmark {
+    display: inline-flex;
+    align-items: flex-end;
+    font-family: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 900;
+    font-stretch: 108%;
+    line-height: 1;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+  .wordmark .o {
+    width: 0.58em;
+    height: 0.58em;
+    margin-left: 0.035em;
+    margin-bottom: 0.115em;
+    flex: none;
+    fill: currentColor;
+  }
+  .wordmark.grain {
+    -webkit-mask-image: var(--grain-mask), linear-gradient(180deg, #000 20%, rgba(0, 0, 0, 0.62) 100%);
+    -webkit-mask-composite: source-in;
+            mask-image: var(--grain-mask), linear-gradient(180deg, #000 20%, rgba(0, 0, 0, 0.62) 100%);
+            mask-composite: intersect;
+  }
+
+  /* ---------- nav ---------- */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px clamp(20px, 5vw, 78px) 0;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 26px;
+    letter-spacing: -0.04em;
+  }
+  .brand svg { width: 20px; height: 20px; }
+  .toc {
+    display: flex;
+    gap: 18px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .toc a { color: var(--ink-2); text-decoration: none; }
+  .toc a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+
+  main {
+    width: min(1040px, 100%);
+    margin: 0 auto;
+    padding: 0 20px 120px;
+  }
+
+  /* ---------- cover ---------- */
+  .cover {
+    text-align: center;
+    padding: 110px 0 90px;
+  }
+  .cover .wordmark { font-size: clamp(88px, 13vw, 180px); }
+  .cover .sub {
+    margin-top: 18px;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ink-2);
+  }
+  .cover .meta {
+    margin-top: 10px;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ---------- sections ---------- */
+  section.block {
+    padding: 64px 0;
+    border-top: 1px solid rgba(19, 33, 58, 0.14);
+  }
+  .eyebrow {
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  h2 {
+    margin-top: 6px;
+    font-family: "Archivo", sans-serif;
+    font-weight: 900;
+    font-stretch: 108%;
+    font-size: clamp(28px, 4vw, 38px);
+    line-height: 1.1;
+    letter-spacing: 0.005em;
+  }
+  .lede {
+    margin-top: 14px;
+    max-width: 640px;
+    font-size: 16.5px;
+    color: var(--ink-2);
+  }
+  h3 {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .card p, .card li { font-size: 14px; color: var(--ink-2); }
+  .card p + p { margin-top: 6px; }
+
+  .grid { display: grid; gap: 14px; margin-top: 32px; }
+  .grid > * { min-width: 0; }
+  .g2 { grid-template-columns: repeat(2, 1fr); }
+  .g3 { grid-template-columns: repeat(3, 1fr); }
+  .g4 { grid-template-columns: repeat(4, 1fr); }
+
+  .card {
+    padding: 22px;
+    border-radius: 20px;
+    background: var(--card);
+    border: 1px solid var(--card-line);
+    box-shadow: 0 8px 24px -16px rgba(30, 70, 130, 0.35);
+  }
+  .card h3 + p { margin-top: 6px; }
+
+  /* essence */
+  .pillars .num {
+    font-family: "Archivo", sans-serif;
+    font-weight: 900;
+    font-size: 15px;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .promise {
+    margin-top: 14px;
+    padding: 28px;
+    text-align: center;
+    border-radius: 20px;
+    background: var(--ink);
+    color: #fff;
+  }
+  .promise .q {
+    font-family: "Archivo", sans-serif;
+    font-weight: 900;
+    font-stretch: 108%;
+    font-size: clamp(22px, 3vw, 30px);
+  }
+  .promise p { margin-top: 6px; color: rgba(255, 255, 255, 0.72); font-size: 14px; }
+
+  /* logo */
+  .stagebox {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 220px;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  .stagebox.sky { background: linear-gradient(160deg, #b9dbfc, #96c4f6); }
+  .stagebox.white { background: #f6faff; }
+  .stagebox.ink { background: var(--ink); }
+  .stagebox.ink .wordmark { color: #eaf3ff; }
+  .stagebox .label {
+    position: absolute;
+    left: 16px;
+    bottom: 12px;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .stagebox.ink .label { color: rgba(255, 255, 255, 0.55); }
+  .stagebox .wordmark { font-size: clamp(48px, 7vw, 76px); }
+
+  .clearspace {
+    position: relative;
+    padding: 0.35em;
+    outline: 1px dashed rgba(180, 55, 74, 0.6);
+    outline-offset: 0;
+  }
+  .clearspace::before {
+    content: "";
+    position: absolute;
+    inset: 0.35em;
+    border: 1px solid rgba(180, 55, 74, 0.35);
+  }
+
+  .marks { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 20px 28px; padding: 16px 0; }
+  .marks svg { display: block; }
+
+  .donts .card { display: flex; flex-direction: column; gap: 14px; }
+  .donts .stagebox { min-height: 130px; background: linear-gradient(160deg, #b9dbfc, #96c4f6); }
+  .donts .stagebox .wordmark { font-size: 40px; }
+  .x {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--urgent);
+  }
+
+  /* color */
+  .swatch {
+    border-radius: 20px;
+    overflow: hidden;
+    background: var(--card);
+    border: 1px solid var(--card-line);
+    cursor: pointer;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    padding: 0;
+    transition: transform 0.15s;
+  }
+  .swatch:hover { transform: translateY(-2px); }
+  .swatch .chip { height: 110px; }
+  .swatch .meta { padding: 14px 16px 16px; }
+  .swatch .name { font-size: 14.5px; font-weight: 700; }
+  .swatch .hex {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+  }
+  .swatch .use { margin-top: 6px; font-size: 12.5px; color: var(--ink-2); }
+  .ratio {
+    display: flex;
+    height: 40px;
+    margin-top: 14px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--card-line);
+  }
+  .ratio span {
+    display: grid;
+    place-items: center;
+    font-size: 11.5px;
+    font-weight: 700;
+  }
+
+  /* type */
+  .specimen { display: grid; gap: 14px; margin-top: 32px; }
+  .spec {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 20px;
+    align-items: baseline;
+    padding: 20px 22px;
+    border-radius: 20px;
+    background: var(--card);
+    border: 1px solid var(--card-line);
+  }
+  .spec .tag { font-size: 12.5px; font-weight: 600; color: var(--muted); line-height: 1.5; }
+  .spec .tag strong { display: block; color: var(--ink); font-size: 13.5px; }
+  .t-display { font-family: "Archivo", sans-serif; font-weight: 900; font-stretch: 108%; font-size: clamp(40px, 6vw, 64px); line-height: 1; }
+  .t-h { font-family: "Archivo", sans-serif; font-weight: 900; font-stretch: 108%; font-size: 30px; line-height: 1.1; }
+  .t-slogan { font-size: 21px; font-weight: 600; letter-spacing: -0.015em; color: var(--ink-2); }
+  .t-body { font-size: 16px; color: var(--ink-2); }
+  .t-eyebrow { font-size: 12.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+  /* texture & motion */
+  .radar-demo {
+    position: relative;
+    height: 260px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: linear-gradient(160deg, #b9dbfc, #96c4f6);
+  }
+  .radar-demo .ring {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    transform: translate(-50%, -50%);
+  }
+  .radar-demo .sweep {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 900px;
+    height: 900px;
+    background: conic-gradient(from -10deg, transparent 0deg, rgba(225, 240, 255, 0.6) 1deg, rgba(225, 240, 255, 0.45) 8deg, transparent 9deg);
+    animation: spin 12s linear infinite;
+  }
+  @keyframes spin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .radar-demo .sweep { animation: none; transform: translate(-50%, -50%) rotate(20deg); }
+  }
+  .radar-demo .wordmark {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 54px;
+  }
+  .grain-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grain-compare .stagebox { min-height: 180px; }
+
+  /* voice */
+  .tones { margin-top: 32px; display: grid; gap: 14px; }
+  .tone {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 20px;
+    padding: 22px;
+    border-radius: 20px;
+    background: var(--card);
+    border: 1px solid var(--card-line);
+  }
+  .tone .pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.75);
+  }
+  .tone .when { margin-top: 8px; font-size: 13px; color: var(--muted); }
+  .bubble {
+    padding: 14px 16px;
+    border-radius: 16px 16px 16px 4px;
+    background: rgba(255, 255, 255, 0.8);
+    font-size: 15px;
+    color: var(--ink);
+  }
+  .bubble + .bubble { margin-top: 8px; }
+  .bubble.me {
+    margin-left: auto;
+    max-width: 70%;
+    border-radius: 16px 16px 4px 16px;
+    background: rgba(52, 88, 140, 0.42);
+    color: #fff;
+  }
+  .words { margin-top: 14px; }
+  .words ul { list-style: none; margin-top: 10px; display: grid; gap: 8px; }
+  .words li { font-size: 14px; color: var(--ink-2); padding-left: 22px; position: relative; }
+  .words li::before { position: absolute; left: 0; font-weight: 800; }
+  .words .yes li::before { content: "✓"; color: var(--casual); }
+  .words .no li::before { content: "✕"; color: var(--urgent); }
+
+  /* components */
+  .comp-stage {
+    display: grid;
+    place-items: center;
+    gap: 16px;
+    padding: 36px 22px;
+    border-radius: 20px;
+    background: linear-gradient(160deg, #b9dbfc, #96c4f6);
+  }
+  .demo-field {
+    width: min(360px, 100%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(19, 33, 58, 0.25);
+    font-size: 16px;
+  }
+  .demo-field .cc { color: var(--muted); font-weight: 500; }
+  .demo-field .ph { flex: 1; min-width: 0; color: #7f93ad; font-weight: 500; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .btn-glass {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    height: 54px;
+    padding: 0 22px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    background: rgba(52, 88, 140, 0.42);
+    -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .btn-solid {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    height: 50px;
+    padding: 0 22px;
+    border-radius: 999px;
+    background: #121d33;
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .btn-glass svg, .btn-solid svg { width: 16px; height: 16px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+  .chip-ui {
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.7);
+    color: var(--ink-2);
+  }
+  .chip-ui.dark { background: var(--ink); color: #fff; }
+  .comp-cap { margin-top: 12px; font-size: 13.5px; color: var(--ink-2); }
+  .comp-cap strong { color: var(--ink); }
+
+  footer {
+    padding: 40px 0 0;
+    border-top: 1px solid rgba(19, 33, 58, 0.14);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  footer a { color: var(--ink-2); }
+
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    transform: translate(-50%, 20px);
+    padding: 10px 18px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: #fff;
+    font-size: 13.5px;
+    font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+    z-index: 10;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  /* ---------- print / PDF ---------- */
+  @page { size: 11in 8.5in; margin: 0; }
+  @media print {
+    html, body { background: var(--sky-2); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .toc, .toast { display: none !important; }
+    .stage::after { display: none; }
+    main { padding-bottom: 40px; }
+    .cover { padding: 150px 0 0; min-height: 7.4in; }
+    section.block { break-before: page; border-top: 0; padding: 48px 0 24px; }
+    .card, .spec, .tone, .stagebox, .swatch, .promise, .radar-demo, .comp-stage { break-inside: avoid; }
+    .radar-demo .sweep { animation: none; transform: translate(-50%, -50%) rotate(20deg); }
+    footer { break-inside: avoid; }
+    /* keep the desktop layout on paper */
+    main { width: 100%; padding: 0 0.55in 0; }
+    .g2 { grid-template-columns: repeat(2, 1fr) !important; }
+    .g3 { grid-template-columns: repeat(3, 1fr) !important; }
+    .g4 { grid-template-columns: repeat(4, 1fr) !important; }
+    .spec { grid-template-columns: 200px 1fr !important; padding: 14px 20px; }
+    .tone { grid-template-columns: 180px 1fr !important; padding: 16px 20px; }
+    .grain-compare { grid-template-columns: 1fr 1fr !important; }
+    .card, .swatch, .stagebox, .spec, .tone { box-shadow: none !important; }
+    .grid { margin-top: 20px; gap: 12px; }
+    .stagebox { min-height: 170px; }
+    .swatch .chip { height: 70px; }
+    .specimen, .tones { margin-top: 20px; gap: 10px; }
+    .lede { margin-top: 8px; font-size: 15px; }
+    .bubble { padding: 10px 14px; font-size: 14px; }
+    .radar-demo { height: 210px; }
+    section.block { padding-top: 36px; }
+    #logo .stagebox { min-height: 120px; }
+    #logo .card .stagebox { min-height: 120px !important; margin-top: 10px !important; }
+    .donts .stagebox { min-height: 80px; }
+    .donts .card { padding: 12px; gap: 8px; }
+    #logo .card { padding: 16px; }
+    .swatch .chip { height: 44px; }
+    .swatch .meta { padding: 10px 14px 12px; }
+    #color .card { padding: 14px 18px; }
+    .tone { padding: 12px 18px; }
+    .tones { gap: 8px; }
+    .bubble { padding: 8px 12px; font-size: 13px; }
+    .bubble + .bubble { margin-top: 5px; }
+    .words .card { padding: 14px 18px; }
+    .words ul { gap: 4px; margin-top: 6px; }
+    .cover { padding-top: 2.6in; }
+    #voice .lede { max-width: 820px; }
+    #voice .tones { margin-top: 14px; }
+    .tone { grid-template-columns: 150px 1fr !important; padding: 10px 16px; }
+    .tone .when { margin-top: 4px; }
+    .bubble { padding: 6px 12px; line-height: 1.4; }
+    .bubble + .bubble { margin-top: 4px; }
+    #voice .words { margin-top: 10px; }
+  }
+
+  @media (max-width: 860px) {
+    .g4 { grid-template-columns: repeat(2, 1fr); }
+    .g3 { grid-template-columns: 1fr; }
+    .toc { display: none; }
+  }
+  @media (max-width: 600px) {
+    header { padding-top: 24px; }
+    .g2, .grain-compare { grid-template-columns: 1fr; }
+    .spec, .tone { grid-template-columns: 1fr; gap: 10px; }
+    .cover { padding: 70px 0 60px; }
+    section.block { padding: 48px 0; }
+    .bubble.me { max-width: 85%; }
+  }
+</style>
+</head>
+<body>
+<!-- reusable O mark -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="o" viewBox="0 0 100 100"><path d="M50 50 L3 67.1 A50 50 0 1 1 15.3 86 Z"/></symbol>
+  <symbol id="arrow" viewBox="0 0 18 18"><path d="M4 14 L14 4 M6 4 H14 V12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<div class="stage">
+  <header>
+    <a class="brand" href="index.html" aria-label="enro home">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 10 V1 A9 9 0 1 0 19 10 Z" fill="#6aaaf0"/></svg>
+      enro
+    </a>
+    <nav class="toc" aria-label="Sections">
+      <a href="#essence">Essence</a>
+      <a href="#logo">Logo</a>
+      <a href="#color">Color</a>
+      <a href="#type">Type</a>
+      <a href="#texture">Texture &amp; motion</a>
+      <a href="#voice">Voice</a>
+      <a href="#ui">UI</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="cover">
+      <h1 class="wordmark grain" aria-label="enro">
+        <span aria-hidden="true">enr</span><svg class="o" aria-hidden="true"><use href="#o"/></svg>
+      </h1>
+      <p class="sub">Brand guidelines</p>
+      <p class="meta">Version 1.0 · October 2026</p>
+    </section>
+
+    <!-- 01 ESSENCE -->
+    <section class="block" id="essence">
+      <p class="eyebrow">01 · Essence</p>
+      <h2>The friend who's always early.</h2>
+      <p class="lede">enro gets you out the door on time. It knows how long you really need to get ready, calls you at the right moment, and talks you through it like a person would. Not another notification.</p>
+
+      <div class="grid g3 pillars">
+        <div class="card">
+          <div class="num">01</div>
+          <h3>Proactive</h3>
+          <p>enro reaches out first. It decides when to interrupt you, not just when your trip starts.</p>
+        </div>
+        <div class="card">
+          <div class="num">02</div>
+          <h3>Conversational</h3>
+          <p>You can say "give me five minutes" and get an honest answer about whether that works.</p>
+        </div>
+        <div class="card">
+          <div class="num">03</div>
+          <h3>Personal</h3>
+          <p>It learns your habits, like running 12 minutes late leaving home, and plans around them.</p>
+        </div>
+      </div>
+
+      <div class="promise">
+        <div class="q">En route. On time.</div>
+        <p>Our promise and our tagline. Always written with two full stops, sentence case.</p>
+      </div>
+    </section>
+
+    <!-- 02 LOGO -->
+    <section class="block" id="logo">
+      <p class="eyebrow">02 · Logo</p>
+      <h2>The wordmark and the notched o.</h2>
+      <p class="lede">The o is a clock face with a slice of time cut out: the minutes enro gives back to you. The notch always points to the lower left, toward the r, as if the hand is just about to move.</p>
+
+      <div class="grid g3">
+        <div class="stagebox sky">
+          <span class="wordmark grain" aria-label="enro"><span aria-hidden="true">enr</span><svg class="o"><use href="#o"/></svg></span>
+          <span class="label">Primary · grain on sky</span>
+        </div>
+        <div class="stagebox white">
+          <span class="wordmark" aria-label="enro"><span aria-hidden="true">enr</span><svg class="o"><use href="#o"/></svg></span>
+          <span class="label">Solid ink on light</span>
+        </div>
+        <div class="stagebox ink">
+          <span class="wordmark" aria-label="enro"><span aria-hidden="true">enr</span><svg class="o"><use href="#o"/></svg></span>
+          <span class="label">Reversed on ink</span>
+        </div>
+      </div>
+
+      <div class="grid g2">
+        <div class="card">
+          <h3>Clear space</h3>
+          <p>Keep empty space around the wordmark equal to half the height of the o on every side.</p>
+          <div class="stagebox white" style="min-height:170px;margin-top:14px">
+            <span class="wordmark clearspace" style="font-size:52px" aria-label="enro"><span aria-hidden="true">enr</span><svg class="o"><use href="#o"/></svg></span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Marks</h3>
+          <p>Use the notched o alone as the app icon. Use the small quarter-cut mark beside "enro" in navigation. Minimum size is 16px for either mark and 24px tall for the wordmark.</p>
+          <div class="stagebox white" style="min-height:170px;margin-top:14px">
+            <div class="marks">
+              <svg width="88" height="88" viewBox="0 0 100 100" fill="#13213a" aria-label="Notched O mark"><use href="#o"/></svg>
+              <svg width="88" height="88" viewBox="0 0 100 100" aria-label="App icon">
+                <rect width="100" height="100" rx="24" fill="#a2cbf8"/>
+                <svg x="22" y="22" width="56" height="56" viewBox="0 0 100 100" fill="#13213a"><use href="#o"/></svg>
+              </svg>
+              <span class="brand" style="font-size:30px"><svg viewBox="0 0 20 20" style="width:22px;height:22px"><path d="M10 10 V1 A9 9 0 1 0 19 10 Z" fill="#6aaaf0"/></svg>enro</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid g4 donts">
+        <div class="card">
+          <div class="stagebox"><span class="wordmark" style="transform:scaleX(1.5)"><span>enr</span><svg class="o"><use href="#o"/></svg></span></div>
+          <span class="x">✕ Don't stretch it</span>
+        </div>
+        <div class="card">
+          <div class="stagebox"><span class="wordmark"><span>enr</span><svg class="o" style="transform:rotate(140deg)"><use href="#o"/></svg></span></div>
+          <span class="x">✕ Don't rotate the notch</span>
+        </div>
+        <div class="card">
+          <div class="stagebox"><span class="wordmark" style="background:linear-gradient(90deg,#ff6a3d,#a64dff);-webkit-background-clip:text;background-clip:text;color:transparent"><span>enr</span><svg class="o" style="fill:#a64dff"><use href="#o"/></svg></span></div>
+          <span class="x">✕ No color gradients</span>
+        </div>
+        <div class="card">
+          <div class="stagebox"><span class="wordmark" style="color:#fff"><span>enr</span><svg class="o" style="fill:#6aaaf0"><use href="#o"/></svg></span></div>
+          <span class="x">✕ Don't recolor the O</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 COLOR -->
+    <section class="block" id="color">
+      <p class="eyebrow">03 · Color</p>
+      <h2>Clear sky, deep ink.</h2>
+      <p class="lede">enro lives in the calm blue of an early morning. Ink carries the words. Status colors are used only when the moment calls for them. Click any swatch to copy its hex.</p>
+
+      <div class="grid g4" id="swatches"></div>
+
+      <div class="card" style="margin-top:14px">
+        <h3>Balance</h3>
+        <p>Roughly how much of any screen each color should cover.</p>
+        <div class="ratio" aria-label="Color balance: Sky 70%, Ink 18%, white 8%, Signal 3%, status 1%">
+          <span style="flex:70;background:#a2cbf8;color:#13213a">Sky 70%</span>
+          <span style="flex:18;background:#13213a;color:#fff">Ink 18%</span>
+          <span style="flex:8;background:#f6faff;color:#5d7391">8%</span>
+          <span style="flex:3;background:#6aaaf0"></span>
+          <span style="flex:1;background:#b4374a"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 TYPE -->
+    <section class="block" id="type">
+      <p class="eyebrow">04 · Typography</p>
+      <h2>Heavy and wide, then quiet.</h2>
+      <p class="lede">Two typefaces, both free on Google Fonts. Archivo Black sets the wordmark and headlines. Inter does everything else. Never use Archivo for paragraphs.</p>
+
+      <div class="specimen">
+        <div class="spec">
+          <div class="tag"><strong>Display</strong>Archivo 900 · width 108%<br>72–150px · tracking +1%</div>
+          <div class="t-display">On time.</div>
+        </div>
+        <div class="spec">
+          <div class="tag"><strong>Headline</strong>Archivo 900 · width 108%<br>28–42px · line height 1.1</div>
+          <div class="t-h">Approve events</div>
+        </div>
+        <div class="spec">
+          <div class="tag"><strong>Slogan</strong>Inter 600<br>18–21px · tracking −1.5%</div>
+          <div class="t-slogan">En route. On time.</div>
+        </div>
+        <div class="spec">
+          <div class="tag"><strong>Body</strong>Inter 400–500<br>14–17px · line height 1.5</div>
+          <div class="t-body">Leave-by times include how long you usually take to get ready.</div>
+        </div>
+        <div class="spec">
+          <div class="tag"><strong>Eyebrow</strong>Inter 700 · uppercase<br>12.5px · tracking +8%</div>
+          <div class="t-eyebrow">5 upcoming events</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 TEXTURE & MOTION -->
+    <section class="block" id="texture">
+      <p class="eyebrow">05 · Texture &amp; motion</p>
+      <h2>Grain, rings and one slow sweep.</h2>
+      <p class="lede">A fine film grain sits over every surface so the blue never looks flat. The radar sweep is our signature motion: one beam, one full turn every 12 seconds, clockwise, like a second hand that's in no hurry.</p>
+
+      <div class="grid g2">
+        <div>
+          <div class="radar-demo" aria-hidden="true">
+            <div class="ring" style="width:420px;height:420px"></div>
+            <div class="sweep"></div>
+            <div class="ring" style="width:200px;height:200px"></div>
+            <span class="wordmark grain"><span>enr</span><svg class="o"><use href="#o"/></svg></span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Motion rules</h3>
+          <ul style="margin-top:10px;padding-left:18px;display:grid;gap:6px">
+            <li>One sweep per screen, centered on the main content.</li>
+            <li>Always 12 seconds per turn, linear, clockwise.</li>
+            <li>The sweep passes behind content, never over text.</li>
+            <li>Rings are 1px white lines at about 50% opacity.</li>
+            <li>When reduced motion is on, the sweep stays still.</li>
+            <li>Buttons ease the arrow 2px up-right on hover. Nothing bounces.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grain-compare" style="margin-top:14px">
+        <div class="stagebox sky">
+          <span class="wordmark grain" style="font-size:56px"><span>enr</span><svg class="o"><use href="#o"/></svg></span>
+          <span class="label">Hero: grain + fade to 62%</span>
+        </div>
+        <div class="stagebox sky">
+          <span class="wordmark" style="font-size:56px"><span>enr</span><svg class="o"><use href="#o"/></svg></span>
+          <span class="label">Small sizes: solid ink</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 VOICE -->
+    <section class="block" id="voice">
+      <p class="eyebrow">06 · Voice &amp; tone</p>
+      <h2>Calm, honest, a little warm.</h2>
+      <p class="lede">enro sounds like a friend who checked the traffic for you. It tells you the real consequence, never guilt-trips, and adapts its tone to how much is at stake.</p>
+
+      <div class="tones">
+        <div class="tone">
+          <div>
+            <span class="pill" style="color:var(--casual)">Casual</span>
+            <p class="when">Coffee, dinners, lectures</p>
+          </div>
+          <div>
+            <div class="bubble">Hey! Coffee with Maya is at 10. If you start getting ready now, you can walk over and still grab a seat.</div>
+            <div class="bubble me">Give me five minutes</div>
+            <div class="bubble">Sure, that works. I'll call again at 9:40.</div>
+          </div>
+        </div>
+        <div class="tone">
+          <div>
+            <span class="pill" style="color:var(--ink-2)">Serious</span>
+            <p class="when">Interviews, meetings, appointments</p>
+          </div>
+          <div>
+            <div class="bubble">Your interview is at 2:00. You usually need 45 minutes to get ready for this kind of thing, so now is a good time to start.</div>
+            <div class="bubble me">Can I leave at 1:40?</div>
+            <div class="bubble">You'd arrive around 2:08. I'd leave by 1:32 to walk in calm.</div>
+          </div>
+        </div>
+        <div class="tone">
+          <div>
+            <span class="pill" style="color:var(--urgent)">Urgent</span>
+            <p class="when">Flights, trains, hard deadlines</p>
+          </div>
+          <div>
+            <div class="bubble">Time to go. Your flight boards at 6:35 and security is busy this morning. If you leave in the next 10 minutes, you're fine.</div>
+            <div class="bubble">I'll stay on until I see you're on your way.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid g2 words">
+        <div class="card yes">
+          <h3>We say</h3>
+          <ul>
+            <li>"You'll miss the first 15 minutes."</li>
+            <li>"That works." / "That's cutting it close."</li>
+            <li>Real times: "Leave by 9:12"</li>
+            <li>Short sentences, contractions, sentence case</li>
+          </ul>
+        </div>
+        <div class="card no">
+          <h3>We don't say</h3>
+          <ul>
+            <li>"You're late again!" or anything that shames</li>
+            <li>"Reminder: event in 30 minutes"</li>
+            <li>Vague times: "soon", "in a bit"</li>
+            <li>Exclamation marks in urgent moments</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07 UI -->
+    <section class="block" id="ui">
+      <p class="eyebrow">07 · Interface</p>
+      <h2>Few pieces, used the same way.</h2>
+      <p class="lede">Pills for actions, a single underline for inputs, small chips for facts. Corners are fully rounded on buttons and 18–20px on cards.</p>
+
+      <div class="grid g3">
+        <div>
+          <div class="comp-stage">
+            <div class="demo-field"><span class="cc">+1</span><span class="ph">Your phone number</span>
+              <span class="btn-glass">Join <svg><use href="#arrow"/></svg></span>
+            </div>
+          </div>
+          <p class="comp-cap"><strong>Glass button + underline input.</strong> For the main action on the sky background. Blue at 42% with a white hairline.</p>
+        </div>
+        <div>
+          <div class="comp-stage" style="min-height:118px">
+            <span class="btn-solid">Continue <svg><use href="#arrow"/></svg></span>
+          </div>
+          <p class="comp-cap"><strong>Solid ink button.</strong> For confirming a step inside the app, like finishing event approval.</p>
+        </div>
+        <div>
+          <div class="comp-stage" style="min-height:118px">
+            <div class="chips">
+              <span class="chip-ui dark">Leave by 9:12 AM</span>
+              <span class="chip-ui">18 min bike</span>
+              <span class="chip-ui" style="color:var(--casual)">Casual</span>
+              <span class="chip-ui" style="color:var(--urgent)">Urgent</span>
+            </div>
+          </div>
+          <p class="comp-cap"><strong>Chips.</strong> The leave-by time is the only dark chip. Everything else stays light.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>enro brand guidelines · v1.0 · October 2026</span>
+      <span><a href="index.html">Landing page</a> · <a href="approve.html">Approve events</a></span>
+    </footer>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+  const colors = [
+    { name: 'Ink', hex: '#13213A', use: 'Wordmark, headlines, primary text' },
+    { name: 'Ink 2', hex: '#2A3D5C', use: 'Slogan, body text' },
+    { name: 'Muted', hex: '#5D7391', use: 'Captions, eyebrows, placeholders' },
+    { name: 'Signal', hex: '#6AAAF0', use: 'Small mark, highlights' },
+    { name: 'Sky 1', hex: '#BBDCFD', use: 'Background glow' },
+    { name: 'Sky 2', hex: '#A2CBF8', use: 'Main background' },
+    { name: 'Sky 3', hex: '#8FC0F5', use: 'Background depth' },
+    { name: 'Cloud', hex: '#F6FAFF', use: 'Light surfaces' },
+    { name: 'Casual', hex: '#2F7A5B', use: 'Casual tone, connected states' },
+    { name: 'Urgent', hex: '#B4374A', use: 'Urgent tone, errors' },
+  ];
+
+  document.getElementById('swatches').innerHTML = colors.map(c => `
+    <button class="swatch" type="button" data-hex="${c.hex}" aria-label="Copy ${c.name} ${c.hex}">
+      <div class="chip" style="background:${c.hex}"></div>
+      <div class="meta">
+        <div class="name">${c.name}</div>
+        <div class="hex">${c.hex}</div>
+        <div class="use">${c.use}</div>
+      </div>
+    </button>`).join('');
+
+  const toast = document.getElementById('toast');
+  let t;
+  document.getElementById('swatches').addEventListener('click', async (e) => {
+    const b = e.target.closest('.swatch');
+    if (!b) return;
+    try { await navigator.clipboard.writeText(b.dataset.hex); toast.textContent = `Copied ${b.dataset.hex}`; }
+    catch { toast.textContent = b.dataset.hex; }
+    toast.classList.add('show');
+    clearTimeout(t);
+    t = setTimeout(() => toast.classList.remove('show'), 1400);
+  });
+</script>
+</body>
+</html>
