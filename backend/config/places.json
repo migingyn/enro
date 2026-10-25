@@ -1,0 +1,58 @@
+{
+  "places": [
+    {
+      "match": "Nobel Dr",
+      "label": "Home (La Jolla, Nobel Dr)",
+      "lat": 32.8706,
+      "lng": -117.2284
+    },
+    {
+      "match": "Center Hall",
+      "label": "Center Hall",
+      "lat": 32.8776,
+      "lng": -117.2373
+    },
+    {
+      "match": "WLH",
+      "label": "Warren Lecture Hall",
+      "lat": 32.8806,
+      "lng": -117.2343
+    },
+    {
+      "match": "Price Center",
+      "label": "Price Center",
+      "lat": 32.8798,
+      "lng": -117.236
+    },
+    {
+      "match": "Geisel",
+      "label": "Geisel Library",
+      "lat": 32.8811,
+      "lng": -117.2376
+    },
+    {
+      "match": "Peterson Hall",
+      "label": "Peterson Hall",
+      "lat": 32.8801,
+      "lng": -117.2402
+    },
+    {
+      "match": "RIMAC",
+      "label": "RIMAC Arena",
+      "lat": 32.8853,
+      "lng": -117.2393
+    },
+    {
+      "match": "Lusk Blvd",
+      "label": "Qualcomm Building Q",
+      "lat": 32.9047,
+      "lng": -117.1957
+    },
+    {
+      "match": "Convoy",
+      "label": "Convoy St",
+      "lat": 32.8266,
+      "lng": -117.155
+    }
+  ]
+}

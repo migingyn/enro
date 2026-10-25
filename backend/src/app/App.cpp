@@ -154,6 +154,7 @@ std::unique_ptr<AppContext> buildApp(Env env) {
   c.personas = readConfig(c.env, "personas.json");
   c.scripts = readConfig(c.env, "scripts.json");
   c.onboarding = readConfig(c.env, "onboarding.json");
+  c.places = std::make_unique<Places>(Places::fromConfig(readConfig(c.env, "places.json")));
 
   c.db = std::make_unique<Database>(c.env.dbPath());
   c.db->createSchema();
@@ -177,6 +178,7 @@ std::unique_ptr<AppContext> buildApp(Env env) {
   c.lines = std::make_unique<LineGenerator>(*c.llm, c.personas, c.scripts);
   c.triage = std::make_unique<EmailTriage>(c);
   c.wake_ladder = std::make_unique<WakeLadder>(c);
+  c.departure = std::make_unique<Departure>(c);
   c.conversation = std::make_unique<Conversation>(c);
   c.contacts = std::make_unique<ContactService>(c);
   c.commentator = std::make_unique<Commentator>(*c.reflex, *c.lines);
@@ -194,6 +196,7 @@ std::unique_ptr<AppContext> buildApp(Env env) {
 
   // Scheduler handlers, one line per owner (T04 queue + loop).
   c.wake_ladder->registerHandlers(*c.scheduler);  // WAKE_CALL (T10)
+  c.departure->registerHandlers(*c.scheduler);    // DEPARTURE_CHECK (T10)
 
   LOG_INFO("providers", "voice=" << c.providers.voice << " llm=" << c.providers.llm << " speech=" << c.providers.speech
                                  << " reflex=" << c.providers.reflex << " calendar=" << c.providers.calendar

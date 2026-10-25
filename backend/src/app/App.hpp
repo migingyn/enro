@@ -14,9 +14,11 @@
 #include "ai/SpeechClient.hpp"
 #include "audio/AudioCache.hpp"
 #include "calls/Conversation.hpp"
+#include "calls/Departure.hpp"
 #include "calls/WakeLadder.hpp"
 #include "config/Env.hpp"
 #include "config/Fixtures.hpp"
+#include "config/Places.hpp"
 #include "contacts/ContactService.hpp"
 #include "google/CalendarSource.hpp"
 #include "google/EmailSource.hpp"
@@ -59,6 +61,7 @@ struct AppContext {
 
   // backend/config/*.json (empty objects when missing)
   nlohmann::json event_types, personas, scripts, onboarding;
+  std::unique_ptr<Places> places;  // backend/config/places.json: coordinates for location strings
 
   // infrastructure
   std::unique_ptr<Database> db;
@@ -92,6 +95,7 @@ struct AppContext {
   std::unique_ptr<LineGenerator> lines;
   std::unique_ptr<EmailTriage> triage;
   std::unique_ptr<WakeLadder> wake_ladder;
+  std::unique_ptr<Departure> departure;
   std::unique_ptr<Conversation> conversation;
   std::unique_ptr<ContactService> contacts;
   std::unique_ptr<Commentator> commentator;
