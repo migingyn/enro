@@ -79,10 +79,14 @@ LeavePlan ReadyToLeave::plan(const LeaveInput& in) const {
   double factor = in.mode_stats.travel_factor > 0 ? in.mode_stats.travel_factor : 1.0;
   int ride = std::max(1, static_cast<int>(std::lround(eta.minutes * factor)));
   // Transit trips start and end on foot: walk to the stop and from the stop, at the learned walking pace.
+  // The router's real walks when it has them (Google), else the typical ones from mode_legs.
   int walk_to = 0, walk_from = 0;
-  if (event_types_.contains("mode_legs") && event_types_["mode_legs"].contains(p.mode)) {
+  double wf = in.walk_stats.travel_factor > 0 ? in.walk_stats.travel_factor : 1.0;
+  if (eta.walk_to_minutes >= 0 && eta.walk_from_minutes >= 0) {
+    walk_to = static_cast<int>(std::lround(eta.walk_to_minutes * wf));
+    walk_from = static_cast<int>(std::lround(eta.walk_from_minutes * wf));
+  } else if (event_types_.contains("mode_legs") && event_types_["mode_legs"].contains(p.mode)) {
     auto& legs = event_types_["mode_legs"][p.mode];
-    double wf = in.walk_stats.travel_factor > 0 ? in.walk_stats.travel_factor : 1.0;
     walk_to = static_cast<int>(std::lround(legs.value("walk_to_stop_minutes", 0) * wf));
     walk_from = static_cast<int>(std::lround(legs.value("walk_from_stop_minutes", 0) * wf));
   }
