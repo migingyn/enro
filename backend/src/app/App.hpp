@@ -24,6 +24,7 @@
 #include "http/DashboardSocket.hpp"
 #include "model/PunctualityModel.hpp"
 #include "model/TransportLearner.hpp"
+#include "motion/MotionTracker.hpp"
 #include "planner/ConsequenceEngine.hpp"
 #include "planner/ReadyToLeave.hpp"
 #include "planner/Urgency.hpp"
@@ -98,6 +99,7 @@ struct AppContext {
   std::unique_ptr<TripRunner> trip_runner;
   std::unique_ptr<LoadSimulator> load_sim;
   std::unique_ptr<AudioCache> audio;
+  std::unique_ptr<MotionTracker> motion;  // Sensor Logger phone motion (S7)
 
   // ---- dashboard helpers: persist + broadcast in one call ----
   // Every agent action writes a Decision (PRD 7.1).

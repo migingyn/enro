@@ -12,6 +12,7 @@ void registerRoutes(CrowApp& app, AppContext& ctx) {
   registerTwilioRoutes(app, ctx);
   registerDashboardSocket(app, ctx);
   registerSimCallSocket(app, ctx);
+  registerMotionRoutes(app, ctx);
   // registerRetellRoutes(app, ctx);  // RETELL ALTERNATE
 }
 

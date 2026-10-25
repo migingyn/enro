@@ -183,6 +183,7 @@ std::unique_ptr<AppContext> buildApp(Env env) {
   c.trip_runner = std::make_unique<TripRunner>(c);
   c.load_sim = std::make_unique<LoadSimulator>();
   c.audio = std::make_unique<AudioCache>(c.env.root() + "/backend/audio_cache");
+  c.motion = std::make_unique<MotionTracker>();
 
   // Call events from any voice provider go through the Conversation, and its reply is spoken back.
   c.voice->onCallEvent([&c](const std::string& call_id, const std::string& event, const std::string& text) {
