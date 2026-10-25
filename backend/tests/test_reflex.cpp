@@ -26,8 +26,6 @@ TEST_CASE("JevReflex without a key falls back to rules") {
   CHECK(j.emailRelevance({}).source == "rules");
 }
 
-TEST_CASE("TODO(T14): Jev timeout falls back to rules within JEV_TIMEOUT_MS" * doctest::skip()) {}
-TEST_CASE("TODO(T14): Jev verdicts carry source jev and latency_ms" * doctest::skip()) {}
 TEST_CASE("rules: 'canceled' in subject from a course address -> PLAN_CHANGE") {
   RulesReflex r;
   auto v = r.emailRelevance({{"message_id", "msg_1003"},

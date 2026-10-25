@@ -1,9 +1,13 @@
-// Jev reflex over HTTP (TypeSafe API, or OpenRouter as a second route). Selected by
-// REFLEX_PROVIDER=jev. Falls back to RulesReflex on timeout or missing key. Owner: T14.
-// Verify the current API shape and model name before wiring it (PRD 7.11).
+// Jev reflex over the TypeSafe System One API (REFLEX_PROVIDER=jev). Owner: T14.
+//
+// Jev makes judgments, code makes decisions: language questions (does this email change a plan? is this
+// reply stalling?) go to Jev as atomic Noul questions, and fixed thresholds in JevReflex.cpp turn the
+// probabilities into verdicts. Decisions that are arithmetic on known numbers (transit delay vs slack,
+// interrupt channel, snooze vs consequences, ladder stop) stay in RulesReflex, where code is reliable.
+// Any failure (no key, timeout, HTTP error, bad answer) falls back to RulesReflex, never to a guess.
 #pragma once
 
-#include <memory>
+#include <functional>
 #include <optional>
 
 #include "config/Env.hpp"
@@ -14,7 +18,10 @@ namespace enro {
 
 class JevReflex : public Reflex {
  public:
-  explicit JevReflex(const Env& env);
+  // POST /v1/systemone body -> response body, or nullopt on timeout or error. Tests inject a fake.
+  using Transport = std::function<std::optional<nlohmann::json>(const nlohmann::json& request)>;
+
+  explicit JevReflex(const Env& env, Transport transport = nullptr);
 
   std::string name() const override { return "jev"; }
 
@@ -26,12 +33,16 @@ class JevReflex : public Reflex {
   ReflexVerdict stopCondition(const nlohmann::json& state) override;
 
  private:
-  // One HTTP call: decision name + allowed verdicts + input. nullopt on timeout or error.
-  std::optional<ReflexVerdict> ask(const std::string& decision, const nlohmann::json& verdicts,
-                                   const nlohmann::json& input);
+  // One request; returns {question name -> noul probability} plus latency, or nullopt.
+  struct NoulAnswers {
+    std::map<std::string, double> p;
+    int latency_ms = 0;
+  };
+  std::optional<NoulAnswers> askNouls(const nlohmann::json& state, const nlohmann::json& questions);
 
-  std::string api_key_, model_, openrouter_key_;
-  int timeout_ms_ = 400;
+  std::string api_key_, model_, base_url_;
+  int timeout_ms_ = 800;
+  Transport transport_;
   RulesReflex fallback_;
 };
 
