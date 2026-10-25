@@ -145,7 +145,7 @@ const vttTime=n=>`00:${String(Math.floor(n/60)).padStart(2,'0')}:${String(n%60).
 await writeFile(path.join(out,'descriptions.vtt'),'WEBVTT\n\n'+captions.map((caption,i)=>`${vttTime(starts[i])} --> ${vttTime(ends[i])}\n${caption}\n`).join('\n'));
 await writeFile(path.join(out,'manifest.json'),JSON.stringify({durationSeconds:DURATION,width:W,height:H,fps:FPS,audio:false,mode:'Scripted walkthrough using sample data',original,updated,checks:{shakingConfirmed:shaken.confirmed,walkingConfirmed:walked.confirmed},physicalValidation:'Revised walking rule is not yet physically validated'},null,2)+'\n');
 if(process.argv.includes('--preview')){console.log(`Preview frames: ${preview}`);process.exit(0)}
-const ff=spawn('ffmpeg',['-hide_banner','-loglevel','error','-y','-f','rawvideo','-pixel_format','rgba','-video_size',`${W}x${H}`,'-framerate',String(FPS),'-i','pipe:0','-an','-c:v','libx264','-preset','fast','-crf','21','-pix_fmt','yuv420p','-movflags','+faststart','-color_primaries','bt709','-color_trc','bt709','-colorspace','bt709',path.join(out,'enro.mp4')],{stdio:['pipe','ignore','pipe']});
+const ff=spawn('ffmpeg',['-hide_banner','-loglevel','error','-y','-f','rawvideo','-pixel_format','rgba','-video_size',`${W}x${H}`,'-framerate',String(FPS),'-i','pipe:0','-an','-c:v','libx264','-preset','fast','-crf','21','-g','30','-pix_fmt','yuv420p','-movflags','+faststart','-color_primaries','bt709','-color_trc','bt709','-colorspace','bt709',path.join(out,'enro.mp4')],{stdio:['pipe','ignore','pipe']});
 let errors='';ff.stderr.on('data',chunk=>errors+=chunk);const done=once(ff,'close');ff.stdin.on('error',error=>console.error(error.message));
 for(let frame=0;frame<FPS*DURATION;frame++){
   draw(frame/FPS);const rgba=c.getImageData(0,0,W,H).data;
